@@ -411,8 +411,8 @@
             <canvas id="chart-vagas"></canvas>
           </div>
           <div class="mt-2 pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] sm:text-xs text-slate-600 font-semibold">
-            <span>Melhorou: <strong class="text-emerald-700">93.3%</strong></span>
-            <span>Piorou/Neutro: <strong class="text-rose-700">6.7%</strong></span>
+            <span>Melhorou: <strong class="text-emerald-700" id="card-vagas-melhorou">93.3%</strong></span>
+            <span>Piorou/Neutro: <strong class="text-rose-700" id="card-vagas-piorou">6.7%</strong></span>
           </div>
         </div>
 
@@ -451,28 +451,28 @@
       <div class="bg-white rounded-2xl p-4 sm:p-6 border border-slate-200 card-shadow">
         <div class="flex items-center justify-between mb-3">
           <h3 class="text-sm sm:text-base font-bold text-slate-900">Perfil dos Entrevistados</h3>
-          <span class="text-[11px] text-slate-500 bg-slate-50 px-2 py-1 rounded-lg border border-slate-200">
-            38 com nome / 22 anônimos
+          <span class="text-[11px] text-slate-500 bg-slate-50 px-2 py-1 rounded-lg border border-slate-200" id="badge-perfil-identificadas">
+            57 com nome / 24 anônimos
           </span>
         </div>
         
         <div class="grid grid-cols-3 gap-2 sm:gap-4">
           <div class="bg-blue-50/60 border border-blue-100 rounded-xl p-2.5 sm:p-4 text-center sm:text-left">
             <span class="text-[10px] sm:text-xs text-slate-500 block font-medium">Lojistas</span>
-            <div class="text-lg sm:text-2xl font-bold text-blue-950 mt-0.5">50</div>
-            <span class="text-[10px] sm:text-xs text-blue-700 font-semibold">(83.3%)</span>
+            <div class="text-lg sm:text-2xl font-bold text-blue-950 mt-0.5" id="perfil-qtd-lojistas">60</div>
+            <span class="text-[10px] sm:text-xs text-blue-700 font-semibold" id="perfil-perc-lojistas">(74.1%)</span>
           </div>
 
           <div class="bg-emerald-50/60 border border-emerald-100 rounded-xl p-2.5 sm:p-4 text-center sm:text-left">
             <span class="text-[10px] sm:text-xs text-slate-500 block font-medium">Visitantes</span>
-            <div class="text-lg sm:text-2xl font-bold text-emerald-950 mt-0.5">8</div>
-            <span class="text-[10px] sm:text-xs text-emerald-700 font-semibold">(13.3%)</span>
+            <div class="text-lg sm:text-2xl font-bold text-emerald-950 mt-0.5" id="perfil-qtd-visitantes">18</div>
+            <span class="text-[10px] sm:text-xs text-emerald-700 font-semibold" id="perfil-perc-visitantes">(22.2%)</span>
           </div>
 
           <div class="bg-amber-50/60 border border-amber-100 rounded-xl p-2.5 sm:p-4 text-center sm:text-left">
             <span class="text-[10px] sm:text-xs text-slate-500 block font-medium">Moradores</span>
-            <div class="text-lg sm:text-2xl font-bold text-amber-950 mt-0.5">2</div>
-            <span class="text-[10px] sm:text-xs text-amber-700 font-semibold">(3.3%)</span>
+            <div class="text-lg sm:text-2xl font-bold text-amber-950 mt-0.5" id="perfil-qtd-moradores">3</div>
+            <span class="text-[10px] sm:text-xs text-amber-700 font-semibold" id="perfil-perc-moradores">(3.7%)</span>
           </div>
         </div>
       </div>
@@ -895,16 +895,16 @@
         </h4>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 text-xs">
           <div class="bg-white/10 p-3.5 rounded-xl border border-white/10">
-            <strong class="text-emerald-400 block text-xs sm:text-sm mb-1 font-bold">45% Sem Impacto Negativo</strong>
+            <strong class="text-emerald-400 block text-xs sm:text-sm mb-1 font-bold" id="comercio-perc-positivo">Sem Impacto Negativo</strong>
             Comerciantes relatam que clientes encontram vagas com rapidez sem circular várias vezes pela via.
           </div>
           <div class="bg-white/10 p-3.5 rounded-xl border border-white/10">
-            <strong class="text-amber-400 block text-xs sm:text-sm mb-1 font-bold">37% Queda Inicial</strong>
+            <strong class="text-amber-400 block text-xs sm:text-sm mb-1 font-bold" id="comercio-perc-queda">Queda Inicial</strong>
             Lojistas apontam receio dos clientes com a cobrança de pós-utilização e desconhecimento do app.
           </div>
           <div class="bg-white/10 p-3.5 rounded-xl border border-white/10">
-            <strong class="text-cyan-300 block text-xs sm:text-sm mb-1 font-bold">Faturamento (P. 5.1)</strong>
-            65% relatam estabilidade e associam variações à crise econômica nacional, e não ao rotativo.
+            <strong class="text-cyan-300 block text-xs sm:text-sm mb-1 font-bold" id="comercio-perc-faturamento">Faturamento (P. 5.1)</strong>
+            <span id="comercio-desc-faturamento">Estabilidade observada pela maioria dos lojistas entrevistados.</span>
           </div>
           <div class="bg-white/10 p-3.5 rounded-xl border border-white/10">
             <strong class="text-blue-300 block text-xs sm:text-sm mb-1 font-bold">Recomendação</strong>
@@ -976,13 +976,13 @@
       <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200 card-shadow space-y-3">
         <div>
           <h3 class="text-sm sm:text-base font-bold text-slate-900">Voz do Cidadão: Críticas e Sugestões</h3>
-          <p class="text-[11px] sm:text-xs text-slate-500">44 comentários registrados pelos entrevistadores</p>
+          <p class="text-[11px] sm:text-xs text-slate-500"><span id="lbl-total-comentarios">0</span> comentários registrados pelos entrevistadores</p>
         </div>
 
         <div class="flex items-center gap-1.5 overflow-x-auto pb-1 no-print">
-          <button onclick="filtrarComentarios('todos')" id="btn-filtro-todos" class="btn-filtro active-filtro text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-900 text-white whitespace-nowrap">Todos (44)</button>
-          <button onclick="filtrarComentarios('elogios')" id="btn-filtro-elogios" class="btn-filtro text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 whitespace-nowrap">Elogios (Notas 4-5)</button>
-          <button onclick="filtrarComentarios('criticas')" id="btn-filtro-criticas" class="btn-filtro text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 whitespace-nowrap">Críticas (Notas 1-3)</button>
+          <button onclick="filtrarComentarios('todos')" id="btn-filtro-todos" class="btn-filtro active-filtro text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-900 text-white whitespace-nowrap">Todos (<span id="count-filtro-todos">0</span>)</button>
+          <button onclick="filtrarComentarios('elogios')" id="btn-filtro-elogios" class="btn-filtro text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 whitespace-nowrap">Elogios (<span id="count-filtro-elogios">0</span>)</button>
+          <button onclick="filtrarComentarios('criticas')" id="btn-filtro-criticas" class="btn-filtro text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 whitespace-nowrap">Críticas (<span id="count-filtro-criticas">0</span>)</button>
         </div>
 
         <div class="relative no-print">
@@ -1020,9 +1020,9 @@
           <h4 class="text-sm font-bold text-slate-900 mt-1">Centro (Implantado)</h4>
           <p class="text-[11px] text-slate-500">Setembro/2026</p>
           <div class="mt-3 space-y-1.5 text-xs">
-            <div class="flex justify-between"><span>Satisfação Média:</span><strong class="text-slate-900">4.0 / 5.0</strong></div>
-            <div class="flex justify-between"><span>Aprovação:</span><strong class="text-blue-700">65.0%</strong></div>
-            <div class="flex justify-between"><span>Vagas Fáceis:</span><strong class="text-emerald-600">93.3%</strong></div>
+            <div class="flex justify-between"><span>Satisfação Média:</span><strong class="text-slate-900" id="resumo-onda1-media">4.0 / 5.0</strong></div>
+            <div class="flex justify-between"><span>Aprovação:</span><strong class="text-blue-700" id="resumo-onda1-aprov">65.0%</strong></div>
+            <div class="flex justify-between"><span>Vagas Fáceis:</span><strong class="text-emerald-600" id="resumo-onda1-vagas">93.3%</strong></div>
           </div>
         </div>
 
@@ -1118,7 +1118,7 @@
 
     // Forçar atualização do Service Worker e capturar instalação PWA
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js?v=21').then((reg) => {
+      navigator.serviceWorker.register('sw.js?v=22').then((reg) => {
         reg.update();
       }).catch(err => console.log('SW fail:', err));
     }
@@ -1198,10 +1198,15 @@
 
       renderizarDashboard(DADOS_ATUAIS);
 
-      // Sincronização automática em segundo plano para capturar novas respostas da planilha
+      // Sincronização automática inicial em segundo plano
       setTimeout(() => {
         sincronizarPlanilha(true);
-      }, 1500);
+      }, 1200);
+
+      // Sincronização automática contínua a cada 20 segundos (tempo real com as estagiárias em campo)
+      setInterval(() => {
+        sincronizarPlanilha(true);
+      }, 20000);
     });
 
     function showToast(msg) {
@@ -1479,9 +1484,73 @@
       const elBadgeExec = document.getElementById('badge-amostra-executiva');
       if (elBadgeExec) elBadgeExec.innerText = `Amostra Representativa (${total} Entrevistas)`;
 
-      const totalLojistas = data.filter(d => d.perfil && d.perfil.toLowerCase().includes('comerciante')).length;
+      // Perfil dos Entrevistados (Lojistas, Visitantes, Moradores)
+      let countLojistas = 0;
+      let countVisitantes = 0;
+      let countMoradores = 0;
+
+      data.forEach(d => {
+        const p = (d.perfil || '').toLowerCase();
+        if (p.includes('comerciante') || p.includes('loja') || p.includes('lojista') || p.includes('funcionário') || p.includes('funcionario')) {
+          countLojistas++;
+        } else if (p.includes('motorista') || p.includes('pedestre') || p.includes('visitante')) {
+          countVisitantes++;
+        } else if (p.includes('morador')) {
+          countMoradores++;
+        }
+      });
+
+      const percLoj = total > 0 ? ((countLojistas / total) * 100).toFixed(1) : '0';
+      const percVis = total > 0 ? ((countVisitantes / total) * 100).toFixed(1) : '0';
+      const percMor = total > 0 ? ((countMoradores / total) * 100).toFixed(1) : '0';
+
+      const elPerfilIdent = document.getElementById('badge-perfil-identificadas');
+      if (elPerfilIdent) elPerfilIdent.innerText = `${identificadas} com nome / ${anonimas} anônimos`;
+
+      const elQtdLoj = document.getElementById('perfil-qtd-lojistas');
+      const elPercLoj = document.getElementById('perfil-perc-lojistas');
+      if (elQtdLoj) elQtdLoj.innerText = countLojistas;
+      if (elPercLoj) elPercLoj.innerText = `(${percLoj}%)`;
+
+      const elQtdVis = document.getElementById('perfil-qtd-visitantes');
+      const elPercVis = document.getElementById('perfil-perc-visitantes');
+      if (elQtdVis) elQtdVis.innerText = countVisitantes;
+      if (elPercVis) elPercVis.innerText = `(${percVis}%)`;
+
+      const elQtdMor = document.getElementById('perfil-qtd-moradores');
+      const elPercMor = document.getElementById('perfil-perc-moradores');
+      if (elQtdMor) elQtdMor.innerText = countMoradores;
+      if (elPercMor) elPercMor.innerText = `(${percMor}%)`;
+
       const elLojistas = document.getElementById('comercio-total-lojistas');
-      if (elLojistas) elLojistas.innerText = totalLojistas;
+      if (elLojistas) elLojistas.innerText = countLojistas;
+
+      // Rodapé do Gráfico de Vagas
+      const elVagasMelh = document.getElementById('card-vagas-melhorou');
+      const elVagasPior = document.getElementById('card-vagas-piorou');
+      if (elVagasMelh) elVagasMelh.innerText = `${vagasPerc}%`;
+      if (elVagasPior) elVagasPior.innerText = `${(100 - parseFloat(vagasPerc)).toFixed(1)}%`;
+
+      // Resumo da Onda 1 em Evolução
+      const elResumoMed = document.getElementById('resumo-onda1-media');
+      const elResumoApr = document.getElementById('resumo-onda1-aprov');
+      const elResumoVag = document.getElementById('resumo-onda1-vagas');
+      if (elResumoMed) elResumoMed.innerText = `${media} / 5.0`;
+      if (elResumoApr) elResumoApr.innerText = `${csatPerc}%`;
+      if (elResumoVag) elResumoVag.innerText = `${vagasPerc}%`;
+
+      // Diagnóstico de Comércio
+      const lojistasData = data.filter(d => d.perfil && d.perfil.toLowerCase().includes('comerciante'));
+      const totalLojComercio = lojistasData.length || 1;
+      const semImpacto = lojistasData.filter(d => (d.impacto_comercio || '').toLowerCase().includes('não teve impacto') || (d.impacto_comercio || '').toLowerCase().includes('aumentou')).length;
+      const queda = lojistasData.filter(d => (d.impacto_comercio || '').toLowerCase().includes('diminuiu')).length;
+      const percSemImp = ((semImpacto / totalLojComercio) * 100).toFixed(0);
+      const percQueda = ((queda / totalLojComercio) * 100).toFixed(0);
+
+      const elComercioPos = document.getElementById('comercio-perc-positivo');
+      const elComercioQueda = document.getElementById('comercio-perc-queda');
+      if (elComercioPos) elComercioPos.innerText = `${percSemImp}% Sem Impacto Negativo`;
+      if (elComercioQueda) elComercioQueda.innerText = `${percQueda}% Queda Inicial`;
 
       renderizarGraficos(data, notas);
       renderizarLocalidades(data);
@@ -1843,7 +1912,24 @@
       feed.innerHTML = '';
 
       const comentarios = data.filter(d => d.sugestao_critica && d.sugestao_critica.trim().length > 1);
-      document.getElementById('badge-sugestoes').innerText = comentarios.length;
+      const totalComent = comentarios.length;
+
+      const badgeSugestoes = document.getElementById('badge-sugestoes');
+      if (badgeSugestoes) badgeSugestoes.innerText = totalComent;
+
+      const lblTotal = document.getElementById('lbl-total-comentarios');
+      if (lblTotal) lblTotal.innerText = totalComent;
+
+      const countTodos = document.getElementById('count-filtro-todos');
+      if (countTodos) countTodos.innerText = totalComent;
+
+      const countElogios = document.getElementById('count-filtro-elogios');
+      const totalElogios = comentarios.filter(c => (c.satisfacao || 0) >= 4).length;
+      if (countElogios) countElogios.innerText = totalElogios;
+
+      const countCriticas = document.getElementById('count-filtro-criticas');
+      const totalCriticas = comentarios.filter(c => (c.satisfacao || 0) <= 3).length;
+      if (countCriticas) countCriticas.innerText = totalCriticas;
 
       comentarios.forEach((item) => {
         const nota = item.satisfacao || 0;
@@ -2149,9 +2235,10 @@
       if (low.includes('cotegipe')) return 'Cotegipe';
       if (low.includes('pirineus') || low.includes('pireneus')) return 'Pirineus';
       if (low.includes('esteves')) return 'Vila Esteves';
+      if (low.includes('miralda')) return 'Vila Miralda';
       if (low.includes('tome') || low.includes('nogueira')) return 'Tomé Nogueira';
       if (low.includes('cohab')) return 'Cohab';
-      if (low.includes('cristovao') || low.includes('cristov')) return 'São Cristóvão';
+      if (low.includes('cristovao') || low.includes('cristov') || low.includes('esquetino')) return 'São Cristóvão';
       if (low.includes('cataguases')) return 'Cataguases (Visitante)';
       if (low.includes('bela vista')) return 'Bela Vista';
       if (low.includes('flores')) return 'Rua das Flores';
@@ -2165,6 +2252,13 @@
       if (low.includes('rosario')) return 'Rosário';
       if (low.includes('imperador')) return 'Alto do Imperador';
       if (low.includes('chacara')) return 'Chácara Dona Euzébia';
+      if (low.includes('tebas')) return 'Distrito de Tebas';
+      if (low.includes('expedicionario')) return 'Av. Expedicionários';
+      if (low.includes('pedro brito')) return 'Pedro Brito';
+      if (low.includes('arthur') || low.includes('leao')) return 'Arthur Leão';
+      if (low.includes('3 de junho')) return 'Rua 3 de Junho';
+      if (low.includes('providencia')) return 'Distrito de Providência';
+      if (low.includes('piau')) return 'Piau';
 
       return s.split(/\s+/).map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
     }
