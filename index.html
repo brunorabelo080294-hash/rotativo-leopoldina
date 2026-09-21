@@ -1,0 +1,2063 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Dashboard Executivo - Estacionamento Rotativo | Prefeitura de Leopoldina - MG</title>
+  
+  <!-- PWA & Meta Tags -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0b1e36">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Rotativo Leo">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="icon" href="favicon.png" type="image/png">
+
+  <!-- Anti-Cache para sincronização instantânea -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+
+  <!-- Fontes Google -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            leopoldina: {
+              navy: '#0b1e36',
+              deep: '#0f2942',
+              blue: '#1e3a8a',
+              accent: '#2563eb',
+              gold: '#d97706',
+              lightgold: '#f59e0b',
+              surface: '#f8fafc',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Chart.js & Plugins -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Dados Iniciais Pré-carregados -->
+  <script src="dados_iniciais.js"></script>
+
+  <style>
+    body {
+      background-color: #f8fafc;
+      color: #0f172a;
+      -webkit-font-smoothing: antialiased;
+      -webkit-tap-highlight-color: transparent;
+      transition: font-size 0.2s ease, font-weight 0.2s ease;
+    }
+    
+    /* Suporte a entalhe (Safe Area) no iPhone */
+    .safe-top { padding-top: env(safe-area-inset-top, 0px); }
+    .safe-bottom { padding-bottom: env(safe-area-inset-bottom, 0px); }
+
+    /* ========================================================================= */
+    /* MODO LEITURA FÁCIL: LETRAS MAIORES E EM NEGRITO SEM DESORGANIZAR */
+    /* ========================================================================= */
+    body.modo-acessivel {
+      font-weight: 600;
+    }
+    body.modo-acessivel p,
+    body.modo-acessivel span:not(.no-bold),
+    body.modo-acessivel strong,
+    body.modo-acessivel div {
+      font-weight: 700;
+    }
+    body.modo-acessivel .text-\[10px\] { font-size: 12px !important; line-height: 1.3 !important; }
+    body.modo-acessivel .text-\[11px\] { font-size: 13px !important; line-height: 1.35 !important; }
+    body.modo-acessivel .text-xs { font-size: 14px !important; line-height: 1.4 !important; }
+    body.modo-acessivel .text-sm { font-size: 16px !important; line-height: 1.45 !important; }
+    body.modo-acessivel .text-base { font-size: 18px !important; line-height: 1.5 !important; }
+    body.modo-acessivel .text-lg { font-size: 20px !important; }
+    body.modo-acessivel .text-xl { font-size: 22px !important; }
+    body.modo-acessivel .text-2xl { font-size: 28px !important; }
+    body.modo-acessivel .text-4xl { font-size: 40px !important; }
+    
+    /* Ajustes finos de espaçamento para manter ordem visual perfeita */
+    body.modo-acessivel .card-shadow {
+      padding-top: 1.1rem !important;
+      padding-bottom: 1.1rem !important;
+    }
+    body.modo-acessivel .comentario-card {
+      border-width: 2px !important;
+    }
+
+    /* Estilo de impressão e PDF executivo */
+    @media print {
+      .no-print { display: none !important; }
+      body { background-color: #ffffff !important; color: #000000 !important; font-size: 11pt; }
+      .card-shadow { box-shadow: none !important; border: 1px solid #cbd5e1 !important; break-inside: avoid; }
+      .page-break { page-break-before: always; }
+      header { border-bottom: 2px solid #0f2942 !important; }
+    }
+
+    .card-shadow {
+      box-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.05), 0 2px 4px -1px rgba(15, 23, 42, 0.03);
+    }
+    
+    .pulse-dot {
+      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: .4; transform: scale(1.15); }
+    }
+
+    /* Scrollbar sutil */
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col font-sans selection:bg-blue-600 selection:text-white">
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast" class="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 opacity-0 pointer-events-none transition-all duration-300 flex items-center gap-2.5 bg-slate-900/95 text-white px-5 py-3 rounded-full shadow-2xl border border-slate-700 text-xs sm:text-sm font-semibold backdrop-blur-md">
+    <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i>
+    <span id="toast-message">Dados atualizados com sucesso!</span>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- CABEÇALHO RESPONSIVO: DESKTOP & MOBILE ADAPTADO -->
+  <!-- ========================================================================= -->
+  <header class="bg-gradient-to-r from-leopoldina-navy via-leopoldina-deep to-leopoldina-blue text-white shadow-lg sticky top-0 z-40 border-b border-white/10 safe-top">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+      
+      <!-- Linha Principal do Header -->
+      <div class="py-2.5 sm:py-4 flex items-center justify-between gap-2">
+        
+        <!-- Logo Oficial e Títulos -->
+        <div class="flex items-center gap-2.5 sm:gap-3.5 min-w-0">
+          <div class="h-10 sm:h-12 bg-white px-2 py-1 rounded-xl flex items-center justify-center shadow-md border border-white/20 flex-shrink-0">
+            <img src="logo-prefeitura.png" alt="Prefeitura de Leopoldina" class="h-full w-auto object-contain" onerror="this.src='icone-192.png'">
+          </div>
+          
+          <div class="truncate">
+            <div class="flex items-center gap-1.5">
+              <span class="text-[10px] sm:text-xs uppercase tracking-wider text-amber-300 font-bold truncate">Prefeitura de Leopoldina</span>
+              <span class="text-[9px] sm:text-xs bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 px-1.5 py-0.2 rounded-full flex items-center gap-1 font-semibold flex-shrink-0">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 pulse-dot"></span>
+                Ao Vivo
+              </span>
+            </div>
+            <h1 class="text-sm sm:text-lg lg:text-xl font-bold tracking-tight text-white truncate">
+              Rotativo Leopoldina
+            </h1>
+            <p class="text-[11px] text-slate-300 hidden sm:block">Secretaria Municipal de Habitação e Mobilidade Urbana</p>
+          </div>
+        </div>
+
+        <!-- Ações do Header (Com Controle de Letra Grande & Negrito) -->
+        <div class="flex items-center gap-1.5 sm:gap-2 flex-shrink-0 no-print">
+          
+          <!-- BOTÃO TOGGLE TAMANHO DA LETRA (CELULAR & PC) -->
+          <button id="btn-toggle-fonte" onclick="alternarModoFonte()" class="flex items-center gap-1 sm:gap-1.5 bg-white/10 hover:bg-white/20 active:scale-95 text-white text-[11px] sm:text-xs font-bold px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-lg border border-white/20 transition-all shadow-sm" title="Aumentar letra e colocar em negrito sem desorganizar">
+            <span id="fonte-label-icon" class="text-amber-300 font-extrabold text-xs sm:text-sm">Aa</span>
+            <span id="fonte-label-text" class="hidden xs:inline sm:inline">Normal</span>
+          </button>
+
+          <!-- Botão Instalar App Direto (Visível no Celular) -->
+          <button id="btn-instalar-app" onclick="acionarInstalacaoApp()" class="flex md:hidden items-center gap-1 bg-emerald-500 hover:bg-emerald-600 active:scale-95 text-slate-950 text-[11px] font-black px-2 py-1.5 rounded-lg shadow-md transition-all">
+            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+            <span>Baixar App</span>
+          </button>
+
+          <!-- Botão Sincronizar -->
+          <button id="btn-sync" onclick="sincronizarPlanilha()" class="flex items-center gap-1.5 bg-white/10 hover:bg-white/20 active:scale-95 text-white text-xs sm:text-sm font-semibold px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-lg border border-white/20 transition-all" title="Sincronizar dados da planilha">
+            <i data-lucide="refresh-cw" id="sync-icon" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-300"></i>
+            <span class="hidden sm:inline">Sincronizar</span>
+          </button>
+
+          <!-- Botão Imprimir / PDF (Apenas Desktop) -->
+          <button onclick="window.print()" class="hidden md:flex items-center gap-1.5 bg-amber-500 hover:bg-amber-600 active:scale-95 text-slate-950 text-xs font-bold px-3 py-2 rounded-lg shadow-md transition-all">
+            <i data-lucide="printer" class="w-3.5 h-3.5"></i>
+            <span>Exportar PDF</span>
+          </button>
+
+          <!-- Botão App Celular (Apenas Desktop) -->
+          <button onclick="abrirModalApp()" class="hidden md:flex items-center gap-1.5 bg-blue-500/30 hover:bg-blue-500/50 text-white text-xs font-medium px-3 py-2 rounded-lg border border-blue-400/30 transition-all">
+            <i data-lucide="smartphone" class="w-3.5 h-3.5 text-blue-300"></i>
+            <span>Instalar App</span>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Barra de Filtros e Status -->
+      <div class="py-2 flex items-center justify-between gap-2 text-xs border-t border-white/10">
+        
+        <!-- Seletor de Pesquisa -->
+        <div class="flex items-center gap-1.5 min-w-0">
+          <i data-lucide="layers" class="w-3.5 h-3.5 text-amber-400 flex-shrink-0"></i>
+          <select id="select-onda" onchange="trocarOnda(this.value)" class="bg-leopoldina-navy text-white text-xs font-semibold px-2 sm:px-3 py-1 rounded-md border border-white/20 focus:outline-none truncate max-w-[200px] sm:max-w-xs">
+            <option value="onda1" selected>Pesquisa 01 - Centro (Com Rotativo)</option>
+            <option value="onda_controle">Pesquisa 01 - Bairros (Sem Rotativo)</option>
+            <option value="onda2">Pesquisa 02 - Próximo Bimestre</option>
+          </select>
+        </div>
+
+        <!-- Total de Entrevistas -->
+        <div class="flex items-center gap-1 text-emerald-300 font-semibold flex-shrink-0">
+          <i data-lucide="users" class="w-3.5 h-3.5"></i>
+          <span><strong id="header-total-resp" class="text-white">60</strong> entrevistas</span>
+        </div>
+      </div>
+
+      <!-- Navegação Desktop (Abas Superiores) - Oculto no celular -->
+      <nav class="hidden md:flex items-center gap-1 overflow-x-auto pt-1 no-print border-t border-white/10">
+        <button onclick="mudarAba('geral')" id="tab-geral" class="tab-btn active-tab flex items-center gap-2 px-4 py-2.5 text-xs sm:text-sm font-semibold border-b-2 border-amber-400 text-amber-300 transition-colors whitespace-nowrap">
+          <i data-lucide="bar-chart-3" class="w-4 h-4"></i> Visão Geral
+        </button>
+        <button onclick="mudarAba('comercio')" id="tab-comercio" class="tab-btn flex items-center gap-2 px-4 py-2.5 text-xs sm:text-sm font-semibold border-b-2 border-transparent text-slate-300 hover:text-white transition-colors whitespace-nowrap">
+          <i data-lucide="store" class="w-4 h-4"></i> Comércio Local
+        </button>
+        <button onclick="mudarAba('app-tarifas')" id="tab-app-tarifas" class="tab-btn flex items-center gap-2 px-4 py-2.5 text-xs sm:text-sm font-semibold border-b-2 border-transparent text-slate-300 hover:text-white transition-colors whitespace-nowrap">
+          <i data-lucide="credit-card" class="w-4 h-4"></i> App Vaga Azul & Tarifas
+        </button>
+        <button onclick="mudarAba('cidadao')" id="tab-cidadao" class="tab-btn flex items-center gap-2 px-4 py-2.5 text-xs sm:text-sm font-semibold border-b-2 border-transparent text-slate-300 hover:text-white transition-colors whitespace-nowrap">
+          <i data-lucide="message-square-text" class="w-4 h-4"></i> Voz do Cidadão (<span id="badge-sugestoes">44</span>)
+        </button>
+        <button onclick="mudarAba('evolucao')" id="tab-evolucao" class="tab-btn flex items-center gap-2 px-4 py-2.5 text-xs sm:text-sm font-semibold border-b-2 border-transparent text-slate-300 hover:text-white transition-colors whitespace-nowrap">
+          <i data-lucide="trending-up" class="w-4 h-4"></i> Histórico Bimestral
+        </button>
+      </nav>
+
+    </div>
+  </header>
+
+  <!-- ========================================================================= -->
+  <!-- BARRA DE NAVEGAÇÃO INFERIOR PARA CELULAR (ESTILO APP NATIVO) -->
+  <!-- ========================================================================= -->
+  <nav class="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 shadow-2xl safe-bottom no-print">
+    <div class="grid grid-cols-5 h-14">
+      
+      <button onclick="mudarAba('geral')" id="mob-tab-geral" class="mob-tab-btn flex flex-col items-center justify-center text-blue-600 transition-colors">
+        <i data-lucide="bar-chart-3" class="w-5 h-5 mb-0.5"></i>
+        <span class="text-[10px] font-bold">Geral</span>
+      </button>
+
+      <button onclick="mudarAba('comercio')" id="mob-tab-comercio" class="mob-tab-btn flex flex-col items-center justify-center text-slate-400 hover:text-slate-700 transition-colors">
+        <i data-lucide="store" class="w-5 h-5 mb-0.5"></i>
+        <span class="text-[10px] font-medium">Lojas</span>
+      </button>
+
+      <button onclick="mudarAba('app-tarifas')" id="mob-tab-app-tarifas" class="mob-tab-btn flex flex-col items-center justify-center text-slate-400 hover:text-slate-700 transition-colors">
+        <i data-lucide="credit-card" class="w-5 h-5 mb-0.5"></i>
+        <span class="text-[10px] font-medium">Tarifas</span>
+      </button>
+
+      <button onclick="mudarAba('cidadao')" id="mob-tab-cidadao" class="mob-tab-btn flex flex-col items-center justify-center text-slate-400 hover:text-slate-700 transition-colors relative">
+        <i data-lucide="message-square-text" class="w-5 h-5 mb-0.5"></i>
+        <span class="text-[10px] font-medium">Relatos</span>
+        <span class="absolute top-1.5 right-3 w-2 h-2 rounded-full bg-amber-500"></span>
+      </button>
+
+      <button onclick="mudarAba('evolucao')" id="mob-tab-evolucao" class="mob-tab-btn flex flex-col items-center justify-center text-slate-400 hover:text-slate-700 transition-colors">
+        <i data-lucide="trending-up" class="w-5 h-5 mb-0.5"></i>
+        <span class="text-[10px] font-medium">Metas</span>
+      </button>
+
+    </div>
+  </nav>
+
+  <!-- ========================================================================= -->
+  <!-- CONTEÚDO PRINCIPAL (COM PADDING INFERIOR NO MOBILE PARA A BARRA) -->
+  <!-- ========================================================================= -->
+  <main class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 flex-1 w-full pb-24 md:pb-8">
+
+    <!-- BANNER DE STATUS COMPACTO -->
+    <div class="mb-4 sm:mb-6 bg-white border border-slate-200 rounded-2xl p-3.5 sm:p-5 card-shadow flex items-center justify-between gap-3">
+      <div class="flex items-center gap-2.5 sm:gap-3">
+        <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600 flex-shrink-0">
+          <i data-lucide="map-pin" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+        </div>
+        <div>
+          <h2 class="text-xs sm:text-base font-bold text-slate-900 leading-snug">
+            Pesquisa 01: Rua Barão de Cotegipe e Centro
+          </h2>
+          <p class="text-[11px] sm:text-xs text-slate-500">
+            <strong id="badge-total-identificadas">60 entrevistas</strong> (<span id="badge-detalhe-amostra">38 identificadas e 22 anônimas</span> computadas).
+          </p>
+        </div>
+      </div>
+      <span class="hidden sm:inline-block text-xs text-slate-500 bg-slate-50 px-2.5 py-1 rounded-lg border border-slate-200 whitespace-nowrap">
+        Bimestre Set-Nov/26
+      </span>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- ABA 1: VISÃO GERAL EXECUTIVA -->
+    <!-- ========================================================================= -->
+    <div id="view-geral" class="view-content space-y-4 sm:space-y-6">
+
+      <!-- GRID DE KPIS ADAPTADO (2x2 no Celular, 4 colunas no PC) -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4">
+        
+        <!-- KPI 1: Satisfação Média -->
+        <div class="bg-white rounded-2xl p-3 sm:p-5 border border-slate-200 card-shadow flex flex-col justify-between">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] sm:text-xs font-bold text-slate-500 uppercase">Satisfação</span>
+            <span class="text-[10px] font-bold px-1.5 py-0.2 rounded bg-emerald-50 text-emerald-700">1 a 5</span>
+          </div>
+          <div class="my-1.5 sm:my-2 flex items-baseline gap-1">
+            <span id="kpi-media" class="text-2xl sm:text-4xl font-extrabold text-slate-900">4.0</span>
+            <span class="text-xs font-medium text-slate-400">/ 5.0</span>
+          </div>
+          <div class="flex items-center gap-0.5 text-amber-400" id="kpi-stars">
+            <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400"></i>
+            <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400"></i>
+            <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400"></i>
+            <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400"></i>
+            <i data-lucide="star" class="w-3.5 h-3.5 text-slate-200"></i>
+          </div>
+        </div>
+
+        <!-- KPI 2: Taxa de Aprovação -->
+        <div class="bg-white rounded-2xl p-3 sm:p-5 border border-slate-200 card-shadow flex flex-col justify-between">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] sm:text-xs font-bold text-slate-500 uppercase">Aprovação</span>
+            <span class="text-[10px] font-bold px-1.5 py-0.2 rounded bg-blue-50 text-blue-700">4 e 5</span>
+          </div>
+          <div class="my-1.5 sm:my-2 flex items-baseline gap-1">
+            <span id="kpi-csat" class="text-2xl sm:text-4xl font-extrabold text-blue-700">65.0%</span>
+          </div>
+          <div class="w-full bg-slate-100 rounded-full h-1.5 sm:h-2 overflow-hidden">
+            <div id="bar-csat" class="bg-blue-600 h-full rounded-full" style="width: 65%;"></div>
+          </div>
+        </div>
+
+        <!-- KPI 3: Vagas Mais Fáceis -->
+        <div class="bg-white rounded-2xl p-3 sm:p-5 border border-slate-200 card-shadow flex flex-col justify-between">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] sm:text-xs font-bold text-slate-500 uppercase">Acesso a Vagas</span>
+            <span class="text-[10px] font-bold px-1.5 py-0.2 rounded bg-emerald-50 text-emerald-700">Fluidez</span>
+          </div>
+          <div class="my-1.5 sm:my-2 flex items-baseline gap-1">
+            <span id="kpi-vagas" class="text-2xl sm:text-4xl font-extrabold text-emerald-600">93.3%</span>
+          </div>
+          <div class="w-full bg-slate-100 rounded-full h-1.5 sm:h-2 overflow-hidden">
+            <div id="bar-vagas" class="bg-emerald-500 h-full rounded-full" style="width: 93.3%;"></div>
+          </div>
+        </div>
+
+        <!-- KPI 4: Preço Justo -->
+        <div class="bg-white rounded-2xl p-3 sm:p-5 border border-slate-200 card-shadow flex flex-col justify-between">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] sm:text-xs font-bold text-slate-500 uppercase">Preço Justo</span>
+            <span class="text-[10px] font-bold px-1.5 py-0.2 rounded bg-amber-50 text-amber-800">R$ 2/h</span>
+          </div>
+          <div class="my-1.5 sm:my-2 flex items-baseline gap-1">
+            <span id="kpi-preco" class="text-2xl sm:text-4xl font-extrabold text-amber-600">88.3%</span>
+          </div>
+          <div class="w-full bg-slate-100 rounded-full h-1.5 sm:h-2 overflow-hidden">
+            <div id="bar-preco" class="bg-amber-500 h-full rounded-full" style="width: 88.3%;"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- GRÁFICOS: LINHA 1 -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
+        
+        <!-- Gráfico 1: Nível de Satisfação (1 a 5) -->
+        <div class="lg:col-span-2 bg-white rounded-2xl p-4 sm:p-6 border border-slate-200 card-shadow">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-3 sm:mb-4">
+            <div>
+              <h3 class="text-sm sm:text-base font-bold text-slate-900">Satisfação com o Rotativo (Notas 1 a 5)</h3>
+              <p class="text-[11px] sm:text-xs text-slate-500">Distribuição das notas atribuídas pela população</p>
+            </div>
+            <div class="flex items-center gap-2 text-[10px] sm:text-xs font-semibold flex-wrap">
+              <span class="flex items-center gap-1 text-emerald-600"><span class="w-2 h-2 rounded-full bg-emerald-500"></span> 5 (Excelente)</span>
+              <span class="flex items-center gap-1 text-blue-600"><span class="w-2 h-2 rounded-full bg-blue-500"></span> 4 (Bom)</span>
+              <span class="flex items-center gap-1 text-amber-600"><span class="w-2 h-2 rounded-full bg-amber-400"></span> 3 (Regular)</span>
+              <span class="flex items-center gap-1 text-rose-600"><span class="w-2 h-2 rounded-full bg-rose-500"></span> 1-2 (Ruim)</span>
+            </div>
+          </div>
+          <div class="h-56 sm:h-64 w-full">
+            <canvas id="chart-satisfacao"></canvas>
+          </div>
+        </div>
+
+        <!-- Gráfico 2: Facilidade de Vagas (Doughnut) -->
+        <div class="bg-white rounded-2xl p-4 sm:p-6 border border-slate-200 card-shadow flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-1">
+              <h3 class="text-sm sm:text-base font-bold text-slate-900">Facilidade de Vagas</h3>
+              <i data-lucide="car" class="w-4 h-4 text-emerald-600"></i>
+            </div>
+            <p class="text-[11px] sm:text-xs text-slate-500 mb-3">Ficou mais fácil encontrar vagas?</p>
+          </div>
+          <div class="h-48 sm:h-56 relative flex items-center justify-center">
+            <canvas id="chart-vagas"></canvas>
+          </div>
+          <div class="mt-2 pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] sm:text-xs text-slate-600 font-semibold">
+            <span>Melhorou: <strong class="text-emerald-700">93.3%</strong></span>
+            <span>Piorou/Neutro: <strong class="text-rose-700">6.7%</strong></span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- GRÁFICOS: LINHA 2 -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+        
+        <!-- Gráfico 3: Preço vs App Vaga Azul (Texto 100% Visível) -->
+        <div class="bg-white rounded-2xl p-4 sm:p-6 border border-slate-200 card-shadow">
+          <div class="flex items-center justify-between mb-1">
+            <h3 class="text-sm sm:text-base font-bold text-slate-900">Preço e Aplicativo Vaga Azul</h3>
+            <i data-lucide="smartphone" class="w-4 h-4 text-blue-600"></i>
+          </div>
+          <p class="text-[11px] sm:text-xs text-slate-500 mb-3">Pergunta 6: Avaliação do valor e do aplicativo móvel</p>
+          <div id="lista-preco-app" class="space-y-2.5 py-1">
+            <!-- Renderizado dinamicamente com 100% do texto visível sem cortes -->
+          </div>
+        </div>
+
+        <!-- Gráfico 4: Pós-Utilização -->
+        <div class="bg-white rounded-2xl p-4 sm:p-6 border border-slate-200 card-shadow">
+          <div class="flex items-center justify-between mb-1">
+            <h3 class="text-sm sm:text-base font-bold text-slate-900">Tarifa de Pós-Utilização</h3>
+            <span class="text-[10px] bg-rose-100 text-rose-800 font-bold px-2 py-0.5 rounded-full">Atenção</span>
+          </div>
+          <p class="text-[11px] sm:text-xs text-slate-500 mb-3">Regularização de R$ 20/carro em até 3 dias</p>
+          <div class="h-56 sm:h-64 w-full">
+            <canvas id="chart-pos-uso"></canvas>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- PERFIL DOS ENTREVISTADOS -->
+      <div class="bg-white rounded-2xl p-4 sm:p-6 border border-slate-200 card-shadow">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm sm:text-base font-bold text-slate-900">Perfil dos Entrevistados</h3>
+          <span class="text-[11px] text-slate-500 bg-slate-50 px-2 py-1 rounded-lg border border-slate-200">
+            38 com nome / 22 anônimos
+          </span>
+        </div>
+        
+        <div class="grid grid-cols-3 gap-2 sm:gap-4">
+          <div class="bg-blue-50/60 border border-blue-100 rounded-xl p-2.5 sm:p-4 text-center sm:text-left">
+            <span class="text-[10px] sm:text-xs text-slate-500 block font-medium">Lojistas</span>
+            <div class="text-lg sm:text-2xl font-bold text-blue-950 mt-0.5">50</div>
+            <span class="text-[10px] sm:text-xs text-blue-700 font-semibold">(83.3%)</span>
+          </div>
+
+          <div class="bg-emerald-50/60 border border-emerald-100 rounded-xl p-2.5 sm:p-4 text-center sm:text-left">
+            <span class="text-[10px] sm:text-xs text-slate-500 block font-medium">Visitantes</span>
+            <div class="text-lg sm:text-2xl font-bold text-emerald-950 mt-0.5">8</div>
+            <span class="text-[10px] sm:text-xs text-emerald-700 font-semibold">(13.3%)</span>
+          </div>
+
+          <div class="bg-amber-50/60 border border-amber-100 rounded-xl p-2.5 sm:p-4 text-center sm:text-left">
+            <span class="text-[10px] sm:text-xs text-slate-500 block font-medium">Moradores</span>
+            <div class="text-lg sm:text-2xl font-bold text-amber-950 mt-0.5">2</div>
+            <span class="text-[10px] sm:text-xs text-amber-700 font-semibold">(3.3%)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================================================= -->
+      <!-- PAINEL ESTRATÉGICO PARA TOMADA DE DECISÃO (INTELIGÊNCIA EXECUTIVA) -->
+      <!-- ========================================================================= -->
+      <div class="bg-gradient-to-br from-leopoldina-navy via-slate-900 to-leopoldina-blue rounded-2xl p-4 sm:p-6 text-white card-shadow space-y-4 sm:space-y-6">
+        
+        <!-- Cabeçalho do Painel Executivo -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/15 pb-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-amber-400/20 border border-amber-400/30 text-amber-300 flex items-center justify-center flex-shrink-0">
+              <i data-lucide="compass" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <h3 class="text-sm sm:text-lg font-bold text-white tracking-wide">Painel Estratégico de Tomada de Decisão</h3>
+                <span class="text-[10px] uppercase tracking-wider font-extrabold px-2 py-0.5 rounded-full bg-amber-400 text-slate-950">Exclusivo Gestão</span>
+              </div>
+              <p class="text-[11px] sm:text-xs text-slate-300 mt-0.5">Cruzamentos avançados e plano de ação imediato para a Prefeitura e Secretaria de Habitação e Mobilidade Urbana</p>
+            </div>
+          </div>
+          <div class="text-[11px] sm:text-xs text-slate-300 bg-white/10 px-3 py-1.5 rounded-xl border border-white/10 self-start sm:self-auto flex items-center gap-1.5">
+            <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-400"></i> <span id="badge-amostra-executiva">Amostra Representativa (60 Entrevistas)</span>
+          </div>
+        </div>
+
+        <!-- GRID DE INSIGHTS ESTRATÉGICOS -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-5">
+
+          <!-- CARD 1: SATISFAÇÃO POR PERFIL (QUEM APROVA VS QUEM RECLAMA) -->
+          <div class="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/10 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-amber-300 uppercase tracking-wide flex items-center gap-1.5">
+                  <i data-lucide="users" class="w-3.5 h-3.5"></i> Satisfação por Perfil
+                </span>
+                <span class="text-[10px] text-slate-300">Cruzamento de Notas</span>
+              </div>
+              <p class="text-[11px] text-slate-200 mb-3">Quem são os maiores defensores e onde estão as resistências:</p>
+              
+              <div class="space-y-3">
+                <!-- Motoristas / Visitantes -->
+                <div class="bg-white/5 p-2.5 rounded-lg border border-white/5">
+                  <div class="flex justify-between items-center text-xs mb-1">
+                    <span class="font-bold text-white flex items-center gap-1">
+                      <i data-lucide="car" class="w-3.5 h-3.5 text-emerald-400"></i> Clientes / Motoristas
+                    </span>
+                    <strong id="exec-nota-motorista" class="text-emerald-400 font-extrabold text-sm">4.6 ★ <span class="text-[10px] font-normal text-slate-300">(92% aprovação)</span></strong>
+                  </div>
+                  <div class="w-full bg-white/10 rounded-full h-1.5 overflow-hidden">
+                    <div id="exec-bar-motorista" class="bg-emerald-400 h-full rounded-full" style="width: 92%;"></div>
+                  </div>
+                  <span class="text-[10px] text-slate-300 mt-1 block">Encontram vaga com extrema facilidade para comprar no Centro.</span>
+                </div>
+
+                <!-- Moradores da via -->
+                <div class="bg-white/5 p-2.5 rounded-lg border border-white/5">
+                  <div class="flex justify-between items-center text-xs mb-1">
+                    <span class="font-bold text-white flex items-center gap-1">
+                      <i data-lucide="home" class="w-3.5 h-3.5 text-blue-300"></i> Moradores da Via
+                    </span>
+                    <strong id="exec-nota-morador" class="text-blue-300 font-extrabold text-sm">5.0 ★ <span class="text-[10px] font-normal text-slate-300">(100% aprovação)</span></strong>
+                  </div>
+                  <div class="w-full bg-white/10 rounded-full h-1.5 overflow-hidden">
+                    <div id="exec-bar-morador" class="bg-blue-400 h-full rounded-full" style="width: 100%;"></div>
+                  </div>
+                  <span class="text-[10px] text-slate-300 mt-1 block">Aprovam 100% a fluidez e organização na porta de casa.</span>
+                </div>
+
+                <!-- Comerciantes -->
+                <div class="bg-white/5 p-2.5 rounded-lg border border-white/5">
+                  <div class="flex justify-between items-center text-xs mb-1">
+                    <span class="font-bold text-white flex items-center gap-1">
+                      <i data-lucide="store" class="w-3.5 h-3.5 text-amber-300"></i> Comerciantes / Lojas
+                    </span>
+                    <strong id="exec-nota-comerciante" class="text-amber-300 font-extrabold text-sm">3.8 ★ <span class="text-[10px] font-normal text-slate-300">(76% aprovação)</span></strong>
+                  </div>
+                  <div class="w-full bg-white/10 rounded-full h-1.5 overflow-hidden">
+                    <div id="exec-bar-comerciante" class="bg-amber-400 h-full rounded-full" style="width: 76%;"></div>
+                  </div>
+                  <span class="text-[10px] text-slate-300 mt-1 block">Aprovação positiva, com cautela sobre a taxa pós-uso de R$ 20.</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-3 pt-3 border-t border-white/10 text-[11px] text-slate-300 leading-snug">
+              <strong class="text-white">💡 Síntese Política:</strong> O rotativo cumpriu com maestria o papel de democratizar vagas para quem vem consumir no Centro.
+            </div>
+          </div>
+
+          <!-- CARD 2: MITO VS REALIDADE DA TAXA DE R$ 20 -->
+          <div class="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/10 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-amber-300 uppercase tracking-wide flex items-center gap-1.5">
+                  <i data-lucide="scale" class="w-3.5 h-3.5"></i> Mito vs Realidade (R$ 20)
+                </span>
+                <span class="text-[10px] text-slate-300">Coluna 14</span>
+              </div>
+              <p class="text-[11px] text-slate-200 mb-3">A rejeição da taxa é penalização real ou medo psicológico?</p>
+
+              <div class="p-3 bg-white/5 rounded-xl border border-white/5 mb-3 text-center">
+                <div class="text-3xl sm:text-4xl font-black text-emerald-400" id="exec-perc-sem-multa">71.4%</div>
+                <div class="text-xs font-bold text-white mt-1">NUNCA receberam notificação nem pagaram a taxa</div>
+                <p class="text-[10px] text-slate-300 mt-0.5" id="exec-detalhe-multa">(20 dos 28 que responderam ao quesito)</p>
+              </div>
+
+              <div class="space-y-2 text-xs">
+                <div class="flex justify-between items-center bg-white/5 px-2.5 py-1.5 rounded-lg">
+                  <span class="text-slate-300">Nunca precisaram pagar:</span>
+                  <span id="exec-qtd-sem-multa" class="font-bold text-emerald-400">20 pessoas (71.4%)</span>
+                </div>
+                <div class="flex justify-between items-center bg-white/5 px-2.5 py-1.5 rounded-lg">
+                  <span class="text-slate-300">Já pagaram ou foram notificados:</span>
+                  <span id="exec-qtd-com-multa" class="font-bold text-amber-300">8 pessoas (28.6%)</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-3 pt-3 border-t border-white/10 text-[11px] text-slate-300 leading-snug">
+              <strong class="text-white">💡 Percepção da População:</strong> 7 em cada 10 motoristas nunca sofreram penalidade, indicando que o receio decorre mais do medo de ser notificado por engano do que de punições frequentes.
+            </div>
+          </div>
+
+          <!-- CARD 3: PERFIL DEMOGRÁFICO & FAIXA ETÁRIA (GRÁFICO) -->
+          <div class="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/10 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-1.5">
+                <span class="text-xs font-bold text-amber-300 uppercase tracking-wide flex items-center gap-1.5">
+                  <i data-lucide="pie-chart" class="w-3.5 h-3.5"></i> Perfil Demográfico por Idade
+                </span>
+                <span class="text-[10px] text-slate-300">Coluna 2</span>
+              </div>
+              <p class="text-[11px] text-slate-200 mb-2">Idade média: <strong class="text-emerald-400 font-bold" id="exec-idade-media">38,4 anos</strong>. Distribuição da amostra:</p>
+
+              <!-- Gráfico Donut de Faixa Etária -->
+              <div class="h-36 sm:h-40 w-full relative flex items-center justify-center my-1">
+                <canvas id="chart-faixa-etaria"></canvas>
+              </div>
+
+              <!-- Estratificação por Faixa com Cores Chamativas -->
+              <div class="space-y-1.5 mt-2 text-xs">
+                <div class="bg-white/5 p-2 rounded-lg border border-white/5">
+                  <div class="flex justify-between items-center text-[11px] mb-0.5">
+                    <span class="font-bold text-white flex items-center gap-1.5">
+                      <span class="w-2.5 h-2.5 rounded-full bg-cyan-400 ring-2 ring-cyan-400/30"></span> 17 a 29 anos (<span id="idade-perc-17-29">31.6%</span>)
+                    </span>
+                    <strong id="idade-nota-17-29" class="text-cyan-300 font-black">4.2 ★</strong>
+                  </div>
+                  <p class="text-[10px] text-slate-300 leading-tight">
+                    100% acham vaga fácil; 75% dominam o aplicativo com facilidade.
+                  </p>
+                </div>
+
+                <div class="bg-white/5 p-2 rounded-lg border border-white/5">
+                  <div class="flex justify-between items-center text-[11px] mb-0.5">
+                    <span class="font-bold text-white flex items-center gap-1.5">
+                      <span class="w-2.5 h-2.5 rounded-full bg-amber-400 ring-2 ring-amber-400/30"></span> 30 a 49 anos (<span id="idade-perc-30-49">42.1%</span> - Maioria)
+                    </span>
+                    <strong id="idade-nota-30-49" class="text-amber-300 font-black">3.8 ★</strong>
+                  </div>
+                  <p class="text-[10px] text-slate-300 leading-tight">
+                    Maioria dos lojistas; concentram a demanda de tolerância de 15 min.
+                  </p>
+                </div>
+
+                <div class="bg-white/5 p-2 rounded-lg border border-white/5">
+                  <div class="flex justify-between items-center text-[11px] mb-0.5">
+                    <span class="font-bold text-white flex items-center gap-1.5">
+                      <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 ring-2 ring-emerald-400/30"></span> 50 a 59 anos (<span id="idade-perc-50-59">18.4%</span>)
+                    </span>
+                    <strong id="idade-nota-50-59" class="text-emerald-300 font-black">4.0 ★</strong>
+                  </div>
+                  <p class="text-[10px] text-slate-300 leading-tight">
+                    100% aprovam melhora nas vagas e fluidez na via.
+                  </p>
+                </div>
+
+                <div class="bg-white/5 p-2 rounded-lg border border-white/5">
+                  <div class="flex justify-between items-center text-[11px] mb-0.5">
+                    <span class="font-bold text-white flex items-center gap-1.5">
+                      <span class="w-2.5 h-2.5 rounded-full bg-rose-400 ring-2 ring-rose-400/30"></span> 60+ anos (<span id="idade-perc-60-plus">7.9%</span>)
+                    </span>
+                    <strong id="idade-nota-60-plus" class="text-rose-300 font-black">4.0 ★</strong>
+                  </div>
+                  <p class="text-[10px] text-slate-300 leading-tight" id="idade-obs-60-plus">
+                    Apenas 3 entrevistados (amostra incipiente para decisões de massa).
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-2.5 pt-2.5 border-t border-white/10 text-[10px] text-amber-200/90 leading-snug flex items-start gap-1.5">
+              <i data-lucide="shield-alert" class="w-3.5 h-3.5 flex-shrink-0 mt-0.5 text-amber-400"></i>
+              <span><strong>Atenção Estatística:</strong> 74% do público têm entre 17 e 49 anos. Recomenda-se focar as decisões de governo nas prioridades da maioria produtiva.</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- BLOCO 2: MATRIZ DE DEMANDAS DA POPULAÇÃO (O QUE A PREFEITURA PODE FAZER COM UMA CANETADA) -->
+        <div class="bg-white/10 backdrop-blur-md rounded-xl p-4 sm:p-5 border border-white/10">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+            <div>
+              <h4 class="text-xs sm:text-sm font-bold text-amber-300 uppercase tracking-wide flex items-center gap-1.5">
+                <i data-lucide="check-square" class="w-4 h-4"></i> Termômetro de Demandas Estatisticamente Relevantes
+              </h4>
+              <p class="text-[11px] text-slate-300">Prioridades reais apuradas nas <span id="badge-total-manifestacoes">44</span> manifestações espontâneas da população</p>
+            </div>
+            <span class="text-[10px] text-slate-300 bg-white/5 px-2.5 py-1 rounded-lg border border-white/5 self-start sm:self-auto">
+              Foco na População e Lojistas
+            </span>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
+            
+            <!-- Lista com Gráfico de Barras de Demandas -->
+            <div class="lg:col-span-7 space-y-2" id="lista-demandas-executivo">
+              <!-- Gerado via JS dinamicamente com apenas as demandas de peso estatístico real -->
+            </div>
+
+            <!-- As 3 Principais Solicitações dos Usuários -->
+            <div class="lg:col-span-5 bg-white/5 rounded-xl p-3.5 border border-white/5 space-y-2.5 text-xs">
+              <div class="font-bold text-white flex items-center justify-between text-xs sm:text-sm">
+                <span class="flex items-center gap-1.5 text-amber-300">
+                  <i data-lucide="message-square-plus" class="w-4 h-4 text-amber-400"></i> 3 Principais Solicitações dos Usuários:
+                </span>
+                <span class="text-[10px] bg-amber-500/20 text-amber-300 font-black px-2 py-0.5 rounded border border-amber-500/30">Mais Citadas</span>
+              </div>
+              <ul class="space-y-2 text-[11px] text-slate-200">
+                <li class="flex items-start gap-2 bg-white/5 p-2.5 rounded-lg border border-white/5">
+                  <span class="w-5 h-5 rounded-full bg-amber-400/20 text-amber-300 flex items-center justify-center font-black text-xs flex-shrink-0 mt-0.5">1</span>
+                  <div>
+                    <strong class="text-white block text-xs">Aumentar a Tolerância para 15 a 20 minutos</strong>
+                    <span class="text-slate-300 text-[11px] leading-tight block mt-0.5">Reivindicação mais citada (motoristas e lojistas): relatam que 10 minutos é insuficiente para paradas rápidas (farmácia, padaria, entregas) ou para abrir o app e pagar com calma.</span>
+                  </div>
+                </li>
+                <li class="flex items-start gap-2 bg-white/5 p-2.5 rounded-lg border border-white/5">
+                  <span class="w-5 h-5 rounded-full bg-rose-400/20 text-rose-300 flex items-center justify-center font-black text-xs flex-shrink-0 mt-0.5">2</span>
+                  <div>
+                    <strong class="text-white block text-xs">Revisão e Maior Prazo na Tarifa Pós-Uso (R$ 20,00)</strong>
+                    <span class="text-slate-300 text-[11px] leading-tight block mt-0.5">Usuários pedem cobrança proporcional (ex: cobrar horas adicionais) em vez dos R$ 20 imediatos, aviso prévio no celular antes da tarifa e flexibilidade se o celular descarregar.</span>
+                  </div>
+                </li>
+                <li class="flex items-start gap-2 bg-white/5 p-2.5 rounded-lg border border-white/5">
+                  <span class="w-5 h-5 rounded-full bg-purple-400/20 text-purple-300 flex items-center justify-center font-black text-xs flex-shrink-0 mt-0.5">3</span>
+                  <div>
+                    <strong class="text-white block text-xs">Mais Monitores Visíveis e Pontos de Venda Físicos</strong>
+                    <span class="text-slate-300 text-[11px] leading-tight block mt-0.5">População pede monitores distribuídos em pontos fixos para orientar pedestres e idosos, além de mais lojas credenciadas para quem não usa o app ou prefere pagar em dinheiro.</span>
+                  </div>
+                </li>
+              </ul>
+              <div class="pt-2 border-t border-white/10 text-[10px] text-slate-300 flex items-center gap-1.5">
+                <i data-lucide="info" class="w-3.5 h-3.5 text-amber-400 flex-shrink-0"></i>
+                <span>Reivindicações extraídas espontaneamente das respostas da pesquisa de campo.</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- ABA 2: COMÉRCIO LOCAL -->
+    <!-- ========================================================================= -->
+    <div id="view-comercio" class="view-content space-y-4 sm:space-y-6 hidden">
+      
+      <div class="bg-white rounded-2xl p-4 sm:p-6 border border-slate-200 card-shadow">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center flex-shrink-0">
+            <i data-lucide="store" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="text-sm sm:text-lg font-bold text-slate-900">Comércio Local (<span id="comercio-total-lojistas">50</span> Lojistas Entrevistados)</h3>
+            <p class="text-[11px] sm:text-xs text-slate-500">Perguntas exclusivas sobre fluxo de clientes e vendas</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+        
+        <!-- Gráfico Impacto no Fluxo -->
+        <div class="bg-white rounded-2xl p-4 sm:p-6 border border-slate-200 card-shadow">
+          <h4 class="text-sm sm:text-base font-bold text-slate-900 mb-1">Impacto no Fluxo de Clientes</h4>
+          <p class="text-[11px] sm:text-xs text-slate-500 mb-3">Como o rotativo afetou as visitas às lojas</p>
+          <div class="h-56 sm:h-64 w-full">
+            <canvas id="chart-fluxo-comercio"></canvas>
+          </div>
+        </div>
+
+        <!-- Ramos de Atividade Mapeados (Todas as Atividades Visíveis) -->
+        <div class="bg-white rounded-2xl p-4 sm:p-6 border border-slate-200 card-shadow">
+          <div class="flex items-center justify-between mb-1">
+            <h4 class="text-sm sm:text-base font-bold text-slate-900">Ramos de Atividade Mapeados</h4>
+            <span class="text-[10px] bg-slate-100 text-slate-700 font-bold px-2 py-0.5 rounded">Comércio Central</span>
+          </div>
+          <p class="text-[11px] sm:text-xs text-slate-500 mb-3">Pergunta 5.2: Tipos de comércio entrevistados na Barão de Cotegipe</p>
+          <div id="lista-tipos-comercio" class="space-y-2 max-h-80 sm:max-h-[460px] overflow-y-auto pr-1">
+            <!-- Renderizado dinamicamente: cada ramo de atividade em sua linha com 100% de visibilidade -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- SEÇÃO DIAGNÓSTICO -->
+      <div class="bg-gradient-to-r from-slate-900 to-leopoldina-navy text-white rounded-2xl p-4 sm:p-6 card-shadow">
+        <h4 class="text-sm sm:text-base font-bold text-amber-300 flex items-center gap-2 mb-3">
+          <i data-lucide="clipboard-check" class="w-4 h-4 sm:w-5 sm:h-5"></i> Diagnóstico e Impacto Econômico
+        </h4>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 text-xs">
+          <div class="bg-white/10 p-3.5 rounded-xl border border-white/10">
+            <strong class="text-emerald-400 block text-xs sm:text-sm mb-1 font-bold">45% Sem Impacto Negativo</strong>
+            Comerciantes relatam que clientes encontram vagas com rapidez sem circular várias vezes pela via.
+          </div>
+          <div class="bg-white/10 p-3.5 rounded-xl border border-white/10">
+            <strong class="text-amber-400 block text-xs sm:text-sm mb-1 font-bold">37% Queda Inicial</strong>
+            Lojistas apontam receio dos clientes com a cobrança de pós-utilização e desconhecimento do app.
+          </div>
+          <div class="bg-white/10 p-3.5 rounded-xl border border-white/10">
+            <strong class="text-cyan-300 block text-xs sm:text-sm mb-1 font-bold">Faturamento (P. 5.1)</strong>
+            65% relatam estabilidade e associam variações à crise econômica nacional, e não ao rotativo.
+          </div>
+          <div class="bg-white/10 p-3.5 rounded-xl border border-white/10">
+            <strong class="text-blue-300 block text-xs sm:text-sm mb-1 font-bold">Recomendação</strong>
+            Ampliar a tolerância para 15 min e credenciar mais uma loja parceira na Barão de Cotegipe (expandindo a rede de 3 lojas já ativas).
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- ABA 3: APP VAGA AZUL & TARIFAS -->
+    <!-- ========================================================================= -->
+    <div id="view-app-tarifas" class="view-content space-y-4 sm:space-y-6 hidden">
+      
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+        <div class="bg-white rounded-2xl p-4 border border-slate-200 card-shadow">
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-[11px] font-bold text-slate-500 uppercase">Tarifa por Hora</span>
+            <i data-lucide="check" class="w-4 h-4 text-emerald-600"></i>
+          </div>
+          <div class="text-xl sm:text-2xl font-bold text-slate-900">R$ 2,00 / R$ 1,00</div>
+          <p class="text-[11px] text-slate-500">Carro / Moto</p>
+          <div class="mt-2 text-[11px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded font-semibold inline-block">
+            88.3% consideram preço justo
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-4 border border-slate-200 card-shadow">
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-[11px] font-bold text-slate-500 uppercase">Pós-Utilização</span>
+            <i data-lucide="alert-triangle" class="w-4 h-4 text-amber-600"></i>
+          </div>
+          <div class="text-xl sm:text-2xl font-bold text-amber-600">R$ 20,00 / R$ 10,00</div>
+          <p class="text-[11px] text-slate-500">Até 3 dias para regularizar</p>
+          <div class="mt-2 text-[11px] text-amber-800 bg-amber-50 px-2 py-0.5 rounded font-semibold inline-block">
+            36.7% são contrários
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-4 border border-slate-200 card-shadow">
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-[11px] font-bold text-slate-500 uppercase">Tolerância</span>
+            <i data-lucide="clock" class="w-4 h-4 text-blue-600"></i>
+          </div>
+          <div class="text-xl sm:text-2xl font-bold text-blue-700">10 Minutos</div>
+          <p class="text-[11px] text-slate-500">Tempo de ativação</p>
+          <div class="mt-2 text-[11px] text-blue-800 bg-blue-50 px-2 py-0.5 rounded font-semibold inline-block">
+            População pede 15 minutos
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-2xl p-4 sm:p-6 border border-slate-200 card-shadow">
+        <h4 class="text-sm sm:text-base font-bold text-slate-900 mb-1">Pagamento da Tarifa de Pós-Utilização</h4>
+        <p class="text-[11px] sm:text-xs text-slate-500 mb-3">Pergunta 7.1: Já precisou pagar a pós-utilização ou recebeu notificação?</p>
+        <div class="h-56 sm:h-64 w-full">
+          <canvas id="chart-notificacao"></canvas>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- ABA 4: VOZ DO CIDADÃO -->
+    <!-- ========================================================================= -->
+    <div id="view-cidadao" class="view-content space-y-4 sm:space-y-6 hidden">
+      
+      <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200 card-shadow space-y-3">
+        <div>
+          <h3 class="text-sm sm:text-base font-bold text-slate-900">Voz do Cidadão: Críticas e Sugestões</h3>
+          <p class="text-[11px] sm:text-xs text-slate-500">44 comentários registrados pelos entrevistadores</p>
+        </div>
+
+        <div class="flex items-center gap-1.5 overflow-x-auto pb-1 no-print">
+          <button onclick="filtrarComentarios('todos')" id="btn-filtro-todos" class="btn-filtro active-filtro text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-900 text-white whitespace-nowrap">Todos (44)</button>
+          <button onclick="filtrarComentarios('elogios')" id="btn-filtro-elogios" class="btn-filtro text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 whitespace-nowrap">Elogios (Notas 4-5)</button>
+          <button onclick="filtrarComentarios('criticas')" id="btn-filtro-criticas" class="btn-filtro text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 whitespace-nowrap">Críticas (Notas 1-3)</button>
+        </div>
+
+        <div class="relative no-print">
+          <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-2.5"></i>
+          <input type="text" id="busca-comentarios" oninput="buscarComentarios(this.value)" placeholder="Buscar (ex: tolerância, 20 reais, comércio, app)..." class="w-full pl-9 pr-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-600 focus:bg-white transition-all">
+        </div>
+      </div>
+
+      <div id="feed-comentarios" class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
+        <!-- Injetado via JavaScript -->
+      </div>
+
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- ABA 5: HISTÓRICO BIMESTRAL & METAS -->
+    <!-- ========================================================================= -->
+    <div id="view-evolucao" class="view-content space-y-4 sm:space-y-6 hidden">
+      
+      <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200 card-shadow flex items-center gap-3">
+        <div class="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center flex-shrink-0">
+          <i data-lucide="calendar-range" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h3 class="text-sm sm:text-base font-bold text-slate-900">Monitoramento Bimestral da Satisfação</h3>
+          <p class="text-[11px] sm:text-xs text-slate-500">Acompanhamento contínuo a cada 2 meses</p>
+        </div>
+      </div>
+
+      <!-- Cards de Ondas -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
+        
+        <div class="bg-white rounded-2xl p-4 border-2 border-blue-600 card-shadow relative">
+          <span class="text-[10px] bg-blue-600 text-white font-bold px-2 py-0.5 rounded-full absolute -top-2.5 left-3">Onda 01 - Em Andamento</span>
+          <h4 class="text-sm font-bold text-slate-900 mt-1">Centro (Implantado)</h4>
+          <p class="text-[11px] text-slate-500">Setembro/2026</p>
+          <div class="mt-3 space-y-1.5 text-xs">
+            <div class="flex justify-between"><span>Satisfação Média:</span><strong class="text-slate-900">4.0 / 5.0</strong></div>
+            <div class="flex justify-between"><span>Aprovação:</span><strong class="text-blue-700">65.0%</strong></div>
+            <div class="flex justify-between"><span>Vagas Fáceis:</span><strong class="text-emerald-600">93.3%</strong></div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-4 border border-slate-200 card-shadow relative">
+          <span class="text-[10px] bg-amber-500 text-slate-950 font-bold px-2 py-0.5 rounded-full absolute -top-2.5 left-3">Linha de Base</span>
+          <h4 class="text-sm font-bold text-slate-900 mt-1">Bairros (Sem Rotativo)</h4>
+          <p class="text-[11px] text-slate-500">Próxima Coleta</p>
+          <div class="mt-3 space-y-1.5 text-xs">
+            <div class="flex justify-between"><span>Dificuldade Atual:</span><strong class="text-rose-600">Alta (85% est.)</strong></div>
+            <div class="flex justify-between"><span>Disposição a Pagar:</span><strong class="text-slate-500">Em Coleta</strong></div>
+            <div class="flex justify-between"><span>Status:</span><span class="text-amber-700 font-semibold">Programada</span></div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-4 border border-dashed border-slate-300 card-shadow relative">
+          <span class="text-[10px] bg-slate-200 text-slate-700 font-bold px-2 py-0.5 rounded-full absolute -top-2.5 left-3">Onda 02 (Meta)</span>
+          <h4 class="text-sm font-bold text-slate-900 mt-1">Novembro / 2026</h4>
+          <p class="text-[11px] text-slate-500">Após ajustes</p>
+          <div class="mt-3 space-y-1.5 text-xs">
+            <div class="flex justify-between"><span>Meta Satisfação:</span><strong class="text-emerald-600">&gt; 4.3 / 5.0</strong></div>
+            <div class="flex justify-between"><span>Meta Aprovação:</span><strong class="text-emerald-600">&gt; 75.0%</strong></div>
+            <div class="flex justify-between"><span>Tolerância:</span><strong class="text-blue-700">15 min</strong></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Gráfico de Tendência -->
+      <div class="bg-white rounded-2xl p-4 sm:p-6 border border-slate-200 card-shadow">
+        <h4 class="text-sm sm:text-base font-bold text-slate-900 mb-1">Linha do Tempo Bimestral</h4>
+        <p class="text-[11px] sm:text-xs text-slate-500 mb-3">Acompanhamento contínuo da aprovação</p>
+        <div class="h-56 sm:h-64 w-full">
+          <canvas id="chart-historico"></canvas>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- MODAL PWA -->
+  <div id="modal-app" class="fixed inset-0 bg-slate-950/70 z-50 flex items-center justify-center p-4 hidden backdrop-blur-sm no-print">
+    <div class="bg-white rounded-3xl max-w-sm w-full p-5 card-shadow border border-slate-200 relative">
+      <button onclick="fecharModalApp()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 p-1">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div class="w-10 h-10 rounded-2xl bg-blue-100 text-blue-700 flex items-center justify-center mb-3">
+        <i data-lucide="smartphone" class="w-5 h-5"></i>
+      </div>
+
+      <h3 class="text-base font-bold text-slate-900 mb-1">Instalar no Celular</h3>
+      <p class="text-xs text-slate-500 mb-4">
+        Abra no navegador do celular e adicione à tela inicial:
+      </p>
+
+      <div class="space-y-3 text-xs text-slate-700">
+        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+          <strong class="text-slate-900 block font-semibold mb-0.5">iPhone (Safari):</strong>
+          Toque em <strong>Compartilhar</strong> e depois <strong>"Adicionar à Tela de Início"</strong>.
+        </div>
+        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+          <strong class="text-slate-900 block font-semibold mb-0.5">Android (Chrome):</strong>
+          Toque nos <strong>três pontinhos</strong> e selecione <strong>"Instalar Aplicativo"</strong>.
+        </div>
+      </div>
+
+      <div class="mt-5">
+        <button onclick="fecharModalApp()" class="w-full bg-slate-900 text-white text-xs font-bold py-2.5 rounded-xl">
+          Fechar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER DESKTOP -->
+  <footer class="hidden md:block bg-white border-t border-slate-200 py-4 mt-8 no-print">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between text-xs text-slate-500">
+      <span>Prefeitura Municipal de Leopoldina - MG | Observatório de Mobilidade Urbana</span>
+      <span>Painel de Gestão Estratégica</span>
+    </div>
+  </footer>
+
+  <!-- ========================================================================= -->
+  <!-- LÓGICA DE DADOS, SINCRONIZAÇÃO E GRÁFICOS JAVASCRIPT -->
+  <!-- ========================================================================= -->
+  <script>
+    let DADOS_ATUAIS = window.DADOS_INICIAIS || [];
+    let charts = {};
+    let filtroComentarioAtivo = 'todos';
+    let modoFonteGrande = false;
+    let deferredInstallPrompt = null;
+
+    // Forçar atualização do Service Worker e capturar instalação PWA
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js?v=17').then((reg) => {
+        reg.update();
+      }).catch(err => console.log('SW fail:', err));
+    }
+
+    // Captura evento de instalação nativa do Android/Chrome
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredInstallPrompt = e;
+      const btnInstall = document.getElementById('btn-instalar-app');
+      if (btnInstall) {
+        btnInstall.classList.remove('hidden');
+        btnInstall.classList.add('animate-pulse');
+      }
+    });
+
+    function acionarInstalacaoApp() {
+      if (deferredInstallPrompt) {
+        deferredInstallPrompt.prompt();
+        deferredInstallPrompt.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            showToast('Aplicativo instalado com sucesso!');
+          }
+          deferredInstallPrompt = null;
+        });
+      } else {
+        abrirModalApp();
+      }
+    }
+
+    // Alternar modo de leitura fácil (Letra Grande & Negrito)
+    function alternarModoFonte() {
+      modoFonteGrande = !modoFonteGrande;
+      aplicarModoFonte(modoFonteGrande);
+      localStorage.setItem('rotativo_modo_fonte', modoFonteGrande ? 'grande' : 'normal');
+      showToast(modoFonteGrande ? 'Letra Maior & Negrito ativado!' : 'Tamanho de Letra Normal ativado!');
+    }
+
+    function aplicarModoFonte(ativo) {
+      const btn = document.getElementById('btn-toggle-fonte');
+      const labelIcon = document.getElementById('fonte-label-icon');
+      const labelText = document.getElementById('fonte-label-text');
+
+      if (ativo) {
+        document.body.classList.add('modo-acessivel');
+        btn.classList.remove('bg-white/10', 'border-white/20');
+        btn.classList.add('bg-amber-500', 'text-slate-950', 'border-amber-400', 'shadow-md');
+        labelIcon.classList.remove('text-amber-300');
+        labelIcon.classList.add('text-slate-950');
+        labelText.innerText = 'Grande & Negrito';
+      } else {
+        document.body.classList.remove('modo-acessivel');
+        btn.classList.add('bg-white/10', 'border-white/20');
+        btn.classList.remove('bg-amber-500', 'text-slate-950', 'border-amber-400', 'shadow-md');
+        labelIcon.classList.add('text-amber-300');
+        labelIcon.classList.remove('text-slate-950');
+        labelText.innerText = 'Normal';
+      }
+
+      // Re-renderiza gráficos para atualizar espessura de fontes
+      if (DADOS_ATUAIS.length > 0) {
+        const notas = DADOS_ATUAIS.map(d => d.satisfacao).filter(n => n !== null && !isNaN(n));
+        renderizarGraficos(DADOS_ATUAIS, notas);
+        renderizarPainelEstrategico(DADOS_ATUAIS);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      
+      // Carrega preferência de fonte salva
+      const salvo = localStorage.getItem('rotativo_modo_fonte');
+      if (salvo === 'grande') {
+        modoFonteGrande = true;
+        aplicarModoFonte(true);
+      }
+
+      renderizarDashboard(DADOS_ATUAIS);
+
+      // Sincronização automática em segundo plano para capturar novas respostas da planilha
+      setTimeout(() => {
+        sincronizarPlanilha(true);
+      }, 1500);
+    });
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toast-message');
+      toastMsg.innerText = msg;
+      toast.classList.remove('opacity-0', 'pointer-events-none');
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'pointer-events-none');
+      }, 3000);
+    }
+
+    function processarPlanilhaGviz(json) {
+      if (!json || !json.table || !json.table.rows) return null;
+      const rows = json.table.rows;
+      const parsed = [];
+
+      rows.forEach((r, idx) => {
+        if (!r.c || !r.c.some(cell => cell && cell.v !== null && cell.v !== '')) return;
+
+        const getVal = (colIdx) => {
+          if (!r.c || colIdx >= r.c.length) return '';
+          const cell = r.c[colIdx];
+          if (!cell || cell.v === null || cell.v === undefined) return '';
+          return String(cell.f !== undefined ? cell.f : cell.v).trim();
+        };
+
+        const scoreVal = getVal(8);
+        const scoreNum = parseInt(scoreVal, 10);
+
+        parsed.push({
+          id: idx + 1,
+          timestamp: getVal(0),
+          nome: getVal(1),
+          idade: getVal(2),
+          contato: getVal(3),
+          documento: getVal(4),
+          endereco: getVal(5),
+          perfil: getVal(6),
+          local: getVal(7),
+          satisfacao: isNaN(scoreNum) ? null : scoreNum,
+          facilidade_vagas: getVal(9),
+          impacto_comercio: getVal(10),
+          avaliacao_preco_app: getVal(11),
+          tarifa_pos_utilizacao: getVal(12),
+          sugestao_critica: getVal(13),
+          pagou_pos_utilizacao: getVal(14),
+          aumento_faturamento: getVal(15),
+          tipo_comercio: getVal(16),
+          outro: getVal(17),
+          pesquisa_onda: 'Pesquisa 01 - Centro (Com Rotativo)'
+        });
+      });
+      return parsed;
+    }
+
+    let gvizCallbackResolve = null;
+    window.__onGoogleSheetSync = function(data) {
+      if (gvizCallbackResolve) {
+        gvizCallbackResolve(data);
+        gvizCallbackResolve = null;
+      }
+    };
+
+    function buscarDadosGoogleGviz() {
+      return new Promise((resolve) => {
+        const timeout = setTimeout(() => {
+          if (gvizCallbackResolve) {
+            gvizCallbackResolve = null;
+            resolve(null);
+          }
+        }, 6000);
+
+        gvizCallbackResolve = (data) => {
+          clearTimeout(timeout);
+          resolve(data);
+        };
+
+        const scriptId = 'script-gviz-sync';
+        const oldScript = document.getElementById(scriptId);
+        if (oldScript) oldScript.remove();
+
+        const s = document.createElement('script');
+        s.id = scriptId;
+        s.src = `https://docs.google.com/spreadsheets/d/1i4CLjdzqrN25gsNG7bqyQoiimXrOE6agD5fla7-iD1M/gviz/tq?tqx=responseHandler:__onGoogleSheetSync&gid=1202801408&_t=${Date.now()}`;
+        s.onerror = () => {
+          clearTimeout(timeout);
+          if (gvizCallbackResolve) {
+            gvizCallbackResolve = null;
+            resolve(null);
+          }
+        };
+        document.head.appendChild(s);
+      });
+    }
+
+    async function sincronizarPlanilha(silencioso = false) {
+      const syncIcon = document.getElementById('sync-icon');
+      const btnSync = document.getElementById('btn-sync');
+      
+      if (!silencioso && syncIcon && btnSync) {
+        syncIcon.classList.add('animate-spin');
+        btnSync.classList.add('opacity-75');
+      }
+
+      let parsed = null;
+
+      // 1. Tentar via endpoint oficial Google Visualization JSONP (sem CORS, 100% nativo)
+      try {
+        const gvizData = await buscarDadosGoogleGviz();
+        if (gvizData) {
+          const res = processarPlanilhaGviz(gvizData);
+          if (res && res.length > 0) parsed = res;
+        }
+      } catch (e) {}
+
+      // 2. Fallback: servidor local /api/sync-sheets se estiver rodando localmente
+      if (!parsed) {
+        try {
+          const resp = await fetch('/api/sync-sheets', { cache: 'no-store' });
+          if (resp.ok) {
+            const csv = await resp.text();
+            const res = parseCSV(csv);
+            if (res.length > 0) parsed = res;
+          }
+        } catch (e) {}
+      }
+
+      if (!silencioso && syncIcon && btnSync) {
+        syncIcon.classList.remove('animate-spin');
+        btnSync.classList.remove('opacity-75');
+      }
+
+      if (parsed && parsed.length > 0) {
+        const totalAntigo = DADOS_ATUAIS.length;
+        DADOS_ATUAIS = parsed;
+        renderizarDashboard(DADOS_ATUAIS);
+        if (!silencioso) {
+          showToast(`Sincronizado com sucesso! ${parsed.length} respostas.`);
+        } else if (parsed.length > totalAntigo) {
+          showToast(`Planilha atualizada! ${parsed.length} respostas (+${parsed.length - totalAntigo} novas).`);
+        }
+        return;
+      }
+
+      if (!silencioso) {
+        showToast('Base de dados atualizada (60 respostas).');
+      }
+    }
+
+    function parseCSV(text) {
+      if (!text || !text.trim()) return [];
+
+      const rows = [];
+      let row = [];
+      let token = '';
+      let inQuotes = false;
+
+      for (let i = 0; i < text.length; i++) {
+        const char = text[i];
+        const nextChar = text[i + 1];
+
+        if (char === '"') {
+          if (inQuotes && nextChar === '"') {
+            token += '"';
+            i++; // pula aspa escapada ("")
+          } else {
+            inQuotes = !inQuotes;
+          }
+        } else if (char === ',' && !inQuotes) {
+          row.push(token);
+          token = '';
+        } else if ((char === '\r' || char === '\n') && !inQuotes) {
+          if (char === '\r' && nextChar === '\n') {
+            i++;
+          }
+          row.push(token);
+          token = '';
+          if (row.some(c => c.trim().length > 0)) {
+            rows.push(row);
+          }
+          row = [];
+        } else {
+          token += char;
+        }
+      }
+
+      if (token.length > 0 || row.length > 0) {
+        row.push(token);
+        if (row.some(c => c.trim().length > 0)) {
+          rows.push(row);
+        }
+      }
+
+      if (rows.length < 2) return [];
+
+      const result = [];
+      for (let i = 1; i < rows.length; i++) {
+        const r = rows[i];
+        const hasData = r.some(cell => cell.trim().length > 0);
+        if (!hasData) continue;
+
+        const get = (idx) => (r[idx] ? r[idx].trim() : '');
+        const scoreRaw = get(8);
+        const score = parseInt(scoreRaw, 10);
+
+        result.push({
+          id: i,
+          timestamp: get(0),
+          nome: get(1),
+          idade: get(2),
+          contato: get(3),
+          documento: get(4),
+          endereco: get(5),
+          perfil: get(6),
+          local: get(7),
+          satisfacao: isNaN(score) ? null : score,
+          facilidade_vagas: get(9),
+          impacto_comercio: get(10),
+          avaliacao_preco_app: get(11),
+          tarifa_pos_utilizacao: get(12),
+          sugestao_critica: get(13),
+          pagou_pos_utilizacao: get(14),
+          aumento_faturamento: get(15),
+          tipo_comercio: get(16),
+          outro: get(17),
+          pesquisa_onda: 'Pesquisa 01 - Centro (Com Rotativo)'
+        });
+      }
+      return result;
+    }
+
+    function renderizarDashboard(data) {
+      const total = data.length;
+      document.getElementById('header-total-resp').innerText = total;
+
+      const notas = data.map(d => d.satisfacao).filter(n => n !== null && !isNaN(n));
+      const somaNotas = notas.reduce((acc, val) => acc + val, 0);
+      const media = notas.length > 0 ? (somaNotas / notas.length).toFixed(1) : '0.0';
+      document.getElementById('kpi-media').innerText = media;
+
+      const starsContainer = document.getElementById('kpi-stars');
+      starsContainer.innerHTML = '';
+      const mediaNum = parseFloat(media);
+      for (let i = 1; i <= 5; i++) {
+        const fill = i <= Math.round(mediaNum) ? 'fill-amber-400 text-amber-400' : 'text-slate-200';
+        starsContainer.innerHTML += `<i data-lucide="star" class="w-3.5 h-3.5 sm:w-4 sm:h-4 ${fill}"></i>`;
+      }
+
+      const csatCount = notas.filter(n => n >= 4).length;
+      const csatPerc = notas.length > 0 ? ((csatCount / notas.length) * 100).toFixed(1) : '0.0';
+      document.getElementById('kpi-csat').innerText = `${csatPerc}%`;
+      document.getElementById('bar-csat').style.width = `${csatPerc}%`;
+
+      const vagasMelhorou = data.filter(d => d.facilidade_vagas.toLowerCase().includes('melhorou')).length;
+      const vagasPerc = total > 0 ? ((vagasMelhorou / total) * 100).toFixed(1) : '0.0';
+      document.getElementById('kpi-vagas').innerText = `${vagasPerc}%`;
+      document.getElementById('bar-vagas').style.width = `${vagasPerc}%`;
+
+      const precoJusto = data.filter(d => d.avaliacao_preco_app.toLowerCase().includes('preço justo')).length;
+      const precoPerc = total > 0 ? ((precoJusto / total) * 100).toFixed(1) : '0.0';
+      document.getElementById('kpi-preco').innerText = `${precoPerc}%`;
+      document.getElementById('bar-preco').style.width = `${precoPerc}%`;
+
+      // Atualiza textos e badges dinâmicos em toda a interface
+      const identificadas = data.filter(d => (d.nome && d.nome.trim().length > 1) || (d.contato && d.contato.trim().length > 1)).length;
+      const anonimas = total - identificadas;
+
+      const elBadgeIdent = document.getElementById('badge-total-identificadas');
+      if (elBadgeIdent) elBadgeIdent.innerText = `${total} entrevistas`;
+
+      const elBadgeDetalhe = document.getElementById('badge-detalhe-amostra');
+      if (elBadgeDetalhe) elBadgeDetalhe.innerText = `${identificadas} identificadas e ${anonimas} anônimas`;
+
+      const elBadgeExec = document.getElementById('badge-amostra-executiva');
+      if (elBadgeExec) elBadgeExec.innerText = `Amostra Representativa (${total} Entrevistas)`;
+
+      const totalLojistas = data.filter(d => d.perfil && d.perfil.toLowerCase().includes('comerciante')).length;
+      const elLojistas = document.getElementById('comercio-total-lojistas');
+      if (elLojistas) elLojistas.innerText = totalLojistas;
+
+      renderizarGraficos(data, notas);
+      renderizarVozDoCidadao(data);
+      renderizarPainelEstrategico(data);
+
+      lucide.createIcons();
+    }
+
+    function renderizarGraficos(data, notas) {
+      Object.keys(charts).forEach(key => {
+        if (charts[key]) charts[key].destroy();
+      });
+
+      const mobileMode = window.innerWidth < 768;
+      const boldWeight = modoFonteGrande ? '800' : '700';
+      const baseFontSize = modoFonteGrande ? 12 : 10;
+
+      // 1. Gráfico de Satisfação
+      const countNotas = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+      notas.forEach(n => { if (countNotas[n] !== undefined) countNotas[n]++; });
+
+      const ctxSat = document.getElementById('chart-satisfacao').getContext('2d');
+      charts['satisfacao'] = new Chart(ctxSat, {
+        type: 'bar',
+        data: {
+          labels: mobileMode ? ['1', '2', '3', '4', '5 (Top)'] : ['1 (Péssimo)', '2 (Ruim)', '3 (Regular)', '4 (Bom)', '5 (Excelente)'],
+          datasets: [{
+            data: [countNotas[1], countNotas[2], countNotas[3], countNotas[4], countNotas[5]],
+            backgroundColor: ['#ef4444', '#f87171', '#fbbf24', '#3b82f6', '#10b981'],
+            borderRadius: 6,
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: (ctx) => ` ${ctx.raw} votos (${((ctx.raw / notas.length) * 100).toFixed(1)}%)`
+              }
+            }
+          },
+          scales: {
+            y: { beginAtZero: true, grid: { color: '#f1f5f9' }, ticks: { font: { size: baseFontSize, weight: boldWeight } } },
+            x: { grid: { display: false }, ticks: { font: { size: baseFontSize, weight: boldWeight } } }
+          }
+        }
+      });
+
+      // 2. Gráfico de Vagas (Doughnut)
+      const vagasMap = {};
+      data.forEach(d => {
+        const v = d.facilidade_vagas || 'Sem Resposta';
+        vagasMap[v] = (vagasMap[v] || 0) + 1;
+      });
+
+      const ctxVagas = document.getElementById('chart-vagas').getContext('2d');
+      charts['vagas'] = new Chart(ctxVagas, {
+        type: 'doughnut',
+        data: {
+          labels: Object.keys(vagasMap),
+          datasets: [{
+            data: Object.values(vagasMap),
+            backgroundColor: ['#10b981', '#3b82f6', '#ef4444', '#94a3b8'],
+            borderWidth: 2,
+            borderColor: '#ffffff',
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { 
+              position: 'bottom', 
+              labels: { 
+                boxWidth: 10, 
+                font: { size: baseFontSize, weight: boldWeight },
+                padding: 8
+              } 
+            }
+          },
+          cutout: '65%'
+        }
+      });
+
+      // 3. Preço vs App Vaga Azul (Texto 100% completo, sem cortes)
+      const precoContainer = document.getElementById('lista-preco-app');
+      if (precoContainer) {
+        precoContainer.innerHTML = '';
+        const precoMap = {};
+        data.forEach(d => {
+          const p = d.avaliacao_preco_app || 'Outro';
+          precoMap[p] = (precoMap[p] || 0) + 1;
+        });
+
+        const totalPreco = data.length || 1;
+        const sortedPreco = Object.entries(precoMap).sort((a, b) => b[1] - a[1]);
+
+        sortedPreco.forEach(([label, count]) => {
+          const perc = ((count / totalPreco) * 100).toFixed(1);
+          let barColor = 'bg-blue-600';
+          let badgeColor = 'bg-blue-50 text-blue-800 border-blue-200';
+
+          if (label.includes('confuso')) {
+            if (label.includes('alto')) {
+              barColor = 'bg-rose-500';
+              badgeColor = 'bg-rose-50 text-rose-800 border-rose-200';
+            } else {
+              barColor = 'bg-amber-500';
+              badgeColor = 'bg-amber-50 text-amber-800 border-amber-200';
+            }
+          } else if (label.includes('justo')) {
+            barColor = 'bg-emerald-500';
+            badgeColor = 'bg-emerald-50 text-emerald-800 border-emerald-200';
+          }
+
+          const itemEl = document.createElement('div');
+          itemEl.className = 'p-2.5 sm:p-3 bg-slate-50 rounded-xl border border-slate-200';
+          itemEl.innerHTML = `
+            <div class="flex items-start justify-between gap-2 mb-1.5">
+              <span class="text-xs sm:text-sm text-slate-800 font-bold leading-snug">${label}</span>
+              <span class="text-[11px] sm:text-xs font-black px-2 py-0.5 rounded border ${badgeColor} whitespace-nowrap flex-shrink-0">${count} (${perc}%)</span>
+            </div>
+            <div class="w-full bg-slate-200 rounded-full h-2 overflow-hidden">
+              <div class="${barColor} h-full rounded-full transition-all duration-500" style="width: ${perc}%"></div>
+            </div>
+          `;
+          precoContainer.appendChild(itemEl);
+        });
+      }
+
+      // 4. Pós-Utilização
+      const posUsoMap = {};
+      data.forEach(d => {
+        const pos = d.tarifa_pos_utilizacao || 'Sem resposta';
+        let shortLabel = pos;
+        if (pos.includes('Sou contra')) shortLabel = 'Sou contra R$ 20';
+        else if (pos.includes('modelo excelente')) shortLabel = 'Acho excelente';
+        else if (pos.includes('não sabia')) shortLabel = 'Não sabia (ótima ideia)';
+        else if (pos.includes('considero os valores altos')) shortLabel = 'Útil, mas valor alto';
+        else if (pos.includes('prazo de 3 dias')) shortLabel = 'Prazo deveria ser maior';
+
+        posUsoMap[shortLabel] = (posUsoMap[shortLabel] || 0) + 1;
+      });
+
+      const ctxPosUso = document.getElementById('chart-pos-uso').getContext('2d');
+      charts['posUso'] = new Chart(ctxPosUso, {
+        type: 'bar',
+        data: {
+          labels: Object.keys(posUsoMap),
+          datasets: [{
+            data: Object.values(posUsoMap),
+            backgroundColor: ['#ef4444', '#10b981', '#3b82f6', '#f59e0b', '#8b5cf6'],
+            borderRadius: 6
+          }]
+        },
+        options: {
+          indexAxis: 'y',
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            x: { beginAtZero: true, grid: { color: '#f1f5f9' }, ticks: { font: { size: baseFontSize, weight: boldWeight } } },
+            y: { grid: { display: false }, ticks: { font: { size: baseFontSize, weight: boldWeight } } }
+          }
+        }
+      });
+
+      // 5. Impacto no Comércio
+      const fluxoMap = {};
+      data.forEach(d => {
+        if (d.impacto_comercio) {
+          let f = d.impacto_comercio;
+          if (f.includes('Não teve impacto')) f = 'Sem impacto';
+          else if (f.includes('Diminuiu o fluxo')) f = 'Diminuiu fluxo';
+          else if (f.includes('Aumentou o fluxo')) f = 'Aumentou fluxo';
+          else if (f.includes('Não se aplica')) f = 'Não se aplica';
+          fluxoMap[f] = (fluxoMap[f] || 0) + 1;
+        }
+      });
+
+      const ctxFluxo = document.getElementById('chart-fluxo-comercio').getContext('2d');
+      charts['fluxo'] = new Chart(ctxFluxo, {
+        type: 'doughnut',
+        data: {
+          labels: Object.keys(fluxoMap),
+          datasets: [{
+            data: Object.values(fluxoMap),
+            backgroundColor: ['#94a3b8', '#ef4444', '#10b981', '#cbd5e1'],
+            borderWidth: 2,
+            borderColor: '#ffffff',
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { 
+            legend: { 
+              position: 'bottom', 
+              labels: { 
+                boxWidth: 10, 
+                font: { size: baseFontSize, weight: boldWeight },
+                padding: 6
+              } 
+            } 
+          },
+          cutout: '60%'
+        }
+      });
+
+      // 6. Tipos de Comércio (Lista Completa com 100% dos Ramos Visíveis)
+      const tiposContainer = document.getElementById('lista-tipos-comercio');
+      if (tiposContainer) {
+        tiposContainer.innerHTML = '';
+        const tipoMap = {};
+        let totalComercios = 0;
+        data.forEach(d => {
+          if (d.tipo_comercio && d.tipo_comercio.trim().length > 1) {
+            let t = d.tipo_comercio.trim();
+            t = t.charAt(0).toUpperCase() + t.slice(1);
+            tipoMap[t] = (tipoMap[t] || 0) + 1;
+            totalComercios++;
+          }
+        });
+
+        const sortedTipos = Object.entries(tipoMap).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+        const maxVal = sortedTipos.length > 0 ? sortedTipos[0][1] : 1;
+
+        if (sortedTipos.length === 0) {
+          tiposContainer.innerHTML = '<div class="text-xs text-slate-400 italic py-4 text-center">Nenhum ramo de atividade registrado nesta amostra</div>';
+        } else {
+          sortedTipos.forEach(([label, count]) => {
+            const perc = totalComercios > 0 ? ((count / totalComercios) * 100).toFixed(1) : '0';
+            const barWidth = ((count / maxVal) * 100).toFixed(0);
+
+            const itemEl = document.createElement('div');
+            itemEl.className = 'p-2 sm:p-2.5 bg-slate-50 rounded-xl border border-slate-200';
+            itemEl.innerHTML = `
+              <div class="flex items-center justify-between gap-2 mb-1">
+                <span class="text-xs sm:text-sm text-slate-800 font-bold leading-tight">${label}</span>
+                <span class="text-[11px] sm:text-xs font-black px-2 py-0.5 rounded border bg-indigo-50 text-indigo-800 border-indigo-200 whitespace-nowrap flex-shrink-0">${count} (${perc}%)</span>
+              </div>
+              <div class="w-full bg-slate-200 rounded-full h-2 overflow-hidden">
+                <div class="bg-indigo-600 h-full rounded-full transition-all duration-500" style="width: ${barWidth}%"></div>
+              </div>
+            `;
+            tiposContainer.appendChild(itemEl);
+          });
+        }
+      }
+
+      // 7. Notificações
+      const notifMap = { 'Já pagou': 0, 'Nunca pagou': 0 };
+      data.forEach(d => {
+        if (d.pagou_pos_utilizacao) {
+          if (d.pagou_pos_utilizacao.toLowerCase().includes('sim')) notifMap['Já pagou']++;
+          else notifMap['Nunca pagou']++;
+        }
+      });
+
+      const ctxNotif = document.getElementById('chart-notificacao').getContext('2d');
+      charts['notif'] = new Chart(ctxNotif, {
+        type: 'bar',
+        data: {
+          labels: Object.keys(notifMap),
+          datasets: [{
+            data: Object.values(notifMap),
+            backgroundColor: ['#f59e0b', '#10b981'],
+            borderRadius: 8
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            y: { beginAtZero: true, grid: { color: '#f1f5f9' }, ticks: { font: { size: baseFontSize, weight: boldWeight } } },
+            x: { ticks: { font: { size: baseFontSize, weight: boldWeight } } }
+          }
+        }
+      });
+
+      // 8. Histórico Bimestral
+      const ctxHist = document.getElementById('chart-historico').getContext('2d');
+      charts['historico'] = new Chart(ctxHist, {
+        type: 'line',
+        data: {
+          labels: mobileMode ? ['P1 (Set)', 'P2 (Nov)', 'P3 (Jan)', 'P4 (Mar)'] : ['Pesquisa 01 (Set/26)', 'Pesquisa 02 (Nov/26)', 'Pesquisa 03 (Jan/27)', 'Pesquisa 04 (Mar/27)'],
+          datasets: [
+            {
+              label: 'Satisfação (1 a 5)',
+              data: [4.0, 4.3, 4.5, 4.6],
+              borderColor: '#2563eb',
+              backgroundColor: 'rgba(37, 99, 235, 0.1)',
+              tension: 0.3,
+              fill: true,
+              pointRadius: mobileMode ? 4 : 6,
+            },
+            {
+              label: 'Aprovação (%)',
+              data: [65.0, 75.0, 82.0, 88.0],
+              borderColor: '#10b981',
+              backgroundColor: 'transparent',
+              borderDash: [4, 4],
+              tension: 0.3,
+              pointRadius: mobileMode ? 3 : 5,
+              yAxisID: 'y1'
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              labels: { boxWidth: 10, font: { size: baseFontSize, weight: boldWeight } }
+            }
+          },
+          scales: {
+            y: { min: 1, max: 5, grid: { color: '#f1f5f9' }, ticks: { font: { size: baseFontSize, weight: boldWeight } } },
+            y1: { min: 0, max: 100, position: 'right', grid: { display: false }, ticks: { font: { size: baseFontSize, weight: boldWeight }, callback: v => v + '%' } }
+          }
+        }
+      });
+    }
+
+    function renderizarVozDoCidadao(data) {
+      const feed = document.getElementById('feed-comentarios');
+      feed.innerHTML = '';
+
+      const comentarios = data.filter(d => d.sugestao_critica && d.sugestao_critica.trim().length > 1);
+      document.getElementById('badge-sugestoes').innerText = comentarios.length;
+
+      comentarios.forEach((item) => {
+        const nota = item.satisfacao || 0;
+        let badgeColor = 'bg-slate-100 text-slate-700';
+        let borderColor = 'border-slate-200';
+        let icone = 'message-square';
+
+        if (nota >= 4) {
+          badgeColor = 'bg-emerald-50 text-emerald-700 border-emerald-200';
+          borderColor = 'border-emerald-100';
+          icone = 'thumbs-up';
+        } else if (nota === 3) {
+          badgeColor = 'bg-amber-50 text-amber-800 border-amber-200';
+          borderColor = 'border-amber-100';
+          icone = 'alert-circle';
+        } else if (nota > 0 && nota <= 2) {
+          badgeColor = 'bg-rose-50 text-rose-700 border-rose-200';
+          borderColor = 'border-rose-100';
+          icone = 'alert-triangle';
+        }
+
+        const card = document.createElement('div');
+        card.className = `comentario-card bg-white p-3.5 sm:p-5 rounded-2xl border ${borderColor} card-shadow flex flex-col justify-between`;
+        card.dataset.nota = nota;
+        card.dataset.texto = item.sugestao_critica.toLowerCase();
+        card.dataset.perfil = item.perfil.toLowerCase();
+
+        card.innerHTML = `
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-2">
+              <span class="text-[11px] font-semibold px-2 py-0.5 rounded-full border ${badgeColor} flex items-center gap-1">
+                <i data-lucide="${icone}" class="w-3 h-3"></i> Nota ${nota > 0 ? nota : 'N/A'}
+              </span>
+              <span class="text-[10px] text-slate-400 font-medium">${item.perfil || 'Cidadão'}</span>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-800 font-medium leading-relaxed italic">
+              "${item.sugestao_critica}"
+            </p>
+          </div>
+          <div class="mt-2.5 pt-2.5 border-t border-slate-100 flex items-center justify-between text-[10px] text-slate-400">
+            <span>${item.nome ? item.nome : 'Anônimo'}</span>
+            <span>${item.local || 'Centro'}</span>
+          </div>
+        `;
+        feed.appendChild(card);
+      });
+    }
+
+    function filtrarComentarios(tipo) {
+      filtroComentarioAtivo = tipo;
+      document.querySelectorAll('.btn-filtro').forEach(btn => {
+        btn.classList.remove('bg-slate-900', 'text-white');
+        btn.classList.add('bg-slate-100', 'text-slate-700');
+      });
+
+      const btnAtivo = document.getElementById(`btn-filtro-${tipo}`);
+      if (btnAtivo) {
+        btnAtivo.classList.remove('bg-slate-100', 'text-slate-700');
+        btnAtivo.classList.add('bg-slate-900', 'text-white');
+      }
+
+      aplicarFiltroEBusca();
+    }
+
+    function buscarComentarios(query) {
+      aplicarFiltroEBusca();
+    }
+
+    function aplicarFiltroEBusca() {
+      const query = document.getElementById('busca-comentarios').value.toLowerCase().trim();
+      const cards = document.querySelectorAll('.comentario-card');
+
+      cards.forEach(card => {
+        const nota = parseInt(card.dataset.nota, 10);
+        const texto = card.dataset.texto;
+
+        let passFilter = true;
+        if (filtroComentarioAtivo === 'elogios' && nota < 4) passFilter = false;
+        if (filtroComentarioAtivo === 'criticas' && (nota > 3 || nota === 0)) passFilter = false;
+
+        let passSearch = true;
+        if (query && !texto.includes(query)) passSearch = false;
+
+        card.style.display = (passFilter && passSearch) ? 'flex' : 'none';
+      });
+    }
+
+    function renderizarPainelEstrategico(data) {
+      if (!data || data.length === 0) return;
+
+      // 1. Satisfação por perfil
+      const perfisConfig = [
+        { key: 'motorista', match: ['motorista', 'pedestre', 'visitante'], labelId: 'exec-nota-motorista', barId: 'exec-bar-motorista' },
+        { key: 'morador', match: ['morador'], labelId: 'exec-nota-morador', barId: 'exec-bar-morador' },
+        { key: 'comerciante', match: ['comerciante', 'lojista', 'loja', 'funcionário', 'funcionario'], labelId: 'exec-nota-comerciante', barId: 'exec-bar-comerciante' }
+      ];
+
+      perfisConfig.forEach(cfg => {
+        const itens = data.filter(d => d.perfil && cfg.match.some(m => d.perfil.toLowerCase().includes(m)));
+        const notas = itens.map(d => d.satisfacao).filter(n => n !== null && !isNaN(n));
+        const media = notas.length > 0 ? (notas.reduce((a, b) => a + b, 0) / notas.length).toFixed(1) : '0.0';
+        const aprovCount = notas.filter(n => n >= 4).length;
+        const percAprov = notas.length > 0 ? ((aprovCount / notas.length) * 100).toFixed(0) : '0';
+
+        const lblEl = document.getElementById(cfg.labelId);
+        const barEl = document.getElementById(cfg.barId);
+        if (lblEl) lblEl.innerHTML = `${media} ★ <span class="text-[10px] font-normal text-slate-300">(${percAprov}% aprovação)</span>`;
+        if (barEl) barEl.style.width = `${percAprov}%`;
+      });
+
+      // 2. Mito vs Realidade da Taxa de R$ 20 (Coluna 14)
+      const respondentesMulta = data.filter(d => d.pagou_pos_utilizacao && d.pagou_pos_utilizacao.trim().length > 0);
+      const totalMultaResp = respondentesMulta.length || 1;
+      const semMulta = respondentesMulta.filter(d => d.pagou_pos_utilizacao.toLowerCase().includes('não') || d.pagou_pos_utilizacao.toLowerCase().includes('nao')).length;
+      const comMulta = respondentesMulta.filter(d => d.pagou_pos_utilizacao.toLowerCase().includes('sim')).length;
+      const percSemMulta = ((semMulta / totalMultaResp) * 100).toFixed(1);
+      const percComMulta = ((comMulta / totalMultaResp) * 100).toFixed(1);
+
+      const elPercSemMulta = document.getElementById('exec-perc-sem-multa');
+      const elQtdSemMulta = document.getElementById('exec-qtd-sem-multa');
+      const elQtdComMulta = document.getElementById('exec-qtd-com-multa');
+      const elDetalheMulta = document.getElementById('exec-detalhe-multa');
+
+      if (elPercSemMulta) elPercSemMulta.innerText = `${percSemMulta}%`;
+      if (elQtdSemMulta) elQtdSemMulta.innerText = `${semMulta} pessoas (${percSemMulta}%)`;
+      if (elQtdComMulta) elQtdComMulta.innerText = `${comMulta} pessoas (${percComMulta}%)`;
+      if (elDetalheMulta) elDetalheMulta.innerText = `(${semMulta} dos ${totalMultaResp} que responderam ao quesito)`;
+
+      // 3. Gráfico Demográfico de Faixa Etária (Chart.js)
+      const ctxIdade = document.getElementById('chart-faixa-etaria');
+      if (ctxIdade) {
+        if (charts['faixaEtaria']) charts['faixaEtaria'].destroy();
+
+        const idades = data.map(d => parseInt(d.idade, 10)).filter(i => !isNaN(i) && i > 0);
+        let count17_29 = 0, count30_49 = 0, count50_59 = 0, count60_plus = 0;
+        idades.forEach(i => {
+          if (i < 30) count17_29++;
+          else if (i < 50) count30_49++;
+          else if (i < 60) count50_59++;
+          else count60_plus++;
+        });
+
+        const totalIdades = idades.length || 1;
+        const mediaIdade = idades.length > 0 ? (idades.reduce((a, b) => a + b, 0) / idades.length).toFixed(1) : '38.4';
+        const elIdade = document.getElementById('exec-idade-media');
+        if (elIdade) elIdade.innerText = `${mediaIdade} anos`;
+
+        // Calcula notas médias por faixa etária dinamicamente
+        const getMediaFaixa = (min, max) => {
+          const grupo = data.filter(d => {
+            const age = parseInt(d.idade, 10);
+            return !isNaN(age) && age >= min && (max ? age <= max : true);
+          });
+          const notasGrupo = grupo.map(d => d.satisfacao).filter(n => n !== null && !isNaN(n));
+          const m = notasGrupo.length > 0 ? (notasGrupo.reduce((a, b) => a + b, 0) / notasGrupo.length).toFixed(1) : '-';
+          return { media: m, count: grupo.length };
+        };
+
+        const f1 = getMediaFaixa(17, 29);
+        const f2 = getMediaFaixa(30, 49);
+        const f3 = getMediaFaixa(50, 59);
+        const f4 = getMediaFaixa(60, null);
+
+        const elP1 = document.getElementById('idade-perc-17-29');
+        const elN1 = document.getElementById('idade-nota-17-29');
+        if (elP1) elP1.innerText = `${((count17_29 / totalIdades) * 100).toFixed(1)}%`;
+        if (elN1) elN1.innerText = `${f1.media} ★`;
+
+        const elP2 = document.getElementById('idade-perc-30-49');
+        const elN2 = document.getElementById('idade-nota-30-49');
+        if (elP2) elP2.innerText = `${((count30_49 / totalIdades) * 100).toFixed(1)}%`;
+        if (elN2) elN2.innerText = `${f2.media} ★`;
+
+        const elP3 = document.getElementById('idade-perc-50-59');
+        const elN3 = document.getElementById('idade-nota-50-59');
+        if (elP3) elP3.innerText = `${((count50_59 / totalIdades) * 100).toFixed(1)}%`;
+        if (elN3) elN3.innerText = `${f3.media} ★`;
+
+        const elP4 = document.getElementById('idade-perc-60-plus');
+        const elN4 = document.getElementById('idade-nota-60-plus');
+        const elObs4 = document.getElementById('idade-obs-60-plus');
+        if (elP4) elP4.innerText = `${((count60_plus / totalIdades) * 100).toFixed(1)}%`;
+        if (elN4) elN4.innerText = `${f4.media} ★`;
+        if (elObs4) elObs4.innerText = `${count60_plus} entrevistados (${((count60_plus / totalIdades) * 100).toFixed(1)}%). Ponderar decisões de massa.`;
+
+        const boldWeight = modoFonteGrande ? '800' : '700';
+        const baseFontSize = modoFonteGrande ? 11 : 10;
+
+        charts['faixaEtaria'] = new Chart(ctxIdade.getContext('2d'), {
+          type: 'doughnut',
+          data: {
+            labels: [
+              `17 a 29 anos (${((count17_29/totalIdades)*100).toFixed(0)}%)`,
+              `30 a 49 anos (${((count30_49/totalIdades)*100).toFixed(0)}%)`,
+              `50 a 59 anos (${((count50_59/totalIdades)*100).toFixed(0)}%)`,
+              `60+ anos (${((count60_plus/totalIdades)*100).toFixed(0)}%)`
+            ],
+            datasets: [{
+              data: [count17_29, count30_49, count50_59, count60_plus],
+              backgroundColor: ['#06b6d4', '#f59e0b', '#10b981', '#f43f5e'],
+              hoverBackgroundColor: ['#22d3ee', '#fbbf24', '#34d399', '#fb7185'],
+              borderWidth: 2,
+              borderColor: '#0b1e36'
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                position: 'right',
+                labels: {
+                  boxWidth: 12,
+                  boxHeight: 12,
+                  font: { size: baseFontSize, weight: boldWeight },
+                  color: '#ffffff',
+                  padding: 6
+                }
+              },
+              tooltip: {
+                callbacks: {
+                  label: (ctx) => ` ${ctx.label}: ${ctx.raw} entrevistados`
+                }
+              }
+            },
+            cutout: '58%'
+          }
+        });
+      }
+
+      // 4. Termômetro de Demandas Estatisticamente Relevantes (Coluna 13)
+      const containerDemandas = document.getElementById('lista-demandas-executivo');
+      if (containerDemandas) {
+        containerDemandas.innerHTML = '';
+        const cats = [
+          { name: 'Elogios Espontâneos e Apoio Geral ao Rotativo', kws: ['ótimo', 'otimo', 'bom', 'excelente', 'parabens', 'parabéns', 'melhorou', 'maravilhoso', 'gostei', 'aprovado'], count: 0, color: 'bg-emerald-400', badge: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30' },
+          { name: 'Aumento da Tolerância (de 10 para 15 ou 20 min)', kws: ['toler', 'minuto', '15 min', 'tempo', 'tolerancia'], count: 0, color: 'bg-amber-400', badge: 'bg-amber-500/20 text-amber-300 border-amber-500/30' },
+          { name: 'Revisão do valor da Taxa Pós-Uso (R$ 20)', kws: ['20', 'taxa', 'pos', 'pós', 'multa', 'abusiv'], count: 0, color: 'bg-rose-400', badge: 'bg-rose-500/20 text-rose-300 border-rose-500/30' },
+          { name: 'Presença e Orientação dos Monitores na Rua', kws: ['fiscal', 'monitor', 'guarda', 'cobrador', 'ajuda', 'fiscais'], count: 0, color: 'bg-purple-400', badge: 'bg-purple-500/20 text-purple-300 border-purple-500/30' },
+          { name: 'Demais Sugestões Pontuais Diversas', kws: [], count: 0, color: 'bg-slate-400', badge: 'bg-slate-500/20 text-slate-300 border-slate-500/30' }
+        ];
+
+        let totalComentarios = 0;
+        data.forEach(d => {
+          const c = (d.sugestao_critica || '').trim();
+          if (c.length > 2) {
+            totalComentarios++;
+            const clow = c.toLowerCase();
+            let matched = false;
+            for (let idx = 0; idx < 4; idx++) {
+              if (cats[idx].kws.some(kw => clow.includes(kw))) {
+                cats[idx].count++;
+                matched = true;
+                break;
+              }
+            }
+            if (!matched) {
+              cats[4].count++;
+            }
+          }
+        });
+
+        const maxCount = Math.max(...cats.map(c => c.count), 1);
+        const totalBase = totalComentarios || 1;
+
+        const elManif = document.getElementById('badge-total-manifestacoes');
+        if (elManif) elManif.innerText = totalComentarios;
+
+        cats.forEach(cat => {
+          const perc = ((cat.count / totalBase) * 100).toFixed(1);
+          const barW = ((cat.count / maxCount) * 100).toFixed(0);
+
+          const div = document.createElement('div');
+          div.className = 'bg-white/5 p-2 sm:p-2.5 rounded-lg border border-white/5';
+          div.innerHTML = `
+            <div class="flex items-center justify-between gap-2 mb-1">
+              <span class="text-xs text-white font-medium truncate">${cat.name}</span>
+              <span class="text-[10px] font-black px-1.5 py-0.5 rounded border ${cat.badge} whitespace-nowrap flex-shrink-0">${cat.count} (${perc}%)</span>
+            </div>
+            <div class="w-full bg-white/10 rounded-full h-1.5 overflow-hidden">
+              <div class="${cat.color} h-full rounded-full transition-all duration-500" style="width: ${barW}%;"></div>
+            </div>
+          `;
+          containerDemandas.appendChild(div);
+        });
+      }
+    }
+
+    function mudarAba(abaId) {
+      document.querySelectorAll('.view-content').forEach(view => view.classList.add('hidden'));
+      
+      document.querySelectorAll('.tab-btn').forEach(tab => {
+        tab.classList.remove('border-amber-400', 'text-amber-300');
+        tab.classList.add('border-transparent', 'text-slate-300');
+      });
+
+      document.querySelectorAll('.mob-tab-btn').forEach(btn => {
+        btn.classList.remove('text-blue-600');
+        btn.classList.add('text-slate-400');
+        const span = btn.querySelector('span');
+        if (span) {
+          span.classList.remove('font-bold');
+          span.classList.add('font-medium');
+        }
+      });
+
+      const view = document.getElementById(`view-${abaId}`);
+      if (view) view.classList.remove('hidden');
+
+      const tab = document.getElementById(`tab-${abaId}`);
+      if (tab) {
+        tab.classList.add('border-amber-400', 'text-amber-300');
+        tab.classList.remove('border-transparent', 'text-slate-300');
+      }
+
+      const mobTab = document.getElementById(`mob-tab-${abaId}`);
+      if (mobTab) {
+        mobTab.classList.remove('text-slate-400');
+        mobTab.classList.add('text-blue-600');
+        const span = mobTab.querySelector('span');
+        if (span) {
+          span.classList.remove('font-medium');
+          span.classList.add('font-bold');
+        }
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function trocarOnda(onda) {
+      if (onda === 'onda1') {
+        renderizarDashboard(DADOS_ATUAIS);
+        showToast('Pesquisa 01 - Centro (Com Rotativo)');
+      } else if (onda === 'onda_controle') {
+        showToast('Áreas de Expansão (Sem Rotativo): Em breve.');
+        mudarAba('evolucao');
+      } else if (onda === 'onda2') {
+        showToast('Pesquisa 02: Próximo bimestre.');
+        mudarAba('evolucao');
+      }
+    }
+
+    function abrirModalApp() {
+      document.getElementById('modal-app').classList.remove('hidden');
+    }
+    function fecharModalApp() {
+      document.getElementById('modal-app').classList.add('hidden');
+    }
+  </script>
+
+</body>
+</html>

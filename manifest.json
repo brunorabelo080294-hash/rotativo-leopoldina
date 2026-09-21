@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json.schemastore.org/web-manifest-combined.json",
+  "id": "rotativo-leopoldina-app",
+  "name": "Rotativo Leopoldina - Prefeitura de Leopoldina",
+  "short_name": "Rotativo Leo",
+  "description": "Dashboard Executivo de Satisfação do Estacionamento Rotativo da Prefeitura de Leopoldina - MG",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0b1e36",
+  "theme_color": "#0b1e36",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "icone-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icone-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "icone-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icone-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
