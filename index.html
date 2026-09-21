@@ -478,6 +478,112 @@
       </div>
 
       <!-- ========================================================================= -->
+      <!-- ORIGEM E LOCALIDADE DOS ENTREVISTADOS (BAIRROS E REGIÃO) -->
+      <!-- ========================================================================= -->
+      <div class="bg-white rounded-2xl p-4 sm:p-6 border border-slate-200 card-shadow space-y-4">
+        
+        <!-- Cabeçalho do Card -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
+          <div class="flex items-center gap-2.5">
+            <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-blue-50 border border-blue-200 text-blue-600 flex items-center justify-center flex-shrink-0">
+              <i data-lucide="map-pin" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <h3 class="text-sm sm:text-base font-bold text-slate-900">Origem e Localidade dos Entrevistados</h3>
+                <span class="text-[10px] uppercase tracking-wider font-extrabold px-2 py-0.5 rounded-full bg-blue-100 text-blue-800">Coluna F</span>
+              </div>
+              <p class="text-[11px] sm:text-xs text-slate-500 mt-0.5">Onde residem ou de onde vêm os entrevistados (moradores, lojistas e visitantes de cidades vizinhas)</p>
+            </div>
+          </div>
+          
+          <div class="flex items-center gap-2 self-start sm:self-auto">
+            <span class="text-[11px] text-blue-800 bg-blue-50 font-semibold px-2.5 py-1 rounded-lg border border-blue-200" id="badge-total-bairros">
+              16 Bairros Identificados
+            </span>
+          </div>
+        </div>
+
+        <!-- KPIs Rápidos de Localidade -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-4">
+          <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-3 flex items-center gap-3">
+            <div class="w-8 h-8 rounded-lg bg-blue-600 text-white flex items-center justify-center font-bold text-xs flex-shrink-0">
+              #1
+            </div>
+            <div>
+              <span class="text-[10px] sm:text-xs text-slate-500 font-medium block">Bairro Líder de Respostas</span>
+              <div class="text-xs sm:text-sm font-bold text-slate-900 truncate" id="kpi-bairro-lider">Pirineus & Vila Esteves</div>
+            </div>
+          </div>
+
+          <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-3 flex items-center gap-3">
+            <div class="w-8 h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center font-bold text-xs flex-shrink-0">
+              <i data-lucide="navigation" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <span class="text-[10px] sm:text-xs text-slate-500 font-medium block">Visitantes de Outras Cidades</span>
+              <div class="text-xs sm:text-sm font-bold text-slate-900 truncate" id="kpi-visitantes-regiao">Cataguases (Comércio Regional)</div>
+            </div>
+          </div>
+
+          <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-3 flex items-center gap-3">
+            <div class="w-8 h-8 rounded-lg bg-amber-500 text-white flex items-center justify-center font-bold text-xs flex-shrink-0">
+              <i data-lucide="compass" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <span class="text-[10px] sm:text-xs text-slate-500 font-medium block">Amostra Territorial Ativa</span>
+              <div class="text-xs sm:text-sm font-bold text-slate-900 truncate" id="kpi-amostra-territorial">24 com bairro registrado</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Conteúdo Principal: Gráfico + Lista Ranqueada -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 pt-1">
+          
+          <!-- Gráfico Horizontal de Barras (7 Colunas no Desktop) -->
+          <div class="lg:col-span-7 bg-slate-50/70 border border-slate-200/80 rounded-xl p-3.5 sm:p-4 flex flex-col justify-between">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                <i data-lucide="bar-chart-2" class="w-4 h-4 text-blue-600"></i> Localidades Mais Frequentes
+              </span>
+              <span class="text-[10px] text-slate-500 font-medium">Toque ou passe o mouse na barra</span>
+            </div>
+            <div class="h-72 sm:h-80 w-full relative">
+              <canvas id="chart-localidade"></canvas>
+            </div>
+          </div>
+
+          <!-- Ranking Detalhado com Barras de Progresso (5 Colunas no Desktop) -->
+          <div class="lg:col-span-5 bg-slate-50/70 border border-slate-200/80 rounded-xl p-3.5 sm:p-4 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                  <i data-lucide="list-ordered" class="w-4 h-4 text-blue-600"></i> Distribuição Territorial
+                </span>
+                <span class="text-[10px] text-slate-500 font-medium" id="lbl-total-cadastrados">16 localidades</span>
+              </div>
+              
+              <!-- Container rolável -->
+              <div id="lista-bairros" class="space-y-2 max-h-72 sm:max-h-80 overflow-y-auto pr-1">
+                <!-- Inserido dinamicamente -->
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Rodapé Estratégico com Conclusão para Gestão -->
+        <div class="bg-blue-50/50 border border-blue-100 rounded-xl p-3 text-[11px] sm:text-xs text-slate-600 flex items-start gap-2.5">
+          <i data-lucide="info" class="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5"></i>
+          <div>
+            <strong class="text-blue-950 font-bold">Diagnóstico Geográfico:</strong>
+            A pesquisa demonstra ampla capilaridade em bairros tradicionais de Leopoldina (Pirineus, Vila Esteves, Cotegipe, Cohab, Tomé Nogueira, São Cristóvão) e atração de consumidores de municípios vizinhos (Cataguases). As novas respostas inseridas na Planilha Google são computadas e sincronizadas automaticamente neste gráfico.
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ========================================================================= -->
       <!-- PAINEL ESTRATÉGICO PARA TOMADA DE DECISÃO (INTELIGÊNCIA EXECUTIVA) -->
       <!-- ========================================================================= -->
       <div class="bg-gradient-to-br from-leopoldina-navy via-slate-900 to-leopoldina-blue rounded-2xl p-4 sm:p-6 text-white card-shadow space-y-4 sm:space-y-6">
@@ -1012,7 +1118,7 @@
 
     // Forçar atualização do Service Worker e capturar instalação PWA
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js?v=20').then((reg) => {
+      navigator.serviceWorker.register('sw.js?v=21').then((reg) => {
         reg.update();
       }).catch(err => console.log('SW fail:', err));
     }
@@ -1075,6 +1181,7 @@
       if (DADOS_ATUAIS.length > 0) {
         const notas = DADOS_ATUAIS.map(d => d.satisfacao).filter(n => n !== null && !isNaN(n));
         renderizarGraficos(DADOS_ATUAIS, notas);
+        renderizarLocalidades(DADOS_ATUAIS);
         renderizarPainelEstrategico(DADOS_ATUAIS);
       }
     }
@@ -1377,6 +1484,7 @@
       if (elLojistas) elLojistas.innerText = totalLojistas;
 
       renderizarGraficos(data, notas);
+      renderizarLocalidades(data);
       renderizarVozDoCidadao(data);
       renderizarPainelEstrategico(data);
 
@@ -2020,6 +2128,202 @@
             </div>
           `;
           containerDemandas.appendChild(div);
+        });
+      }
+    }
+
+    function normalizarBairro(raw) {
+      if (!raw || typeof raw !== 'string') return null;
+      let s = raw.trim();
+      if (!s || s.length < 2) return null;
+
+      // Remove números de residência e complementos no final (ex: 'Cotegipe 96', ' n 282', ', 321')
+      s = s.replace(/[\s,]+(n[º°\.]?\s*)?\d+.*$/i, '').trim();
+      if (!s || s.length < 2) return null;
+
+      // Remove pontuação solta no final
+      s = s.replace(/[,\.\-\/]+$/, '').trim();
+
+      const low = s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+      if (low.includes('cotegipe')) return 'Cotegipe';
+      if (low.includes('pirineus') || low.includes('pireneus')) return 'Pirineus';
+      if (low.includes('esteves')) return 'Vila Esteves';
+      if (low.includes('tome') || low.includes('nogueira')) return 'Tomé Nogueira';
+      if (low.includes('cohab')) return 'Cohab';
+      if (low.includes('cristovao') || low.includes('cristov')) return 'São Cristóvão';
+      if (low.includes('cataguases')) return 'Cataguases (Visitante)';
+      if (low.includes('bela vista')) return 'Bela Vista';
+      if (low.includes('flores')) return 'Rua das Flores';
+      if (low.includes('tres cruzes')) return 'Três Cruzes';
+      if (low.includes('bandeirantes')) return 'Bandeirantes';
+      if (low.includes('eldorado')) return 'Eldorado';
+      if (low.includes('fortaleza')) return 'Fortaleza';
+      if (low.includes('ribeiro') || low.includes('junqueira')) return 'Ribeiro Junqueira';
+      if (low.includes('caicara')) return 'Caiçaras';
+      if (low.includes('centro')) return 'Centro';
+      if (low.includes('rosario')) return 'Rosário';
+      if (low.includes('imperador')) return 'Alto do Imperador';
+      if (low.includes('chacara')) return 'Chácara Dona Euzébia';
+
+      return s.split(/\s+/).map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+    }
+
+    function renderizarLocalidades(data) {
+      if (!data || data.length === 0) return;
+
+      const contagem = {};
+      let totalComEndereco = 0;
+
+      data.forEach(d => {
+        const bairro = normalizarBairro(d.endereco);
+        if (bairro) {
+          contagem[bairro] = (contagem[bairro] || 0) + 1;
+          totalComEndereco++;
+        }
+      });
+
+      const ordenados = Object.keys(contagem).map(k => ({
+        bairro: k,
+        total: contagem[k],
+        perc: totalComEndereco > 0 ? ((contagem[k] / totalComEndereco) * 100).toFixed(1) : '0'
+      })).sort((a, b) => b.total - a.total);
+
+      // Atualizar Badges e KPIs
+      const elBadgeBairros = document.getElementById('badge-total-bairros');
+      if (elBadgeBairros) elBadgeBairros.innerText = `${ordenados.length} Bairros Identificados`;
+
+      const elLblTotal = document.getElementById('lbl-total-cadastrados');
+      if (elLblTotal) elLblTotal.innerText = `${ordenados.length} localidades mapeadas`;
+
+      const elAmostraTerr = document.getElementById('kpi-amostra-territorial');
+      if (elAmostraTerr) elAmostraTerr.innerText = `${totalComEndereco} com bairro registrado`;
+
+      const elBairroLider = document.getElementById('kpi-bairro-lider');
+      if (elBairroLider && ordenados.length > 0) {
+        const maxVal = ordenados[0].total;
+        const lideres = ordenados.filter(o => o.total === maxVal).map(o => o.bairro);
+        elBairroLider.innerText = `${lideres.join(' & ')} (${maxVal} cada)`;
+      }
+
+      const elVisitantes = document.getElementById('kpi-visitantes-regiao');
+      if (elVisitantes) {
+        const visit = ordenados.find(o => o.bairro.toLowerCase().includes('cataguases') || o.bairro.toLowerCase().includes('visitante'));
+        if (visit) {
+          elVisitantes.innerText = `${visit.bairro} (${visit.total})`;
+        } else {
+          elVisitantes.innerText = 'Leopoldina e Região';
+        }
+      }
+
+      // Renderizar Lista Ranqueada
+      const containerLista = document.getElementById('lista-bairros');
+      if (containerLista) {
+        containerLista.innerHTML = '';
+        const maxCount = ordenados.length > 0 ? ordenados[0].total : 1;
+
+        ordenados.forEach((item, idx) => {
+          const isVisitante = item.bairro.toLowerCase().includes('visitante') || item.bairro.toLowerCase().includes('cataguases');
+          const barColor = isVisitante ? 'bg-amber-500' : 'bg-blue-600';
+          const pctBar = Math.max(12, Math.round((item.total / maxCount) * 100));
+
+          const div = document.createElement('div');
+          div.className = 'bg-white p-2 sm:p-2.5 rounded-lg border border-slate-200 hover:border-blue-300 transition-colors shadow-xs';
+          div.innerHTML = `
+            <div class="flex items-center justify-between text-xs mb-1">
+              <div class="flex items-center gap-1.5 min-w-0 pr-2">
+                <span class="w-4.5 h-4.5 rounded-md ${idx < 3 ? 'bg-blue-100 text-blue-700 font-bold' : 'bg-slate-100 text-slate-500 font-medium'} flex items-center justify-center text-[10px] flex-shrink-0">
+                  ${idx + 1}
+                </span>
+                <span class="font-bold text-slate-800 truncate text-[11px] sm:text-xs">${item.bairro}</span>
+                ${isVisitante ? '<span class="text-[9px] bg-amber-100 text-amber-800 px-1 rounded font-bold">Regional</span>' : ''}
+              </div>
+              <div class="text-right flex-shrink-0">
+                <span class="font-extrabold text-blue-950 text-xs">${item.total}</span>
+                <span class="text-[10px] text-slate-400 font-medium ml-1">(${item.perc}%)</span>
+              </div>
+            </div>
+            <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+              <div class="${barColor} h-1.5 rounded-full transition-all duration-500" style="width: ${pctBar}%"></div>
+            </div>
+          `;
+          containerLista.appendChild(div);
+        });
+      }
+
+      // Renderizar Gráfico Horizontal Chart.js
+      const canvasEl = document.getElementById('chart-localidade');
+      if (canvasEl) {
+        if (charts['localidade']) {
+          charts['localidade'].destroy();
+        }
+
+        const boldWeight = modoFonteGrande ? '800' : '700';
+        const baseFontSize = modoFonteGrande ? 12 : 11;
+
+        // Principais localidades para o gráfico de barras
+        const itensGrafico = ordenados.slice(0, 10);
+        const labels = itensGrafico.map(i => i.bairro);
+        const valores = itensGrafico.map(i => i.total);
+
+        // Cores: líderes azul escuro, visitante em âmbar, demais em azul vibrante/ciano
+        const bgColors = itensGrafico.map((item, idx) => {
+          if (item.bairro.toLowerCase().includes('visitante')) return '#f59e0b';
+          if (idx === 0 || idx === 1) return '#1e3a8a';
+          if (idx < 5) return '#2563eb';
+          return '#38bdf8';
+        });
+
+        const ctx = canvasEl.getContext('2d');
+        charts['localidade'] = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: labels,
+            datasets: [{
+              data: valores,
+              backgroundColor: bgColors,
+              borderRadius: 6,
+              borderSkipped: false,
+              barPercentage: 0.75,
+              categoryPercentage: 0.85
+            }]
+          },
+          options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                callbacks: {
+                  label: function(ctx) {
+                    const item = itensGrafico[ctx.dataIndex];
+                    const pct = item ? item.perc : '0';
+                    return ` ${ctx.raw} pessoa(s) entrevistada(s) (${pct}%)`;
+                  }
+                }
+              }
+            },
+            scales: {
+              x: {
+                beginAtZero: true,
+                ticks: {
+                  stepSize: 1,
+                  precision: 0,
+                  font: { size: baseFontSize, weight: boldWeight },
+                  color: '#64748b'
+                },
+                grid: { color: '#f1f5f9' }
+              },
+              y: {
+                ticks: {
+                  font: { size: baseFontSize, weight: boldWeight },
+                  color: '#1e293b'
+                },
+                grid: { display: false }
+              }
+            }
+          }
         });
       }
     }
