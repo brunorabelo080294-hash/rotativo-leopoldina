@@ -1018,7 +1018,7 @@
 
     // Forçar atualização do Service Worker e capturar instalação PWA
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js?v=18').then((reg) => {
+      navigator.serviceWorker.register('sw.js?v=19').then((reg) => {
         reg.update();
       }).catch(err => console.log('SW fail:', err));
     }
@@ -1417,22 +1417,27 @@
           responsive: true,
           maintainAspectRatio: false,
           layout: {
-            padding: { top: 22 }
+            padding: { top: 32 }
           },
           plugins: {
             legend: { display: false },
             datalabels: {
               anchor: 'end',
               align: 'top',
-              offset: 2,
-              color: '#0f172a',
+              offset: 4,
+              backgroundColor: '#0b1e36',
+              borderColor: '#ffffff',
+              borderWidth: 1.5,
+              borderRadius: 6,
+              color: '#ffffff',
               font: {
                 family: '"Plus Jakarta Sans", sans-serif',
-                weight: boldWeight,
-                size: baseFontSize + 1
+                weight: '900',
+                size: 12
               },
+              padding: { top: 3, bottom: 3, left: 6, right: 6 },
               formatter: (value) => {
-                if (!value || value === 0) return '0';
+                if (!value || value === 0) return '';
                 const total = notas.length || 1;
                 const perc = ((value / total) * 100).toFixed(0);
                 return `${value} (${perc}%)`;
@@ -1447,7 +1452,7 @@
           scales: {
             y: { 
               beginAtZero: true, 
-              grace: '18%',
+              grace: '25%',
               grid: { color: '#f1f5f9' }, 
               ticks: { font: { size: baseFontSize, weight: boldWeight } } 
             },
@@ -1463,11 +1468,18 @@
         vagasMap[v] = (vagasMap[v] || 0) + 1;
       });
 
+      const totalVagas = Object.values(vagasMap).reduce((a, b) => a + b, 0) || 1;
+      const vagasLabelsWithValues = Object.keys(vagasMap).map(k => {
+        const cnt = vagasMap[k];
+        const pct = ((cnt / totalVagas) * 100).toFixed(0);
+        return `${k} (${cnt} • ${pct}%)`;
+      });
+
       const ctxVagas = document.getElementById('chart-vagas').getContext('2d');
       charts['vagas'] = new Chart(ctxVagas, {
         type: 'doughnut',
         data: {
-          labels: Object.keys(vagasMap),
+          labels: vagasLabelsWithValues,
           datasets: [{
             data: Object.values(vagasMap),
             backgroundColor: ['#10b981', '#3b82f6', '#ef4444', '#94a3b8'],
@@ -1488,24 +1500,27 @@
               } 
             },
             datalabels: {
+              backgroundColor: '#0b1e36',
+              borderColor: '#ffffff',
+              borderWidth: 1.5,
+              borderRadius: 6,
               color: '#ffffff',
-              textShadowColor: 'rgba(0, 0, 0, 0.8)',
-              textShadowBlur: 4,
               font: {
                 family: '"Plus Jakarta Sans", sans-serif',
-                weight: '800',
-                size: baseFontSize + 1
+                weight: '900',
+                size: 13
               },
+              padding: { top: 4, bottom: 4, left: 7, right: 7 },
               formatter: (value, ctx) => {
                 if (!value || value === 0) return '';
                 const total = ctx.dataset.data.reduce((a, b) => a + b, 0);
                 const perc = ((value / total) * 100).toFixed(0);
-                if (perc < 5) return '';
+                if (perc < 6) return `${value}`;
                 return `${value} (${perc}%)`;
               }
             }
           },
-          cutout: '65%'
+          cutout: '50%'
         }
       });
 
@@ -1584,21 +1599,26 @@
           indexAxis: 'y',
           responsive: true,
           maintainAspectRatio: false,
-          layout: {
-            padding: { right: 55 }
+            layout: {
+            padding: { right: 80 }
           },
           plugins: { 
             legend: { display: false },
             datalabels: {
               anchor: 'end',
               align: 'right',
-              offset: 4,
-              color: '#0f172a',
+              offset: 6,
+              backgroundColor: '#0b1e36',
+              borderColor: '#ffffff',
+              borderWidth: 1.5,
+              borderRadius: 6,
+              color: '#ffffff',
               font: {
                 family: '"Plus Jakarta Sans", sans-serif',
-                weight: boldWeight,
-                size: baseFontSize
+                weight: '900',
+                size: 12
               },
+              padding: { top: 3, bottom: 3, left: 7, right: 7 },
               formatter: (value, ctx) => {
                 if (!value) return '';
                 const total = ctx.dataset.data.reduce((a, b) => a + b, 0);
@@ -1610,7 +1630,7 @@
           scales: {
             x: { 
               beginAtZero: true, 
-              grace: '20%',
+              grace: '28%',
               grid: { color: '#f1f5f9' }, 
               ticks: { font: { size: baseFontSize, weight: boldWeight } } 
             },
@@ -1632,11 +1652,18 @@
         }
       });
 
+      const totalFluxo = Object.values(fluxoMap).reduce((a, b) => a + b, 0) || 1;
+      const fluxoLabelsWithValues = Object.keys(fluxoMap).map(k => {
+        const cnt = fluxoMap[k];
+        const pct = ((cnt / totalFluxo) * 100).toFixed(0);
+        return `${k} (${cnt} • ${pct}%)`;
+      });
+
       const ctxFluxo = document.getElementById('chart-fluxo-comercio').getContext('2d');
       charts['fluxo'] = new Chart(ctxFluxo, {
         type: 'doughnut',
         data: {
-          labels: Object.keys(fluxoMap),
+          labels: fluxoLabelsWithValues,
           datasets: [{
             data: Object.values(fluxoMap),
             backgroundColor: ['#94a3b8', '#ef4444', '#10b981', '#cbd5e1'],
@@ -1657,24 +1684,27 @@
               } 
             },
             datalabels: {
+              backgroundColor: '#0b1e36',
+              borderColor: '#ffffff',
+              borderWidth: 1.5,
+              borderRadius: 6,
               color: '#ffffff',
-              textShadowColor: 'rgba(0, 0, 0, 0.8)',
-              textShadowBlur: 4,
               font: {
                 family: '"Plus Jakarta Sans", sans-serif',
-                weight: '800',
-                size: baseFontSize + 1
+                weight: '900',
+                size: 13
               },
+              padding: { top: 4, bottom: 4, left: 7, right: 7 },
               formatter: (value, ctx) => {
                 if (!value || value === 0) return '';
                 const total = ctx.dataset.data.reduce((a, b) => a + b, 0);
                 const perc = ((value / total) * 100).toFixed(0);
-                if (perc < 5) return '';
+                if (perc < 6) return `${value}`;
                 return `${value} (${perc}%)`;
               }
             }
           },
-          cutout: '60%'
+          cutout: '50%'
         }
       });
 
@@ -1743,20 +1773,25 @@
           responsive: true,
           maintainAspectRatio: false,
           layout: {
-            padding: { top: 22 }
+            padding: { top: 32 }
           },
           plugins: { 
             legend: { display: false },
             datalabels: {
               anchor: 'end',
               align: 'top',
-              offset: 2,
-              color: '#0f172a',
+              offset: 4,
+              backgroundColor: '#0b1e36',
+              borderColor: '#ffffff',
+              borderWidth: 1.5,
+              borderRadius: 6,
+              color: '#ffffff',
               font: {
                 family: '"Plus Jakarta Sans", sans-serif',
-                weight: boldWeight,
-                size: baseFontSize + 1
+                weight: '900',
+                size: 13
               },
+              padding: { top: 4, bottom: 4, left: 7, right: 7 },
               formatter: (value, ctx) => {
                 if (!value || value === 0) return '0';
                 const total = ctx.dataset.data.reduce((a, b) => a + b, 0);
@@ -1768,7 +1803,7 @@
           scales: {
             y: { 
               beginAtZero: true, 
-              grace: '20%',
+              grace: '25%',
               grid: { color: '#f1f5f9' }, 
               ticks: { font: { size: baseFontSize, weight: boldWeight } } 
             },
@@ -1795,14 +1830,14 @@
               pointHoverRadius: 8,
               datalabels: {
                 align: 'top',
-                offset: 5,
-                color: '#1e40af',
-                backgroundColor: 'rgba(239, 246, 255, 0.95)',
-                borderColor: '#93c5fd',
-                borderWidth: 1,
-                borderRadius: 4,
-                padding: { top: 2, bottom: 2, left: 5, right: 5 },
-                font: { size: baseFontSize, weight: '800' },
+                offset: 6,
+                color: '#ffffff',
+                backgroundColor: '#1d4ed8',
+                borderColor: '#ffffff',
+                borderWidth: 1.5,
+                borderRadius: 6,
+                padding: { top: 3, bottom: 3, left: 6, right: 6 },
+                font: { size: 12, weight: '900' },
                 formatter: (val) => `${Number(val).toFixed(1)} ★`
               }
             },
@@ -1818,14 +1853,14 @@
               yAxisID: 'y1',
               datalabels: {
                 align: 'bottom',
-                offset: 5,
-                color: '#065f46',
-                backgroundColor: 'rgba(236, 253, 245, 0.95)',
-                borderColor: '#a7f3d0',
-                borderWidth: 1,
-                borderRadius: 4,
-                padding: { top: 2, bottom: 2, left: 5, right: 5 },
-                font: { size: baseFontSize, weight: '800' },
+                offset: 6,
+                color: '#ffffff',
+                backgroundColor: '#047857',
+                borderColor: '#ffffff',
+                borderWidth: 1.5,
+                borderRadius: 6,
+                padding: { top: 3, bottom: 3, left: 6, right: 6 },
+                font: { size: 12, weight: '900' },
                 formatter: (val) => `${Math.round(val)}%`
               }
             }
@@ -2076,19 +2111,22 @@
                 }
               },
               datalabels: {
-                color: '#ffffff',
-                textShadowColor: 'rgba(0, 0, 0, 0.85)',
-                textShadowBlur: 4,
+                backgroundColor: '#ffffff',
+                borderColor: '#0b1e36',
+                borderWidth: 1.5,
+                borderRadius: 6,
+                color: '#0b1e36',
                 font: {
                   family: '"Plus Jakarta Sans", sans-serif',
                   weight: '900',
-                  size: baseFontSize + 1
+                  size: 13
                 },
+                padding: { top: 4, bottom: 4, left: 7, right: 7 },
                 formatter: (value, ctx) => {
                   if (!value || value === 0) return '';
                   const total = ctx.dataset.data.reduce((a, b) => a + b, 0);
                   const perc = ((value / total) * 100).toFixed(0);
-                  if (perc < 5) return '';
+                  if (perc < 6) return `${value}`;
                   return `${value} (${perc}%)`;
                 }
               },
@@ -2098,7 +2136,7 @@
                 }
               }
             },
-            cutout: '58%'
+            cutout: '48%'
           }
         });
       }

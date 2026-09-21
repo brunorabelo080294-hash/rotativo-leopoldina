@@ -1,4 +1,4 @@
-const CACHE_NAME = 'rotativo-leopoldina-v18';
+const CACHE_NAME = 'rotativo-leopoldina-v19';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
