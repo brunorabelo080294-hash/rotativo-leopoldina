@@ -49,9 +49,8 @@
     }
   </script>
 
-  <!-- Chart.js & Plugins -->
+  <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
   
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -1011,14 +1010,9 @@
     let modoFonteGrande = false;
     let deferredInstallPrompt = null;
 
-    // Registrar Plugin de Rótulos Numéricos nos Gráficos (ChartDataLabels)
-    if (typeof ChartDataLabels !== 'undefined' && typeof Chart !== 'undefined') {
-      Chart.register(ChartDataLabels);
-    }
-
     // Forçar atualização do Service Worker e capturar instalação PWA
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js?v=19').then((reg) => {
+      navigator.serviceWorker.register('sw.js?v=20').then((reg) => {
         reg.update();
       }).catch(err => console.log('SW fail:', err));
     }
@@ -1416,33 +1410,8 @@
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          layout: {
-            padding: { top: 32 }
-          },
           plugins: {
             legend: { display: false },
-            datalabels: {
-              anchor: 'end',
-              align: 'top',
-              offset: 4,
-              backgroundColor: '#0b1e36',
-              borderColor: '#ffffff',
-              borderWidth: 1.5,
-              borderRadius: 6,
-              color: '#ffffff',
-              font: {
-                family: '"Plus Jakarta Sans", sans-serif',
-                weight: '900',
-                size: 12
-              },
-              padding: { top: 3, bottom: 3, left: 6, right: 6 },
-              formatter: (value) => {
-                if (!value || value === 0) return '';
-                const total = notas.length || 1;
-                const perc = ((value / total) * 100).toFixed(0);
-                return `${value} (${perc}%)`;
-              }
-            },
             tooltip: {
               callbacks: {
                 label: (ctx) => ` ${ctx.raw} votos (${((ctx.raw / notas.length) * 100).toFixed(1)}%)`
@@ -1450,12 +1419,7 @@
             }
           },
           scales: {
-            y: { 
-              beginAtZero: true, 
-              grace: '25%',
-              grid: { color: '#f1f5f9' }, 
-              ticks: { font: { size: baseFontSize, weight: boldWeight } } 
-            },
+            y: { beginAtZero: true, grid: { color: '#f1f5f9' }, ticks: { font: { size: baseFontSize, weight: boldWeight } } },
             x: { grid: { display: false }, ticks: { font: { size: baseFontSize, weight: boldWeight } } }
           }
         }
@@ -1469,17 +1433,12 @@
       });
 
       const totalVagas = Object.values(vagasMap).reduce((a, b) => a + b, 0) || 1;
-      const vagasLabelsWithValues = Object.keys(vagasMap).map(k => {
-        const cnt = vagasMap[k];
-        const pct = ((cnt / totalVagas) * 100).toFixed(0);
-        return `${k} (${cnt} • ${pct}%)`;
-      });
 
       const ctxVagas = document.getElementById('chart-vagas').getContext('2d');
       charts['vagas'] = new Chart(ctxVagas, {
         type: 'doughnut',
         data: {
-          labels: vagasLabelsWithValues,
+          labels: Object.keys(vagasMap),
           datasets: [{
             data: Object.values(vagasMap),
             backgroundColor: ['#10b981', '#3b82f6', '#ef4444', '#94a3b8'],
@@ -1499,28 +1458,13 @@
                 padding: 8
               } 
             },
-            datalabels: {
-              backgroundColor: '#0b1e36',
-              borderColor: '#ffffff',
-              borderWidth: 1.5,
-              borderRadius: 6,
-              color: '#ffffff',
-              font: {
-                family: '"Plus Jakarta Sans", sans-serif',
-                weight: '900',
-                size: 13
-              },
-              padding: { top: 4, bottom: 4, left: 7, right: 7 },
-              formatter: (value, ctx) => {
-                if (!value || value === 0) return '';
-                const total = ctx.dataset.data.reduce((a, b) => a + b, 0);
-                const perc = ((value / total) * 100).toFixed(0);
-                if (perc < 6) return `${value}`;
-                return `${value} (${perc}%)`;
+            tooltip: {
+              callbacks: {
+                label: (ctx) => ` ${ctx.label}: ${ctx.raw} votos (${((ctx.raw / totalVagas) * 100).toFixed(1)}%)`
               }
             }
           },
-          cutout: '50%'
+          cutout: '65%'
         }
       });
 
@@ -1599,41 +1543,16 @@
           indexAxis: 'y',
           responsive: true,
           maintainAspectRatio: false,
-            layout: {
-            padding: { right: 80 }
-          },
           plugins: { 
             legend: { display: false },
-            datalabels: {
-              anchor: 'end',
-              align: 'right',
-              offset: 6,
-              backgroundColor: '#0b1e36',
-              borderColor: '#ffffff',
-              borderWidth: 1.5,
-              borderRadius: 6,
-              color: '#ffffff',
-              font: {
-                family: '"Plus Jakarta Sans", sans-serif',
-                weight: '900',
-                size: 12
-              },
-              padding: { top: 3, bottom: 3, left: 7, right: 7 },
-              formatter: (value, ctx) => {
-                if (!value) return '';
-                const total = ctx.dataset.data.reduce((a, b) => a + b, 0);
-                const perc = ((value / total) * 100).toFixed(0);
-                return `${value} (${perc}%)`;
+            tooltip: {
+              callbacks: {
+                label: (ctx) => ` ${ctx.raw} votos (${((ctx.raw / data.length) * 100).toFixed(1)}%)`
               }
             }
           },
           scales: {
-            x: { 
-              beginAtZero: true, 
-              grace: '28%',
-              grid: { color: '#f1f5f9' }, 
-              ticks: { font: { size: baseFontSize, weight: boldWeight } } 
-            },
+            x: { beginAtZero: true, grid: { color: '#f1f5f9' }, ticks: { font: { size: baseFontSize, weight: boldWeight } } },
             y: { grid: { display: false }, ticks: { font: { size: baseFontSize, weight: boldWeight } } }
           }
         }
@@ -1653,17 +1572,12 @@
       });
 
       const totalFluxo = Object.values(fluxoMap).reduce((a, b) => a + b, 0) || 1;
-      const fluxoLabelsWithValues = Object.keys(fluxoMap).map(k => {
-        const cnt = fluxoMap[k];
-        const pct = ((cnt / totalFluxo) * 100).toFixed(0);
-        return `${k} (${cnt} • ${pct}%)`;
-      });
 
       const ctxFluxo = document.getElementById('chart-fluxo-comercio').getContext('2d');
       charts['fluxo'] = new Chart(ctxFluxo, {
         type: 'doughnut',
         data: {
-          labels: fluxoLabelsWithValues,
+          labels: Object.keys(fluxoMap),
           datasets: [{
             data: Object.values(fluxoMap),
             backgroundColor: ['#94a3b8', '#ef4444', '#10b981', '#cbd5e1'],
@@ -1683,28 +1597,13 @@
                 padding: 6
               } 
             },
-            datalabels: {
-              backgroundColor: '#0b1e36',
-              borderColor: '#ffffff',
-              borderWidth: 1.5,
-              borderRadius: 6,
-              color: '#ffffff',
-              font: {
-                family: '"Plus Jakarta Sans", sans-serif',
-                weight: '900',
-                size: 13
-              },
-              padding: { top: 4, bottom: 4, left: 7, right: 7 },
-              formatter: (value, ctx) => {
-                if (!value || value === 0) return '';
-                const total = ctx.dataset.data.reduce((a, b) => a + b, 0);
-                const perc = ((value / total) * 100).toFixed(0);
-                if (perc < 6) return `${value}`;
-                return `${value} (${perc}%)`;
+            tooltip: {
+              callbacks: {
+                label: (ctx) => ` ${ctx.label}: ${ctx.raw} votos (${((ctx.raw / totalFluxo) * 100).toFixed(1)}%)`
               }
             }
           },
-          cutout: '50%'
+          cutout: '60%'
         }
       });
 
@@ -1772,41 +1671,16 @@
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          layout: {
-            padding: { top: 32 }
-          },
           plugins: { 
             legend: { display: false },
-            datalabels: {
-              anchor: 'end',
-              align: 'top',
-              offset: 4,
-              backgroundColor: '#0b1e36',
-              borderColor: '#ffffff',
-              borderWidth: 1.5,
-              borderRadius: 6,
-              color: '#ffffff',
-              font: {
-                family: '"Plus Jakarta Sans", sans-serif',
-                weight: '900',
-                size: 13
-              },
-              padding: { top: 4, bottom: 4, left: 7, right: 7 },
-              formatter: (value, ctx) => {
-                if (!value || value === 0) return '0';
-                const total = ctx.dataset.data.reduce((a, b) => a + b, 0);
-                const perc = ((value / total) * 100).toFixed(0);
-                return `${value} (${perc}%)`;
+            tooltip: {
+              callbacks: {
+                label: (ctx) => ` ${ctx.raw} pessoas (${((ctx.raw / (notifMap['Já pagou'] + notifMap['Nunca pagou'] || 1)) * 100).toFixed(1)}%)`
               }
             }
           },
           scales: {
-            y: { 
-              beginAtZero: true, 
-              grace: '25%',
-              grid: { color: '#f1f5f9' }, 
-              ticks: { font: { size: baseFontSize, weight: boldWeight } } 
-            },
+            y: { beginAtZero: true, grid: { color: '#f1f5f9' }, ticks: { font: { size: baseFontSize, weight: boldWeight } } },
             x: { ticks: { font: { size: baseFontSize, weight: boldWeight } } }
           }
         }
@@ -1826,20 +1700,7 @@
               backgroundColor: 'rgba(37, 99, 235, 0.1)',
               tension: 0.3,
               fill: true,
-              pointRadius: mobileMode ? 5 : 6,
-              pointHoverRadius: 8,
-              datalabels: {
-                align: 'top',
-                offset: 6,
-                color: '#ffffff',
-                backgroundColor: '#1d4ed8',
-                borderColor: '#ffffff',
-                borderWidth: 1.5,
-                borderRadius: 6,
-                padding: { top: 3, bottom: 3, left: 6, right: 6 },
-                font: { size: 12, weight: '900' },
-                formatter: (val) => `${Number(val).toFixed(1)} ★`
-              }
+              pointRadius: mobileMode ? 4 : 6,
             },
             {
               label: 'Aprovação (%)',
@@ -1848,38 +1709,22 @@
               backgroundColor: 'transparent',
               borderDash: [4, 4],
               tension: 0.3,
-              pointRadius: mobileMode ? 4 : 5,
-              pointHoverRadius: 7,
-              yAxisID: 'y1',
-              datalabels: {
-                align: 'bottom',
-                offset: 6,
-                color: '#ffffff',
-                backgroundColor: '#047857',
-                borderColor: '#ffffff',
-                borderWidth: 1.5,
-                borderRadius: 6,
-                padding: { top: 3, bottom: 3, left: 6, right: 6 },
-                font: { size: 12, weight: '900' },
-                formatter: (val) => `${Math.round(val)}%`
-              }
+              pointRadius: mobileMode ? 3 : 5,
+              yAxisID: 'y1'
             }
           ]
         },
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          layout: {
-            padding: { top: 20, bottom: 20 }
-          },
           plugins: {
             legend: {
               labels: { boxWidth: 10, font: { size: baseFontSize, weight: boldWeight } }
             }
           },
           scales: {
-            y: { min: 1, max: 5.2, grid: { color: '#f1f5f9' }, ticks: { font: { size: baseFontSize, weight: boldWeight } } },
-            y1: { min: 0, max: 110, position: 'right', grid: { display: false }, ticks: { font: { size: baseFontSize, weight: boldWeight }, callback: v => v + '%' } }
+            y: { min: 1, max: 5, grid: { color: '#f1f5f9' }, ticks: { font: { size: baseFontSize, weight: boldWeight } } },
+            y1: { min: 0, max: 100, position: 'right', grid: { display: false }, ticks: { font: { size: baseFontSize, weight: boldWeight }, callback: v => v + '%' } }
           }
         }
       });
@@ -2110,33 +1955,13 @@
                   padding: 6
                 }
               },
-              datalabels: {
-                backgroundColor: '#ffffff',
-                borderColor: '#0b1e36',
-                borderWidth: 1.5,
-                borderRadius: 6,
-                color: '#0b1e36',
-                font: {
-                  family: '"Plus Jakarta Sans", sans-serif',
-                  weight: '900',
-                  size: 13
-                },
-                padding: { top: 4, bottom: 4, left: 7, right: 7 },
-                formatter: (value, ctx) => {
-                  if (!value || value === 0) return '';
-                  const total = ctx.dataset.data.reduce((a, b) => a + b, 0);
-                  const perc = ((value / total) * 100).toFixed(0);
-                  if (perc < 6) return `${value}`;
-                  return `${value} (${perc}%)`;
-                }
-              },
               tooltip: {
                 callbacks: {
                   label: (ctx) => ` ${ctx.label}: ${ctx.raw} entrevistados`
                 }
               }
             },
-            cutout: '48%'
+            cutout: '58%'
           }
         });
       }
