@@ -1,3 +1,5 @@
+// Base consolidada de respostas (Offline First)
+// Total de entrevistas consolidadas: 90
 window.DADOS_INICIAIS = [
   {
     "id": 1,
@@ -19,7 +21,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "",
     "tipo_comercio": "",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 1
   },
   {
     "id": 2,
@@ -41,7 +43,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "",
     "tipo_comercio": "",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 1
   },
   {
     "id": 3,
@@ -63,7 +65,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "",
     "tipo_comercio": "",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 1
   },
   {
     "id": 4,
@@ -85,7 +87,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "",
     "tipo_comercio": "",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 1
   },
   {
     "id": 5,
@@ -107,7 +109,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "",
     "tipo_comercio": "",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 1
   },
   {
     "id": 6,
@@ -129,7 +131,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "",
     "tipo_comercio": "",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 1
   },
   {
     "id": 7,
@@ -151,7 +153,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "",
     "tipo_comercio": "",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 1
   },
   {
     "id": 8,
@@ -173,7 +175,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "",
     "tipo_comercio": "",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 1
   },
   {
     "id": 9,
@@ -195,7 +197,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "",
     "tipo_comercio": "",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 1
   },
   {
     "id": 10,
@@ -217,7 +219,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "",
     "tipo_comercio": "",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 1
   },
   {
     "id": 11,
@@ -239,7 +241,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "",
     "tipo_comercio": "",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 1
   },
   {
     "id": 12,
@@ -261,7 +263,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "",
     "tipo_comercio": "",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 1
   },
   {
     "id": 13,
@@ -283,7 +285,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "",
     "tipo_comercio": "",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 1
   },
   {
     "id": 14,
@@ -305,7 +307,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "",
     "tipo_comercio": "",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 1
   },
   {
     "id": 15,
@@ -327,7 +329,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "",
     "tipo_comercio": "",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 1
   },
   {
     "id": 16,
@@ -349,7 +351,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "",
     "tipo_comercio": "",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 1
   },
   {
     "id": 17,
@@ -371,7 +373,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "",
     "tipo_comercio": "",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 1
   },
   {
     "id": 18,
@@ -393,7 +395,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "",
     "tipo_comercio": "",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 1
   },
   {
     "id": 19,
@@ -415,7 +417,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "",
     "tipo_comercio": "",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 1
   },
   {
     "id": 20,
@@ -437,7 +439,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "",
     "tipo_comercio": "",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 1
   },
   {
     "id": 21,
@@ -459,7 +461,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "",
     "tipo_comercio": "",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 1
   },
   {
     "id": 22,
@@ -481,7 +483,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "",
     "tipo_comercio": "",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 1
   },
   {
     "id": 23,
@@ -503,7 +505,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "",
     "tipo_comercio": "",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 1
   },
   {
     "id": 24,
@@ -525,7 +527,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "",
     "tipo_comercio": "",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 1
   },
   {
     "id": 25,
@@ -547,7 +549,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "",
     "tipo_comercio": "",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 1
   },
   {
     "id": 26,
@@ -569,7 +571,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "",
     "tipo_comercio": "",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 1
   },
   {
     "id": 27,
@@ -591,7 +593,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "",
     "tipo_comercio": "",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 1
   },
   {
     "id": 28,
@@ -613,7 +615,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "",
     "tipo_comercio": "",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 1
   },
   {
     "id": 29,
@@ -635,7 +637,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "",
     "tipo_comercio": "",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 1
   },
   {
     "id": 30,
@@ -657,7 +659,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "",
     "tipo_comercio": "",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 1
   },
   {
     "id": 31,
@@ -679,7 +681,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "",
     "tipo_comercio": "",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 2
   },
   {
     "id": 32,
@@ -701,7 +703,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "",
     "tipo_comercio": "",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 2
   },
   {
     "id": 33,
@@ -723,7 +725,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "",
     "tipo_comercio": "",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 2
   },
   {
     "id": 34,
@@ -745,7 +747,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "",
     "tipo_comercio": "",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 2
   },
   {
     "id": 35,
@@ -767,7 +769,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "",
     "tipo_comercio": "",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 2
   },
   {
     "id": 36,
@@ -789,7 +791,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "",
     "tipo_comercio": "",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 2
   },
   {
     "id": 37,
@@ -811,7 +813,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "",
     "tipo_comercio": "",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 2
   },
   {
     "id": 38,
@@ -833,7 +835,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "",
     "tipo_comercio": "",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 2
   },
   {
     "id": 39,
@@ -855,7 +857,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "",
     "tipo_comercio": "",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 2
   },
   {
     "id": 40,
@@ -877,7 +879,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "Não sei informar",
     "tipo_comercio": "Eletrônico",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 2
   },
   {
     "id": 41,
@@ -899,7 +901,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "Não sei informar",
     "tipo_comercio": "Vestuário",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 2
   },
   {
     "id": 42,
@@ -921,7 +923,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "Abaixou",
     "tipo_comercio": "Eletronicos",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 2
   },
   {
     "id": 43,
@@ -943,7 +945,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "Não sei informar",
     "tipo_comercio": "Utilidade e brinquedos",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 2
   },
   {
     "id": 44,
@@ -965,7 +967,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "",
     "tipo_comercio": "",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 2
   },
   {
     "id": 45,
@@ -987,7 +989,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "Não sei informar",
     "tipo_comercio": "Aviamento e pedrarias",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 2
   },
   {
     "id": 46,
@@ -1009,7 +1011,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "Não sei informar",
     "tipo_comercio": "Vestuários",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 2
   },
   {
     "id": 47,
@@ -1031,7 +1033,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "Não sei informar",
     "tipo_comercio": "Calçados",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 2
   },
   {
     "id": 48,
@@ -1053,7 +1055,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "Não sei informar",
     "tipo_comercio": "Celulares",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 2
   },
   {
     "id": 49,
@@ -1075,7 +1077,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "Não sei informar",
     "tipo_comercio": "Moveis e eletrodomesticos",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 2
   },
   {
     "id": 50,
@@ -1097,7 +1099,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "Nao sabe informar, pq nao sabe se foi a crise econômica ou o rotativo.",
     "tipo_comercio": "Vestuários",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 2
   },
   {
     "id": 51,
@@ -1119,7 +1121,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "Não sei informar",
     "tipo_comercio": "Celulares",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 2
   },
   {
     "id": 52,
@@ -1141,7 +1143,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "Diminuiu",
     "tipo_comercio": "Roupas",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 2
   },
   {
     "id": 53,
@@ -1163,7 +1165,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "30%",
     "tipo_comercio": "Vestuários",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 2
   },
   {
     "id": 54,
@@ -1185,7 +1187,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "Nao sabe dizer se foi por causa da crise ou do rotativo",
     "tipo_comercio": "Tecido",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 2
   },
   {
     "id": 55,
@@ -1207,7 +1209,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "-6%",
     "tipo_comercio": "Varejo",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 2
   },
   {
     "id": 56,
@@ -1229,7 +1231,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "Não sei informar",
     "tipo_comercio": "Vestuários",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 2
   },
   {
     "id": 57,
@@ -1251,7 +1253,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "Não sei informar",
     "tipo_comercio": "Perfumaria",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 2
   },
   {
     "id": 58,
@@ -1273,7 +1275,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "Não sei informar",
     "tipo_comercio": "Planos e aparelhos",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 2
   },
   {
     "id": 59,
@@ -1295,7 +1297,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "Diminuiu",
     "tipo_comercio": "Doces finos",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 2
   },
   {
     "id": 60,
@@ -1317,7 +1319,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "Não sei informar",
     "tipo_comercio": "Vestuários",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 2
   },
   {
     "id": 61,
@@ -1339,7 +1341,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "Não sei informar",
     "tipo_comercio": "",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 2
   },
   {
     "id": 62,
@@ -1361,7 +1363,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "Não sei informar",
     "tipo_comercio": "Farmácia",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 2
   },
   {
     "id": 63,
@@ -1383,7 +1385,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "Não sei informar",
     "tipo_comercio": "Loja de cosméticos",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 2
   },
   {
     "id": 64,
@@ -1405,7 +1407,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "Não sei informar",
     "tipo_comercio": "",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 2
   },
   {
     "id": 65,
@@ -1427,7 +1429,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "Não sei informar",
     "tipo_comercio": "Farmacia",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 2
   },
   {
     "id": 66,
@@ -1449,7 +1451,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "Não sei informar",
     "tipo_comercio": "Loja de roupa",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 2
   },
   {
     "id": 67,
@@ -1471,7 +1473,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "Não sei informar",
     "tipo_comercio": "",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 2
   },
   {
     "id": 68,
@@ -1493,7 +1495,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "Não sei informar",
     "tipo_comercio": "Joias",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 2
   },
   {
     "id": 69,
@@ -1515,7 +1517,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "Não sei informar",
     "tipo_comercio": "",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 2
   },
   {
     "id": 70,
@@ -1537,7 +1539,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "diminuiu muito",
     "tipo_comercio": "Vestuario",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 2
   },
   {
     "id": 71,
@@ -1559,7 +1561,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "Não sei informar",
     "tipo_comercio": "Cosméticos",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 2
   },
   {
     "id": 72,
@@ -1581,7 +1583,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "Não sei informar",
     "tipo_comercio": "",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 2
   },
   {
     "id": 73,
@@ -1603,7 +1605,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "Não sei informar",
     "tipo_comercio": "",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 2
   },
   {
     "id": 74,
@@ -1625,7 +1627,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "Não sei informar",
     "tipo_comercio": "Vestuário",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 2
   },
   {
     "id": 75,
@@ -1647,7 +1649,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "Não sei informar",
     "tipo_comercio": "",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 2
   },
   {
     "id": 76,
@@ -1669,7 +1671,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "Não sei informar",
     "tipo_comercio": "",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 2
   },
   {
     "id": 77,
@@ -1691,7 +1693,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "Diminuiu",
     "tipo_comercio": "Celulares",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 2
   },
   {
     "id": 78,
@@ -1713,7 +1715,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "Não sei informar",
     "tipo_comercio": "",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 2
   },
   {
     "id": 79,
@@ -1735,7 +1737,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "Não sei informar",
     "tipo_comercio": "Vesttuario",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 2
   },
   {
     "id": 80,
@@ -1757,7 +1759,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "Não sei informar",
     "tipo_comercio": "",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 2
   },
   {
     "id": 81,
@@ -1779,7 +1781,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "Não sei informar",
     "tipo_comercio": "",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 2
   },
   {
     "id": 82,
@@ -1801,7 +1803,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "Não sei informar",
     "tipo_comercio": "",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 2
   },
   {
     "id": 83,
@@ -1823,7 +1825,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "Não sei informar",
     "tipo_comercio": "Vestuário",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 2
   },
   {
     "id": 84,
@@ -1845,7 +1847,7 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "Não sei informar",
     "tipo_comercio": "",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 2
   },
   {
     "id": 85,
@@ -1867,6 +1869,116 @@ window.DADOS_INICIAIS = [
     "aumento_faturamento": "Diminuiu muito",
     "tipo_comercio": "Gráfica",
     "outro": "",
-    "pesquisa_onda": "Pesquisa 01 - Centro (Com Rotativo)"
+    "pesquisa_onda": 2
+  },
+  {
+    "id": 86,
+    "timestamp": "21/09/2026 11:17:40",
+    "nome": "Wilma",
+    "idade": "53",
+    "contato": "",
+    "documento": "Prefiro não informar",
+    "endereco": "Carmita monteiro",
+    "perfil": "Comerciante / Funcionário de loja",
+    "local": "Cotegipe",
+    "satisfacao": 1,
+    "facilidade_vagas": "Sim, melhorou muito.",
+    "impacto_comercio": "Diminuiu o fluxo (clientes evitam pagar ou não sabem usar).",
+    "avaliacao_preco_app": "Preço justo e aplicativo fácil de usar.",
+    "tarifa_pos_utilizacao": "Sou contra esse formato de cobrança.",
+    "sugestao_critica": "Esse sistema de 10 minutos não funciona direito, já fiquei menos de 10 minutos e fui multada",
+    "pagou_pos_utilizacao": "Sim",
+    "aumento_faturamento": "Diminuiu muito",
+    "tipo_comercio": "Roupas",
+    "outro": "",
+    "pesquisa_onda": 2
+  },
+  {
+    "id": 87,
+    "timestamp": "21/09/2026 11:20:23",
+    "nome": "FERNANDA DA SILVA MOURA",
+    "idade": "60",
+    "contato": "",
+    "documento": "Prefiro não informar",
+    "endereco": "ELDORADO",
+    "perfil": "Motorista / Pedestre (visitante)",
+    "local": "Praça Félix Martins",
+    "satisfacao": 2,
+    "facilidade_vagas": "Sim, melhorou um pouco.",
+    "impacto_comercio": "Não se aplica (não é comerciante).",
+    "avaliacao_preco_app": "Preço justo, mas aplicativo/pagamento é confuso.",
+    "tarifa_pos_utilizacao": "Eu não sabia que isso existia, mas acho uma excelente alternativa para evitar multas.",
+    "sugestao_critica": "EM OUTRAS CIDADES O IDOSO TEM DIREITO DE ESTACIONAR SEM PAGAR. AQUI ISSO NÃO É CONSIDERADO.",
+    "pagou_pos_utilizacao": "Não",
+    "aumento_faturamento": "Não sei informar",
+    "tipo_comercio": "",
+    "outro": "",
+    "pesquisa_onda": 2
+  },
+  {
+    "id": 88,
+    "timestamp": "21/09/2026 11:28:37",
+    "nome": "Rafael Hyago de Oliveira",
+    "idade": "27",
+    "contato": "",
+    "documento": "Prefiro não informar",
+    "endereco": "Centro",
+    "perfil": "Motorista / Pedestre (visitante)",
+    "local": "Praça Félix Martins",
+    "satisfacao": 3,
+    "facilidade_vagas": "Sim, melhorou um pouco.",
+    "impacto_comercio": "Não se aplica (não é comerciante).",
+    "avaliacao_preco_app": "Preço justo e aplicativo fácil de usar.",
+    "tarifa_pos_utilizacao": "Já conhecia, acho útil, mas o prazo de 3 dias para pagamento deveria ser maior.",
+    "sugestao_critica": "",
+    "pagou_pos_utilizacao": "Não",
+    "aumento_faturamento": "Não sei informar",
+    "tipo_comercio": "",
+    "outro": "",
+    "pesquisa_onda": 2
+  },
+  {
+    "id": 89,
+    "timestamp": "21/09/2026 11:30:40",
+    "nome": "João Roberto",
+    "idade": "43",
+    "contato": "",
+    "documento": "Prefiro não informar",
+    "endereco": "Alto da ventania",
+    "perfil": "Motorista / Pedestre (visitante)",
+    "local": "Praça Félix Martins",
+    "satisfacao": 4,
+    "facilidade_vagas": "Sim, melhorou muito.",
+    "impacto_comercio": "Não se aplica (não é comerciante).",
+    "avaliacao_preco_app": "Preço justo e aplicativo fácil de usar.",
+    "tarifa_pos_utilizacao": "Eu não sabia que isso existia, mas acho uma excelente alternativa para evitar multas.",
+    "sugestao_critica": "",
+    "pagou_pos_utilizacao": "Não",
+    "aumento_faturamento": "Não sei informar",
+    "tipo_comercio": "",
+    "outro": "",
+    "pesquisa_onda": 2
+  },
+  {
+    "id": 90,
+    "timestamp": "21/09/2026 11:37:01",
+    "nome": "Silva Ferras",
+    "idade": "60",
+    "contato": "",
+    "documento": "Prefiro não informar",
+    "endereco": "Pirineus",
+    "perfil": "Comerciante / Funcionário de loja",
+    "local": "Cotegipe",
+    "satisfacao": 1,
+    "facilidade_vagas": "Sim, melhorou um pouco.",
+    "impacto_comercio": "Diminuiu o fluxo (clientes evitam pagar ou não sabem usar).",
+    "avaliacao_preco_app": "Preço justo, mas aplicativo/pagamento é confuso.",
+    "tarifa_pos_utilizacao": "Sou contra esse formato de cobrança.",
+    "sugestao_critica": "Totalmente contra",
+    "pagou_pos_utilizacao": "Não",
+    "aumento_faturamento": "Faturamento horrível",
+    "tipo_comercio": "Roupa de crianca",
+    "outro": "",
+    "pesquisa_onda": 2
   }
 ];

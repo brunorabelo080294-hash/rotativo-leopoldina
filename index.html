@@ -810,32 +810,14 @@
                 </span>
                 <span class="text-[10px] bg-amber-500/20 text-amber-300 font-black px-2 py-0.5 rounded border border-amber-500/30">Mais Citadas</span>
               </div>
-              <ul class="space-y-2 text-[11px] text-slate-200">
-                <li class="flex items-start gap-2 bg-white/5 p-2.5 rounded-lg border border-white/5">
-                  <span class="w-5 h-5 rounded-full bg-amber-400/20 text-amber-300 flex items-center justify-center font-black text-xs flex-shrink-0 mt-0.5">1</span>
-                  <div>
-                    <strong class="text-white block text-xs">Aumentar a Tolerância para 15 a 20 minutos</strong>
-                    <span class="text-slate-300 text-[11px] leading-tight block mt-0.5">Reivindicação mais citada (motoristas e lojistas): relatam que 10 minutos é insuficiente para paradas rápidas (farmácia, padaria, entregas) ou para abrir o app e pagar com calma.</span>
-                  </div>
-                </li>
-                <li class="flex items-start gap-2 bg-white/5 p-2.5 rounded-lg border border-white/5">
-                  <span class="w-5 h-5 rounded-full bg-rose-400/20 text-rose-300 flex items-center justify-center font-black text-xs flex-shrink-0 mt-0.5">2</span>
-                  <div>
-                    <strong class="text-white block text-xs">Revisão e Maior Prazo na Tarifa Pós-Uso (R$ 20,00)</strong>
-                    <span class="text-slate-300 text-[11px] leading-tight block mt-0.5">Usuários pedem cobrança proporcional (ex: cobrar horas adicionais) em vez dos R$ 20 imediatos, aviso prévio no celular antes da tarifa e flexibilidade se o celular descarregar.</span>
-                  </div>
-                </li>
-                <li class="flex items-start gap-2 bg-white/5 p-2.5 rounded-lg border border-white/5">
-                  <span class="w-5 h-5 rounded-full bg-purple-400/20 text-purple-300 flex items-center justify-center font-black text-xs flex-shrink-0 mt-0.5">3</span>
-                  <div>
-                    <strong class="text-white block text-xs">Mais Monitores Visíveis e Pontos de Venda Físicos</strong>
-                    <span class="text-slate-300 text-[11px] leading-tight block mt-0.5">População pede monitores distribuídos em pontos fixos para orientar pedestres e idosos, além de mais lojas credenciadas para quem não usa o app ou prefere pagar em dinheiro.</span>
-                  </div>
-                </li>
+              <ul class="space-y-2 text-[11px] text-slate-200" id="lista-top-3-solicitacoes">
+                <!-- Renderizado dinamicamente via JS com as 3 mais votadas em tempo real -->
               </ul>
-              <div class="pt-2 border-t border-white/10 text-[10px] text-slate-300 flex items-center gap-1.5">
-                <i data-lucide="info" class="w-3.5 h-3.5 text-amber-400 flex-shrink-0"></i>
-                <span>Reivindicações extraídas espontaneamente das respostas da pesquisa de campo.</span>
+              <div class="pt-2 border-t border-white/10 text-[10px] text-slate-300 flex items-center justify-between gap-1.5">
+                <span class="flex items-center gap-1.5">
+                  <i data-lucide="refresh-cw" class="w-3.5 h-3.5 text-amber-400 flex-shrink-0"></i>
+                  <span>Reordenado automaticamente conforme novas respostas chegam da rua.</span>
+                </span>
               </div>
             </div>
 
@@ -1118,7 +1100,7 @@
 
     // Forçar atualização do Service Worker e capturar instalação PWA
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js?v=22').then((reg) => {
+      navigator.serviceWorker.register('sw.js?v=23').then((reg) => {
         reg.update();
       }).catch(err => console.log('SW fail:', err));
     }
@@ -2160,47 +2142,114 @@
         });
       }
 
-      // 4. Termômetro de Demandas Estatisticamente Relevantes (Coluna 13)
+      // 4. Termômetro de Demandas Estatisticamente Relevantes & Top 3 Solicitações Dinâmicas (Coluna 13)
+      const demandasDef = [
+        {
+          id: 'pos_uso',
+          name: 'Revisão do Valor da Tarifa Pós-Uso (R$ 20,00)',
+          kws: ['20', 'pos', 'pós', 'taxa', 'multa', 'abusiv', 'diária', 'diaria', 'injust'],
+          desc: 'Usuários pedem cobrança proporcional (ex: pagar hora adicional) em vez dos R$ 20 imediatos, aviso no celular antes da cobrança e flexibilidade se o celular descarregar.',
+          color: 'bg-rose-400',
+          badge: 'bg-rose-500/20 text-rose-300 border-rose-500/30',
+          numBadge: 'bg-rose-400/20 text-rose-300 border-rose-400/30',
+          count: 0
+        },
+        {
+          id: 'monitores',
+          name: 'Presença de Monitores e Informação / Pontos Físicos',
+          kws: ['monitor', 'monitores', 'fiscal', 'fiscais', 'orienta', 'informa', 'perdido', 'ajuda', 'ponto de venda', 'pontos de venda', 'local físico', 'locais fisicos'],
+          desc: 'População pede monitores fixos e visíveis para orientar pedestres e idosos, além de mais lojas credenciadas para quem não usa app ou prefere pagar em dinheiro.',
+          color: 'bg-purple-400',
+          badge: 'bg-purple-500/20 text-purple-300 border-purple-500/30',
+          numBadge: 'bg-purple-400/20 text-purple-300 border-purple-400/30',
+          count: 0
+        },
+        {
+          id: 'tolerancia',
+          name: 'Aumento da Tolerância (de 10 para 15 ou 20 min)',
+          kws: ['toler', 'minuto', '15 min', '20 min', 'tempo de toler', '15min', '20min', 'tempo'],
+          desc: 'Reivindicação de que 10 minutos é insuficiente para paradas rápidas (farmácia, padaria, entregas) ou para abrir o app e pagar com calma.',
+          color: 'bg-amber-400',
+          badge: 'bg-amber-500/20 text-amber-300 border-amber-500/30',
+          numBadge: 'bg-amber-400/20 text-amber-300 border-amber-400/30',
+          count: 0
+        },
+        {
+          id: 'idosos',
+          name: 'Acessibilidade e Apoio / Isenção para Idosos',
+          kws: ['idoso', 'idosos', 'credencial', 'dificuldade', 'mexer', 'complicado'],
+          desc: 'Reivindicação de facilitação para idosos com credencial, simplificação no manuseio do aplicativo e orientações presenciais na via.',
+          color: 'bg-cyan-400',
+          badge: 'bg-cyan-500/20 text-cyan-300 border-cyan-500/30',
+          numBadge: 'bg-cyan-400/20 text-cyan-300 border-cyan-400/30',
+          count: 0
+        },
+        {
+          id: 'motos',
+          name: 'Revisão de Valores para Motos e Motoboys',
+          kws: ['moto', 'motos', 'motoboy', 'motoboys'],
+          desc: 'Motociclistas e entregadores solicitam redução no valor da vaga de moto ou cadastro/isenção para entregadores em serviço.',
+          color: 'bg-orange-400',
+          badge: 'bg-orange-500/20 text-orange-300 border-orange-500/30',
+          numBadge: 'bg-orange-400/20 text-orange-300 border-orange-400/30',
+          count: 0
+        },
+        {
+          id: 'expansao',
+          name: 'Expansão do Rotativo para Outras Vias Centrais',
+          kws: ['outras ruas', 'outros lugares', 'expandir', 'carlos luz', 'terminar de implementar', 'demais ruas'],
+          desc: 'População e lojistas pedem que o rotativo chegue a outras ruas do Centro para evitar que carros fujam e sobrecarreguem vias vizinhas.',
+          color: 'bg-blue-400',
+          badge: 'bg-blue-500/20 text-blue-300 border-blue-500/30',
+          numBadge: 'bg-blue-400/20 text-blue-300 border-blue-400/30',
+          count: 0
+        }
+      ];
+
+      const elogiosObj = {
+        name: 'Elogios Espontâneos e Apoio Geral ao Rotativo',
+        kws: ['ótimo', 'otimo', 'bom', 'excelente', 'parabens', 'parabéns', 'melhorou', 'maravilhoso', 'gostei', 'aprovado', 'perfeito', 'útil', 'util', 'facilitou'],
+        color: 'bg-emerald-400',
+        badge: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30',
+        count: 0
+      };
+
+      let totalComentariosValidos = 0;
+      data.forEach(d => {
+        const c = (d.sugestao_critica || '').trim();
+        if (c.length > 2) {
+          totalComentariosValidos++;
+          const clow = c.toLowerCase();
+          if (elogiosObj.kws.some(kw => clow.includes(kw))) {
+            elogiosObj.count++;
+          }
+          demandasDef.forEach(dem => {
+            if (dem.kws.some(kw => clow.includes(kw))) {
+              dem.count++;
+            }
+          });
+        }
+      });
+
+      const totalBase = totalComentariosValidos || 1;
+      const elManif = document.getElementById('badge-total-manifestacoes');
+      if (elManif) elManif.innerText = totalComentariosValidos;
+
+      // Ordenar demandas por contagem de votos da maioria
+      const demandasOrdenadas = [...demandasDef].sort((a, b) => b.count - a.count);
+
+      // 4.A Renderiza Lista Esquerda (Termômetro Geral de Demandas)
       const containerDemandas = document.getElementById('lista-demandas-executivo');
       if (containerDemandas) {
         containerDemandas.innerHTML = '';
-        const cats = [
-          { name: 'Elogios Espontâneos e Apoio Geral ao Rotativo', kws: ['ótimo', 'otimo', 'bom', 'excelente', 'parabens', 'parabéns', 'melhorou', 'maravilhoso', 'gostei', 'aprovado'], count: 0, color: 'bg-emerald-400', badge: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30' },
-          { name: 'Aumento da Tolerância (de 10 para 15 ou 20 min)', kws: ['toler', 'minuto', '15 min', 'tempo', 'tolerancia'], count: 0, color: 'bg-amber-400', badge: 'bg-amber-500/20 text-amber-300 border-amber-500/30' },
-          { name: 'Revisão do valor da Taxa Pós-Uso (R$ 20)', kws: ['20', 'taxa', 'pos', 'pós', 'multa', 'abusiv'], count: 0, color: 'bg-rose-400', badge: 'bg-rose-500/20 text-rose-300 border-rose-500/30' },
-          { name: 'Presença e Orientação dos Monitores na Rua', kws: ['fiscal', 'monitor', 'guarda', 'cobrador', 'ajuda', 'fiscais'], count: 0, color: 'bg-purple-400', badge: 'bg-purple-500/20 text-purple-300 border-purple-500/30' },
-          { name: 'Demais Sugestões Pontuais Diversas', kws: [], count: 0, color: 'bg-slate-400', badge: 'bg-slate-500/20 text-slate-300 border-slate-500/30' }
-        ];
+        
+        // Inclui Elogios + as demandas ranqueadas que tiverem votos
+        const listaExibicao = [elogiosObj, ...demandasOrdenadas.filter(d => d.count > 0)];
+        const maxCount = Math.max(...listaExibicao.map(c => c.count), 1);
 
-        let totalComentarios = 0;
-        data.forEach(d => {
-          const c = (d.sugestao_critica || '').trim();
-          if (c.length > 2) {
-            totalComentarios++;
-            const clow = c.toLowerCase();
-            let matched = false;
-            for (let idx = 0; idx < 4; idx++) {
-              if (cats[idx].kws.some(kw => clow.includes(kw))) {
-                cats[idx].count++;
-                matched = true;
-                break;
-              }
-            }
-            if (!matched) {
-              cats[4].count++;
-            }
-          }
-        });
-
-        const maxCount = Math.max(...cats.map(c => c.count), 1);
-        const totalBase = totalComentarios || 1;
-
-        const elManif = document.getElementById('badge-total-manifestacoes');
-        if (elManif) elManif.innerText = totalComentarios;
-
-        cats.forEach(cat => {
+        listaExibicao.forEach(cat => {
           const perc = ((cat.count / totalBase) * 100).toFixed(1);
-          const barW = ((cat.count / maxCount) * 100).toFixed(0);
+          const barW = Math.max(8, ((cat.count / maxCount) * 100).toFixed(0));
 
           const div = document.createElement('div');
           div.className = 'bg-white/5 p-2 sm:p-2.5 rounded-lg border border-white/5';
@@ -2214,6 +2263,30 @@
             </div>
           `;
           containerDemandas.appendChild(div);
+        });
+      }
+
+      // 4.B Renderiza Lista Direita (AS 3 PRINCIPAIS SOLICITAÇÕES DA MAIORIA EM TEMPO REAL)
+      const containerTop3 = document.getElementById('lista-top-3-solicitacoes');
+      if (containerTop3) {
+        containerTop3.innerHTML = '';
+        const top3 = demandasOrdenadas.slice(0, 3);
+
+        top3.forEach((dem, idx) => {
+          const perc = ((dem.count / totalBase) * 100).toFixed(1);
+          const li = document.createElement('li');
+          li.className = 'flex items-start gap-2 bg-white/5 p-2.5 rounded-lg border border-white/5 hover:border-white/15 transition-all';
+          li.innerHTML = `
+            <span class="w-5 h-5 rounded-full ${dem.numBadge} flex items-center justify-center font-black text-xs flex-shrink-0 mt-0.5">${idx + 1}</span>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between gap-1 flex-wrap">
+                <strong class="text-white text-xs">${dem.name}</strong>
+                <span class="text-[10px] font-extrabold px-1.5 py-0.5 rounded border ${dem.badge} whitespace-nowrap">${dem.count} citações (${perc}%)</span>
+              </div>
+              <span class="text-slate-300 text-[11px] leading-tight block mt-1">${dem.desc}</span>
+            </div>
+          `;
+          containerTop3.appendChild(li);
         });
       }
     }
