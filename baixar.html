@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Baixar Aplicativo Oficial - Estacionamento Rotativo | Prefeitura de Leopoldina</title>
+  
+  <!-- PWA & Meta Tags -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0b1e36">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Rotativo Leo">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="icon" href="favicon.png" type="image/png">
+
+  <!-- Fontes Google -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            leopoldina: {
+              navy: '#0b1e36',
+              deep: '#0f2942',
+              blue: '#1e3a8a',
+              accent: '#2563eb',
+              gold: '#d97706',
+              lightgold: '#f59e0b',
+              surface: '#f8fafc',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    body {
+      background-color: #0b1e36;
+      color: #f8fafc;
+      -webkit-font-smoothing: antialiased;
+      -webkit-tap-highlight-color: transparent;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .safe-top { padding-top: env(safe-area-inset-top, 0px); }
+    .safe-bottom { padding-bottom: env(safe-area-inset-bottom, 0px); }
+    .glass-card {
+      background: rgba(15, 41, 66, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between safe-top safe-bottom bg-gradient-to-b from-[#0b1e36] via-[#0f2942] to-[#071322]">
+
+  <!-- HEADER INSTITUCIONAL -->
+  <header class="w-full border-b border-white/10 bg-black/20 py-4 px-4 sm:px-6">
+    <div class="max-w-xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <img src="logo-prefeitura.png" alt="Prefeitura de Leopoldina" class="h-10 sm:h-12 w-auto object-contain bg-white/95 rounded-lg p-1 shadow-md">
+        <div>
+          <h1 class="text-xs sm:text-sm font-extrabold uppercase tracking-wide text-white">Prefeitura de Leopoldina</h1>
+          <p class="text-[10px] sm:text-xs text-blue-200/90 font-medium">Sec. de Habitação e Mobilidade Urbana</p>
+        </div>
+      </div>
+      <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+        App Oficial
+      </span>
+    </div>
+  </header>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main class="w-full max-w-xl mx-auto px-4 py-8 flex-grow flex flex-col justify-center">
+
+    <!-- CARD PRINCIPAL DE DOWNLOAD -->
+    <div class="glass-card rounded-3xl p-6 sm:p-8 text-center shadow-2xl relative overflow-hidden">
+      <!-- Glow background -->
+      <div class="absolute -top-24 -left-24 w-48 h-48 bg-blue-500/20 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -bottom-24 -right-24 w-48 h-48 bg-amber-500/20 rounded-full blur-3xl pointer-events-none"></div>
+
+      <!-- Ícone App -->
+      <div class="mx-auto w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-tr from-blue-600 via-indigo-600 to-amber-500 rounded-3xl p-1 shadow-xl shadow-blue-900/50 mb-5 flex items-center justify-center">
+        <div class="w-full h-full bg-[#0b1e36] rounded-[22px] flex items-center justify-center overflow-hidden">
+          <img src="icone-192.png" alt="Ícone Rotativo Leopoldina" class="w-16 h-16 object-contain">
+        </div>
+      </div>
+
+      <!-- Títulos -->
+      <h2 class="text-xl sm:text-2xl font-black text-white tracking-tight mb-2">
+        Rotativo Leopoldina
+      </h2>
+      <p class="text-xs sm:text-sm text-slate-300 font-medium mb-6 leading-relaxed">
+        Aplicativo Oficial do Sistema de Estacionamento Rotativo.<br>
+        Instale direto na tela inicial do seu celular, rápido e sem ocupar memória.
+      </p>
+
+      <!-- BOTÃO PRINCIPAL DE INSTALAÇÃO -->
+      <button id="btn-instalar-app" onclick="acionarInstalacao()" class="w-full bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-500 hover:from-blue-500 hover:to-indigo-500 text-white font-extrabold text-base sm:text-lg py-4 px-6 rounded-2xl shadow-xl shadow-blue-600/30 flex items-center justify-center gap-3 transition-all duration-300 transform active:scale-95 border border-white/20">
+        <i data-lucide="download" class="w-6 h-6"></i>
+        <span>Instalar Aplicativo no Celular</span>
+      </button>
+
+      <p id="msg-instalado" class="hidden text-xs text-emerald-400 font-bold mt-3 flex items-center justify-center gap-1.5">
+        <i data-lucide="check-circle" class="w-4 h-4"></i> Aplicativo já adicionado à sua tela inicial!
+      </p>
+
+      <!-- DIVISOR -->
+      <div class="my-6 border-t border-white/10 relative">
+        <span class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#0e2740] px-3 text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+          Instruções Rápidas
+        </span>
+      </div>
+
+      <!-- ABAS OU CARDS COM PASSO A PASSO -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-left">
+        <!-- Card Android -->
+        <div class="p-4 rounded-2xl bg-white/5 border border-white/10 hover:border-white/20 transition-all">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="w-6 h-6 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
+              <i data-lucide="smartphone" class="w-3.5 h-3.5"></i>
+            </span>
+            <span class="text-xs font-bold text-white">Android (Chrome)</span>
+          </div>
+          <ol class="text-[11px] text-slate-300 space-y-1.5 list-decimal list-inside leading-snug">
+            <li>Toque no botão <strong class="text-white">"Instalar"</strong> acima.</li>
+            <li>Se não abrir, toque nos <strong class="text-white">três pontinhos (⋮)</strong> no Chrome.</li>
+            <li>Selecione <strong class="text-white">"Instalar aplicativo"</strong>.</li>
+          </ol>
+        </div>
+
+        <!-- Card iPhone (iOS) -->
+        <div class="p-4 rounded-2xl bg-white/5 border border-white/10 hover:border-white/20 transition-all">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="w-6 h-6 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center">
+              <i data-lucide="apple" class="w-3.5 h-3.5"></i>
+            </span>
+            <span class="text-xs font-bold text-white">iPhone (Safari)</span>
+          </div>
+          <ol class="text-[11px] text-slate-300 space-y-1.5 list-decimal list-inside leading-snug">
+            <li>Abra este link no navegador <strong class="text-white">Safari</strong>.</li>
+            <li>Toque no botão <strong class="text-white">Compartilhar</strong> (ícone com seta).</li>
+            <li>Role e toque em <strong class="text-white">"Adicionar à Tela de Início"</strong>.</li>
+          </ol>
+        </div>
+      </div>
+
+      <!-- NOTA DE SEGURANÇA -->
+      <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-center gap-2 text-[11px] text-slate-400 font-medium">
+        <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400 flex-shrink-0"></i>
+        <span>Aplicativo oficial verificado pela Prefeitura Municipal de Leopoldina</span>
+      </div>
+
+    </div>
+
+    <!-- BOTÃO DISCRETO PARA ÁREA DE GESTÃO / PAINEL -->
+    <div class="mt-6 text-center">
+      <a href="./index.html" class="inline-flex items-center gap-1.5 text-xs font-bold text-slate-400 hover:text-amber-400 transition-colors py-1.5 px-3 rounded-lg border border-white/5 hover:border-amber-400/30">
+        <i data-lucide="lock" class="w-3.5 h-3.5"></i>
+        <span>Acesso à Gestão / Relatórios</span>
+      </a>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="w-full text-center py-4 text-[10px] text-slate-500 border-t border-white/5">
+    Prefeitura Municipal de Leopoldina - MG &copy; 2026 | Sistema Oficial de Mobilidade Urbana
+  </footer>
+
+  <!-- SCRIPT DE INSTALAÇÃO PWA -->
+  <script>
+    let deferredPrompt = null;
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js?v=18').catch(err => console.log('SW:', err));
+    }
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      const btn = document.getElementById('btn-instalar-app');
+      if (btn) {
+        btn.classList.add('ring-4', 'ring-blue-400/30');
+      }
+    });
+
+    function acionarInstalacao() {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            document.getElementById('msg-instalado').classList.remove('hidden');
+          }
+          deferredPrompt = null;
+        });
+      } else {
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        if (isIOS) {
+          alert('Para instalar no iPhone:\n\n1. Toque no ícone de Compartilhar (o quadradinho com uma seta para cima na barra inferior do Safari)\n2. Role para baixo e toque em "Adicionar à Tela de Início"\n3. Toque em "Adicionar" no canto superior direito.');
+        } else {
+          alert('Para instalar no seu celular:\n\nToque no menu do navegador (três pontinhos no canto superior direito) e selecione "Instalar Aplicativo" ou "Adicionar à Tela Inicial".');
+        }
+      }
+    }
+
+    window.addEventListener('appinstalled', () => {
+      const msg = document.getElementById('msg-instalado');
+      if (msg) msg.classList.remove('hidden');
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+    });
+  </script>
+</body>
+</html>

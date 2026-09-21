@@ -1011,9 +1011,14 @@
     let modoFonteGrande = false;
     let deferredInstallPrompt = null;
 
+    // Registrar Plugin de Rótulos Numéricos nos Gráficos (ChartDataLabels)
+    if (typeof ChartDataLabels !== 'undefined' && typeof Chart !== 'undefined') {
+      Chart.register(ChartDataLabels);
+    }
+
     // Forçar atualização do Service Worker e capturar instalação PWA
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js?v=17').then((reg) => {
+      navigator.serviceWorker.register('sw.js?v=18').then((reg) => {
         reg.update();
       }).catch(err => console.log('SW fail:', err));
     }
@@ -1411,8 +1416,28 @@
         options: {
           responsive: true,
           maintainAspectRatio: false,
+          layout: {
+            padding: { top: 22 }
+          },
           plugins: {
             legend: { display: false },
+            datalabels: {
+              anchor: 'end',
+              align: 'top',
+              offset: 2,
+              color: '#0f172a',
+              font: {
+                family: '"Plus Jakarta Sans", sans-serif',
+                weight: boldWeight,
+                size: baseFontSize + 1
+              },
+              formatter: (value) => {
+                if (!value || value === 0) return '0';
+                const total = notas.length || 1;
+                const perc = ((value / total) * 100).toFixed(0);
+                return `${value} (${perc}%)`;
+              }
+            },
             tooltip: {
               callbacks: {
                 label: (ctx) => ` ${ctx.raw} votos (${((ctx.raw / notas.length) * 100).toFixed(1)}%)`
@@ -1420,7 +1445,12 @@
             }
           },
           scales: {
-            y: { beginAtZero: true, grid: { color: '#f1f5f9' }, ticks: { font: { size: baseFontSize, weight: boldWeight } } },
+            y: { 
+              beginAtZero: true, 
+              grace: '18%',
+              grid: { color: '#f1f5f9' }, 
+              ticks: { font: { size: baseFontSize, weight: boldWeight } } 
+            },
             x: { grid: { display: false }, ticks: { font: { size: baseFontSize, weight: boldWeight } } }
           }
         }
@@ -1456,6 +1486,23 @@
                 font: { size: baseFontSize, weight: boldWeight },
                 padding: 8
               } 
+            },
+            datalabels: {
+              color: '#ffffff',
+              textShadowColor: 'rgba(0, 0, 0, 0.8)',
+              textShadowBlur: 4,
+              font: {
+                family: '"Plus Jakarta Sans", sans-serif',
+                weight: '800',
+                size: baseFontSize + 1
+              },
+              formatter: (value, ctx) => {
+                if (!value || value === 0) return '';
+                const total = ctx.dataset.data.reduce((a, b) => a + b, 0);
+                const perc = ((value / total) * 100).toFixed(0);
+                if (perc < 5) return '';
+                return `${value} (${perc}%)`;
+              }
             }
           },
           cutout: '65%'
@@ -1537,9 +1584,36 @@
           indexAxis: 'y',
           responsive: true,
           maintainAspectRatio: false,
-          plugins: { legend: { display: false } },
+          layout: {
+            padding: { right: 55 }
+          },
+          plugins: { 
+            legend: { display: false },
+            datalabels: {
+              anchor: 'end',
+              align: 'right',
+              offset: 4,
+              color: '#0f172a',
+              font: {
+                family: '"Plus Jakarta Sans", sans-serif',
+                weight: boldWeight,
+                size: baseFontSize
+              },
+              formatter: (value, ctx) => {
+                if (!value) return '';
+                const total = ctx.dataset.data.reduce((a, b) => a + b, 0);
+                const perc = ((value / total) * 100).toFixed(0);
+                return `${value} (${perc}%)`;
+              }
+            }
+          },
           scales: {
-            x: { beginAtZero: true, grid: { color: '#f1f5f9' }, ticks: { font: { size: baseFontSize, weight: boldWeight } } },
+            x: { 
+              beginAtZero: true, 
+              grace: '20%',
+              grid: { color: '#f1f5f9' }, 
+              ticks: { font: { size: baseFontSize, weight: boldWeight } } 
+            },
             y: { grid: { display: false }, ticks: { font: { size: baseFontSize, weight: boldWeight } } }
           }
         }
@@ -1581,7 +1655,24 @@
                 font: { size: baseFontSize, weight: boldWeight },
                 padding: 6
               } 
-            } 
+            },
+            datalabels: {
+              color: '#ffffff',
+              textShadowColor: 'rgba(0, 0, 0, 0.8)',
+              textShadowBlur: 4,
+              font: {
+                family: '"Plus Jakarta Sans", sans-serif',
+                weight: '800',
+                size: baseFontSize + 1
+              },
+              formatter: (value, ctx) => {
+                if (!value || value === 0) return '';
+                const total = ctx.dataset.data.reduce((a, b) => a + b, 0);
+                const perc = ((value / total) * 100).toFixed(0);
+                if (perc < 5) return '';
+                return `${value} (${perc}%)`;
+              }
+            }
           },
           cutout: '60%'
         }
@@ -1651,9 +1742,36 @@
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          plugins: { legend: { display: false } },
+          layout: {
+            padding: { top: 22 }
+          },
+          plugins: { 
+            legend: { display: false },
+            datalabels: {
+              anchor: 'end',
+              align: 'top',
+              offset: 2,
+              color: '#0f172a',
+              font: {
+                family: '"Plus Jakarta Sans", sans-serif',
+                weight: boldWeight,
+                size: baseFontSize + 1
+              },
+              formatter: (value, ctx) => {
+                if (!value || value === 0) return '0';
+                const total = ctx.dataset.data.reduce((a, b) => a + b, 0);
+                const perc = ((value / total) * 100).toFixed(0);
+                return `${value} (${perc}%)`;
+              }
+            }
+          },
           scales: {
-            y: { beginAtZero: true, grid: { color: '#f1f5f9' }, ticks: { font: { size: baseFontSize, weight: boldWeight } } },
+            y: { 
+              beginAtZero: true, 
+              grace: '20%',
+              grid: { color: '#f1f5f9' }, 
+              ticks: { font: { size: baseFontSize, weight: boldWeight } } 
+            },
             x: { ticks: { font: { size: baseFontSize, weight: boldWeight } } }
           }
         }
@@ -1673,7 +1791,20 @@
               backgroundColor: 'rgba(37, 99, 235, 0.1)',
               tension: 0.3,
               fill: true,
-              pointRadius: mobileMode ? 4 : 6,
+              pointRadius: mobileMode ? 5 : 6,
+              pointHoverRadius: 8,
+              datalabels: {
+                align: 'top',
+                offset: 5,
+                color: '#1e40af',
+                backgroundColor: 'rgba(239, 246, 255, 0.95)',
+                borderColor: '#93c5fd',
+                borderWidth: 1,
+                borderRadius: 4,
+                padding: { top: 2, bottom: 2, left: 5, right: 5 },
+                font: { size: baseFontSize, weight: '800' },
+                formatter: (val) => `${Number(val).toFixed(1)} ★`
+              }
             },
             {
               label: 'Aprovação (%)',
@@ -1682,22 +1813,38 @@
               backgroundColor: 'transparent',
               borderDash: [4, 4],
               tension: 0.3,
-              pointRadius: mobileMode ? 3 : 5,
-              yAxisID: 'y1'
+              pointRadius: mobileMode ? 4 : 5,
+              pointHoverRadius: 7,
+              yAxisID: 'y1',
+              datalabels: {
+                align: 'bottom',
+                offset: 5,
+                color: '#065f46',
+                backgroundColor: 'rgba(236, 253, 245, 0.95)',
+                borderColor: '#a7f3d0',
+                borderWidth: 1,
+                borderRadius: 4,
+                padding: { top: 2, bottom: 2, left: 5, right: 5 },
+                font: { size: baseFontSize, weight: '800' },
+                formatter: (val) => `${Math.round(val)}%`
+              }
             }
           ]
         },
         options: {
           responsive: true,
           maintainAspectRatio: false,
+          layout: {
+            padding: { top: 20, bottom: 20 }
+          },
           plugins: {
             legend: {
               labels: { boxWidth: 10, font: { size: baseFontSize, weight: boldWeight } }
             }
           },
           scales: {
-            y: { min: 1, max: 5, grid: { color: '#f1f5f9' }, ticks: { font: { size: baseFontSize, weight: boldWeight } } },
-            y1: { min: 0, max: 100, position: 'right', grid: { display: false }, ticks: { font: { size: baseFontSize, weight: boldWeight }, callback: v => v + '%' } }
+            y: { min: 1, max: 5.2, grid: { color: '#f1f5f9' }, ticks: { font: { size: baseFontSize, weight: boldWeight } } },
+            y1: { min: 0, max: 110, position: 'right', grid: { display: false }, ticks: { font: { size: baseFontSize, weight: boldWeight }, callback: v => v + '%' } }
           }
         }
       });
@@ -1926,6 +2073,23 @@
                   font: { size: baseFontSize, weight: boldWeight },
                   color: '#ffffff',
                   padding: 6
+                }
+              },
+              datalabels: {
+                color: '#ffffff',
+                textShadowColor: 'rgba(0, 0, 0, 0.85)',
+                textShadowBlur: 4,
+                font: {
+                  family: '"Plus Jakarta Sans", sans-serif',
+                  weight: '900',
+                  size: baseFontSize + 1
+                },
+                formatter: (value, ctx) => {
+                  if (!value || value === 0) return '';
+                  const total = ctx.dataset.data.reduce((a, b) => a + b, 0);
+                  const perc = ((value / total) * 100).toFixed(0);
+                  if (perc < 5) return '';
+                  return `${value} (${perc}%)`;
                 }
               },
               tooltip: {

@@ -1,7 +1,8 @@
-const CACHE_NAME = 'rotativo-leopoldina-v17';
+const CACHE_NAME = 'rotativo-leopoldina-v18';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
+  './baixar.html',
   './manifest.json',
   './dados_iniciais.js',
   './logo-prefeitura.png',
