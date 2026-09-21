@@ -1324,12 +1324,20 @@
 
       if (parsed && parsed.length > 0) {
         const totalAntigo = DADOS_ATUAIS.length;
-        DADOS_ATUAIS = parsed;
-        renderizarDashboard(DADOS_ATUAIS);
-        if (!silencioso) {
-          showToast(`Sincronizado com sucesso! ${parsed.length} respostas.`);
-        } else if (parsed.length > totalAntigo) {
-          showToast(`Planilha atualizada! ${parsed.length} respostas (+${parsed.length - totalAntigo} novas).`);
+        const dadosMudaram = (parsed.length !== totalAntigo) || 
+                             (JSON.stringify(parsed) !== JSON.stringify(DADOS_ATUAIS));
+        if (dadosMudaram) {
+          DADOS_ATUAIS = parsed;
+          renderizarDashboard(DADOS_ATUAIS);
+          if (!silencioso) {
+            showToast(`Sincronizado com sucesso! ${parsed.length} respostas.`);
+          } else if (parsed.length > totalAntigo) {
+            showToast(`Planilha atualizada! ${parsed.length} respostas (+${parsed.length - totalAntigo} novas).`);
+          }
+        } else {
+          if (!silencioso) {
+            showToast(`Base de dados já atualizada (${parsed.length} respostas).`);
+          }
         }
         return;
       }
@@ -1891,6 +1899,7 @@
 
     function renderizarVozDoCidadao(data) {
       const feed = document.getElementById('feed-comentarios');
+      if (!feed) return;
       feed.innerHTML = '';
 
       const comentarios = data.filter(d => d.sugestao_critica && d.sugestao_critica.trim().length > 1);
@@ -1905,16 +1914,21 @@
       const countTodos = document.getElementById('count-filtro-todos');
       if (countTodos) countTodos.innerText = totalComent;
 
-      const countElogios = document.getElementById('count-filtro-elogios');
+      // Classificação consistente de Elogios e Críticas:
+      // Elogio: nota >= 4
+      // Crítica: nota <= 3 ou sem nota
       const totalElogios = comentarios.filter(c => (c.satisfacao || 0) >= 4).length;
+      const countElogios = document.getElementById('count-filtro-elogios');
       if (countElogios) countElogios.innerText = totalElogios;
 
-      const countCriticas = document.getElementById('count-filtro-criticas');
       const totalCriticas = comentarios.filter(c => (c.satisfacao || 0) <= 3).length;
+      const countCriticas = document.getElementById('count-filtro-criticas');
       if (countCriticas) countCriticas.innerText = totalCriticas;
 
       comentarios.forEach((item) => {
         const nota = item.satisfacao || 0;
+        const tipo = (nota >= 4) ? 'elogio' : 'critica';
+
         let badgeColor = 'bg-slate-100 text-slate-700';
         let borderColor = 'border-slate-200';
         let icone = 'message-square';
@@ -1934,10 +1948,11 @@
         }
 
         const card = document.createElement('div');
-        card.className = `comentario-card bg-white p-3.5 sm:p-5 rounded-2xl border ${borderColor} card-shadow flex flex-col justify-between`;
-        card.dataset.nota = nota;
-        card.dataset.texto = item.sugestao_critica.toLowerCase();
-        card.dataset.perfil = item.perfil.toLowerCase();
+        card.className = `comentario-card bg-white p-3.5 sm:p-5 rounded-2xl border ${borderColor} card-shadow flex flex-col justify-between transition-all`;
+        card.dataset.nota = String(nota);
+        card.dataset.tipo = tipo;
+        card.dataset.texto = (item.sugestao_critica || '').toLowerCase();
+        card.dataset.perfil = (item.perfil || '').toLowerCase();
 
         card.innerHTML = `
           <div>
@@ -1958,21 +1973,28 @@
         `;
         feed.appendChild(card);
       });
+
+      // Aplica e mantém o filtro ativo (Todos, Elogios ou Críticas) e qualquer busca digitada
+      atualizarBotoesFiltroComentarios();
+      aplicarFiltroEBusca();
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function atualizarBotoesFiltroComentarios() {
+      ['todos', 'elogios', 'criticas'].forEach(tipo => {
+        const btn = document.getElementById(`btn-filtro-${tipo}`);
+        if (!btn) return;
+        if (tipo === filtroComentarioAtivo) {
+          btn.className = 'btn-filtro active-filtro text-xs font-bold px-3.5 py-1.5 rounded-lg bg-slate-900 text-white whitespace-nowrap shadow-sm transition-all cursor-pointer';
+        } else {
+          btn.className = 'btn-filtro text-xs font-medium px-3.5 py-1.5 rounded-lg bg-slate-100 text-slate-700 whitespace-nowrap hover:bg-slate-200 transition-all cursor-pointer';
+        }
+      });
     }
 
     function filtrarComentarios(tipo) {
       filtroComentarioAtivo = tipo;
-      document.querySelectorAll('.btn-filtro').forEach(btn => {
-        btn.classList.remove('bg-slate-900', 'text-white');
-        btn.classList.add('bg-slate-100', 'text-slate-700');
-      });
-
-      const btnAtivo = document.getElementById(`btn-filtro-${tipo}`);
-      if (btnAtivo) {
-        btnAtivo.classList.remove('bg-slate-100', 'text-slate-700');
-        btnAtivo.classList.add('bg-slate-900', 'text-white');
-      }
-
+      atualizarBotoesFiltroComentarios();
       aplicarFiltroEBusca();
     }
 
@@ -1981,22 +2003,55 @@
     }
 
     function aplicarFiltroEBusca() {
-      const query = document.getElementById('busca-comentarios').value.toLowerCase().trim();
+      const input = document.getElementById('busca-comentarios');
+      const query = input ? input.value.toLowerCase().trim() : '';
       const cards = document.querySelectorAll('.comentario-card');
+      const feed = document.getElementById('feed-comentarios');
+
+      let visiveis = 0;
 
       cards.forEach(card => {
-        const nota = parseInt(card.dataset.nota, 10);
-        const texto = card.dataset.texto;
+        const tipo = card.dataset.tipo;
+        const texto = card.dataset.texto || '';
 
         let passFilter = true;
-        if (filtroComentarioAtivo === 'elogios' && nota < 4) passFilter = false;
-        if (filtroComentarioAtivo === 'criticas' && (nota > 3 || nota === 0)) passFilter = false;
+        if (filtroComentarioAtivo === 'elogios') {
+          passFilter = (tipo === 'elogio');
+        } else if (filtroComentarioAtivo === 'criticas') {
+          passFilter = (tipo === 'critica');
+        }
 
         let passSearch = true;
-        if (query && !texto.includes(query)) passSearch = false;
+        if (query && !texto.includes(query)) {
+          passSearch = false;
+        }
 
-        card.style.display = (passFilter && passSearch) ? 'flex' : 'none';
+        if (passFilter && passSearch) {
+          card.style.display = 'flex';
+          card.classList.remove('hidden');
+          visiveis++;
+        } else {
+          card.style.display = 'none';
+          card.classList.add('hidden');
+        }
       });
+
+      // Exibe mensagem caso nenhum comentário atenda ao filtro/busca
+      let msgVazio = document.getElementById('msg-sem-comentarios');
+      if (visiveis === 0) {
+        if (!msgVazio && feed) {
+          msgVazio = document.createElement('div');
+          msgVazio.id = 'msg-sem-comentarios';
+          msgVazio.className = 'col-span-1 md:col-span-2 text-center py-10 text-slate-400 text-xs sm:text-sm bg-slate-50/60 rounded-2xl border border-dashed border-slate-200 p-6';
+          msgVazio.innerHTML = '<i data-lucide="message-square-dashed" class="w-8 h-8 mx-auto mb-2 text-slate-300"></i>Nenhum comentário encontrado com os filtros selecionados.';
+          feed.appendChild(msgVazio);
+          if (window.lucide) lucide.createIcons();
+        } else if (msgVazio) {
+          msgVazio.style.display = 'block';
+        }
+      } else if (msgVazio) {
+        msgVazio.style.display = 'none';
+      }
     }
 
     function renderizarPainelEstrategico(data) {
@@ -2531,6 +2586,11 @@
           span.classList.remove('font-medium');
           span.classList.add('font-bold');
         }
+      }
+
+      if (abaId === 'cidadao') {
+        atualizarBotoesFiltroComentarios();
+        aplicarFiltroEBusca();
       }
 
       window.scrollTo({ top: 0, behavior: 'smooth' });
