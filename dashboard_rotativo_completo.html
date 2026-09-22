@@ -832,10 +832,10 @@ window.DADOS_INICIAIS = window.DADOS_CENTRO;
 
           </div>
         </div>
+      </div> <!-- /Painel Estrategico Centro -->
+    </div> <!-- /container-pesquisa-centro -->
 
-      </div> <!-- /container-pesquisa-centro -->
-
-      <!-- ================================================================= -->
+            <!-- ================================================================= -->
       <!-- PAINEL 2: PESQUISA DE VIABILIDADE - BAIRROS (SEM ROTATIVO) -->
       <!-- ================================================================= -->
       <div id="container-pesquisa-bairros" class="space-y-4 sm:space-y-6 hidden">
@@ -848,10 +848,10 @@ window.DADOS_INICIAIS = window.DADOS_CENTRO;
             </div>
             <div>
               <div class="flex items-center gap-2">
-                <span class="text-[10px] uppercase tracking-wider font-extrabold px-2 py-0.5 rounded-full bg-blue-400 text-slate-950">Estudo Preliminar</span>
-                <h3 class="text-sm sm:text-lg font-bold text-white tracking-wide">Pesquisa de Viabilidade nos Bairros</h3>
+                <span class="text-[10px] uppercase tracking-wider font-extrabold px-2 py-0.5 rounded-full bg-blue-400 text-slate-950">Estudo de Viabilidade</span>
+                <h3 class="text-sm sm:text-lg font-bold text-white tracking-wide">Rua Presidente Carlos Luz (Sem Rotativo)</h3>
               </div>
-              <p class="text-[11px] sm:text-xs text-slate-300 mt-0.5">Diagnóstico na Rua Presidente Carlos Luz para avaliar expansão e regularização de vagas</p>
+              <p class="text-[11px] sm:text-xs text-slate-300 mt-0.5">Diagnóstico para avaliar expansão da Área Azul e regularização de vagas no bairro</p>
             </div>
           </div>
           <div class="flex items-center gap-2 self-start sm:self-auto">
@@ -862,7 +862,7 @@ window.DADOS_INICIAIS = window.DADOS_CENTRO;
           </div>
         </div>
 
-        <!-- GRID DE KPIS DE VIABILIDADE -->
+        <!-- GRID DE KPIS DE VIABILIDADE (4 Colunas Idêntico ao Centro) -->
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4">
           
           <!-- KPI 1: Apoio à Implantação -->
@@ -877,29 +877,14 @@ window.DADOS_INICIAIS = window.DADOS_CENTRO;
             <div class="w-full bg-slate-100 rounded-full h-1.5 sm:h-2 overflow-hidden mb-1">
               <div id="bairros-bar-adesao" class="bg-emerald-500 h-full rounded-full" style="width: 37.5%;"></div>
             </div>
-            <span class="text-[10px] text-slate-500 font-medium" id="bairros-kpi-adesao-sub">A favor ou com ressalvas</span>
+            <span class="text-[10px] text-slate-500 font-medium" id="bairros-kpi-adesao-sub">18.8% a favor + 18.8% com ressalvas</span>
           </div>
 
-          <!-- KPI 2: Resistência Atual -->
-          <div class="bg-white rounded-2xl p-3 sm:p-5 border border-slate-200 card-shadow flex flex-col justify-between">
-            <div class="flex items-center justify-between">
-              <span class="text-[11px] sm:text-xs font-bold text-slate-500 uppercase">Resistência</span>
-              <span class="text-[10px] font-bold px-1.5 py-0.2 rounded bg-rose-50 text-rose-700">Contrários</span>
-            </div>
-            <div class="my-1.5 sm:my-2 flex items-baseline gap-1">
-              <span id="bairros-kpi-contra" class="text-2xl sm:text-4xl font-extrabold text-rose-600">56.2%</span>
-            </div>
-            <div class="w-full bg-slate-100 rounded-full h-1.5 sm:h-2 overflow-hidden mb-1">
-              <div id="bairros-bar-contra" class="bg-rose-500 h-full rounded-full" style="width: 56.2%;"></div>
-            </div>
-            <span class="text-[10px] text-slate-500 font-medium" id="bairros-kpi-contra-sub">Receio de afastar clientes e falta de carga/descarga</span>
-          </div>
-
-          <!-- KPI 3: Vagas Escassas Hoje -->
+          <!-- KPI 2: Dificuldade de Vagas Hoje -->
           <div class="bg-white rounded-2xl p-3 sm:p-5 border border-slate-200 card-shadow flex flex-col justify-between">
             <div class="flex items-center justify-between">
               <span class="text-[11px] sm:text-xs font-bold text-slate-500 uppercase">Vagas Hoje</span>
-              <span class="text-[10px] font-bold px-1.5 py-0.2 rounded bg-amber-50 text-amber-800">Dificuldade</span>
+              <span class="text-[10px] font-bold px-1.5 py-0.2 rounded bg-amber-50 text-amber-800">Escassez</span>
             </div>
             <div class="my-1.5 sm:my-2 flex items-baseline gap-1">
               <span id="bairros-kpi-vagas" class="text-2xl sm:text-4xl font-extrabold text-amber-600">87.5%</span>
@@ -910,7 +895,7 @@ window.DADOS_INICIAIS = window.DADOS_CENTRO;
             <span class="text-[10px] text-slate-500 font-medium" id="bairros-kpi-vagas-sub">Vagas ocupadas o dia todo por carros em fuga do Centro</span>
           </div>
 
-          <!-- KPI 4: Prejuízo Comercial -->
+          <!-- KPI 3: Prejuízo Comercial -->
           <div class="bg-white rounded-2xl p-3 sm:p-5 border border-slate-200 card-shadow flex flex-col justify-between">
             <div class="flex items-center justify-between">
               <span class="text-[11px] sm:text-xs font-bold text-slate-500 uppercase">Prejuízo Comercial</span>
@@ -924,20 +909,38 @@ window.DADOS_INICIAIS = window.DADOS_CENTRO;
             </div>
             <span class="text-[10px] text-slate-500 font-medium" id="bairros-kpi-prejuizo-sub">Falta de vagas afeta compras e entregas na via</span>
           </div>
+
+          <!-- KPI 4: Resistência Atual -->
+          <div class="bg-white rounded-2xl p-3 sm:p-5 border border-slate-200 card-shadow flex flex-col justify-between">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] sm:text-xs font-bold text-slate-500 uppercase">Resistência Atual</span>
+              <span class="text-[10px] font-bold px-1.5 py-0.2 rounded bg-rose-50 text-rose-700">Contrários</span>
+            </div>
+            <div class="my-1.5 sm:my-2 flex items-baseline gap-1">
+              <span id="bairros-kpi-contra" class="text-2xl sm:text-4xl font-extrabold text-rose-600">56.2%</span>
+            </div>
+            <div class="w-full bg-slate-100 rounded-full h-1.5 sm:h-2 overflow-hidden mb-1">
+              <div id="bairros-bar-contra" class="bg-rose-500 h-full rounded-full" style="width: 56.2%;"></div>
+            </div>
+            <span class="text-[10px] text-slate-500 font-medium" id="bairros-kpi-contra-sub">Receio de afastar clientes e falta de carga/descarga</span>
+          </div>
+
         </div>
 
-        <!-- GRID DE GRÁFICOS DE VIABILIDADE -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
+        <!-- ========================================================================= -->
+        <!-- GRID DE 2 GRANDES GRÁFICOS PRINCIPAIS (LADO A LADO - 50% / 50% COMO NO CENTRO) -->
+        <!-- ========================================================================= -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
           
-          <!-- Gráfico 1: Adesão ao Rotativo -->
+          <!-- Gráfico 1: Adesão ao Rotativo na Via (Barras Verticais Idêntico ao Gráfico de Satisfação) -->
           <div class="bg-white rounded-2xl p-4 sm:p-6 border border-slate-200 card-shadow flex flex-col justify-between">
             <div>
               <div class="flex items-center justify-between mb-1">
-                <h3 class="text-sm sm:text-base font-bold text-slate-900">Adesão ao Rotativo na Via</h3>
+                <h3 class="text-sm sm:text-base font-bold text-slate-900">Adesão ao Estacionamento Rotativo na Via</h3>
                 <span class="text-[10px] bg-blue-50 text-blue-700 font-bold px-2 py-0.5 rounded">Pergunta 5</span>
               </div>
-              <p class="text-[11px] sm:text-xs text-slate-500 mb-3">Você seria a favor da implantação da Área Azul nesta rua?</p>
-              <div class="h-52 sm:h-56 w-full relative flex items-center justify-center">
+              <p class="text-[11px] sm:text-xs text-slate-500 mb-3">Distribuição de opiniões sobre a implantação na Rua Presidente Carlos Luz</p>
+              <div class="h-56 sm:h-64 w-full relative">
                 <canvas id="chart-bairros-adesao"></canvas>
               </div>
             </div>
@@ -946,43 +949,158 @@ window.DADOS_INICIAIS = window.DADOS_CENTRO;
             </div>
           </div>
 
-          <!-- Gráfico 2: Como é achar vaga hoje -->
+          <!-- Gráfico 2: Facilidade de Encontrar Vagas Hoje (Rosca Idêntica ao Gráfico de Vagas do Centro) -->
           <div class="bg-white rounded-2xl p-4 sm:p-6 border border-slate-200 card-shadow flex flex-col justify-between">
             <div>
               <div class="flex items-center justify-between mb-1">
-                <h3 class="text-sm sm:text-base font-bold text-slate-900">Dificuldade de Vagas Hoje</h3>
+                <h3 class="text-sm sm:text-base font-bold text-slate-900">Facilidade de Encontrar Vagas Hoje na Rua</h3>
                 <span class="text-[10px] bg-amber-50 text-amber-700 font-bold px-2 py-0.5 rounded">Pergunta 3</span>
               </div>
-              <p class="text-[11px] sm:text-xs text-slate-500 mb-3">Como você avalia a facilidade de encontrar vagas nesta rua?</p>
-              <div class="h-52 sm:h-56 w-full">
+              <p class="text-[11px] sm:text-xs text-slate-500 mb-3">Como os comerciantes avaliam a disponibilidade de vagas atualmente</p>
+              <div class="h-56 sm:h-64 w-full relative flex items-center justify-center">
                 <canvas id="chart-bairros-vagas"></canvas>
               </div>
             </div>
-            <div class="mt-3 pt-3 border-t border-slate-100 text-[11px] text-slate-600" id="bairros-desc-vagas">
-              <strong class="text-slate-900 font-semibold" id="bairros-vagas-perc-txt">87.5%</strong> relatam lentidão ou impossibilidade de encontrar vagas livres.
-            </div>
-          </div>
-
-          <!-- Gráfico 3: Impacto no Comércio -->
-          <div class="bg-white rounded-2xl p-4 sm:p-6 border border-slate-200 card-shadow flex flex-col justify-between">
-            <div>
-              <div class="flex items-center justify-between mb-1">
-                <h3 class="text-sm sm:text-base font-bold text-slate-900">Impacto no Comércio da Via</h3>
-                <span class="text-[10px] bg-purple-50 text-purple-700 font-bold px-2 py-0.5 rounded">Pergunta 4</span>
-              </div>
-              <p class="text-[11px] sm:text-xs text-slate-500 mb-3">A dificuldade de estacionar atrapalha os estabelecimentos?</p>
-              <div class="h-52 sm:h-56 w-full">
-                <canvas id="chart-bairros-impacto"></canvas>
-              </div>
-            </div>
-            <div class="mt-3 pt-3 border-t border-slate-100 text-[11px] text-slate-600" id="bairros-desc-impacto">
-              <strong class="text-slate-900 font-semibold" id="bairros-impacto-perc-txt">75.0%</strong> dos entrevistados afirmam prejuízo nas vendas ou na rotina.
+            <div class="mt-3 pt-3 border-t border-slate-100 flex items-center justify-around text-[10px] sm:text-[11px]">
+              <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span><span>Difícil: <strong id="card-bairros-vagas-dificil">43.8%</strong></span></div>
+              <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span><span>Médio: <strong id="card-bairros-vagas-medio">43.8%</strong></span></div>
+              <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span><span>Fácil: <strong id="card-bairros-vagas-facil">12.5%</strong></span></div>
             </div>
           </div>
 
         </div>
 
-        <!-- PAINEL ESTRATÉGICO DE TOMADA DE DECISÃO (VIABILIDADE DE EXPANSÃO) -->
+        <!-- ========================================================================= -->
+        <!-- PERFIL DOS ENTREVISTADOS NA VIA (IDÊNTICO AO DO CENTRO) -->
+        <!-- ========================================================================= -->
+        <div class="bg-white rounded-2xl p-4 sm:p-6 border border-slate-200 card-shadow">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-sm sm:text-base font-bold text-slate-900">Perfil dos Entrevistados na Via</h3>
+            <span class="text-[11px] text-slate-500 bg-slate-50 px-2 py-1 rounded-lg border border-slate-200" id="badge-bairros-perfil-identificadas">
+              16 Comerciantes e Lojistas Mapeados
+            </span>
+          </div>
+          
+          <div class="grid grid-cols-3 gap-2 sm:gap-4">
+            <div class="bg-blue-50/60 border border-blue-100 rounded-xl p-2.5 sm:p-4 text-center sm:text-left">
+              <span class="text-[10px] sm:text-xs text-slate-500 block font-medium">Lojistas / Comerciantes</span>
+              <div class="text-lg sm:text-2xl font-bold text-blue-950 mt-0.5" id="bairros-perfil-qtd-lojistas">16</div>
+              <span class="text-[10px] sm:text-xs text-blue-700 font-semibold" id="bairros-perfil-perc-lojistas">(100%)</span>
+            </div>
+
+            <div class="bg-emerald-50/60 border border-emerald-100 rounded-xl p-2.5 sm:p-4 text-center sm:text-left">
+              <span class="text-[10px] sm:text-xs text-slate-500 block font-medium truncate" title="Motoristas e clientes da via">Motoristas / Clientes</span>
+              <div class="text-lg sm:text-2xl font-bold text-emerald-950 mt-0.5" id="bairros-perfil-qtd-visitantes">0</div>
+              <span class="text-[10px] sm:text-xs text-emerald-700 font-semibold" id="bairros-perfil-perc-visitantes">(0%)</span>
+            </div>
+
+            <div class="bg-amber-50/60 border border-amber-100 rounded-xl p-2.5 sm:p-4 text-center sm:text-left">
+              <span class="text-[10px] sm:text-xs text-slate-500 block font-medium">Moradores Locais</span>
+              <div class="text-lg sm:text-2xl font-bold text-amber-950 mt-0.5" id="bairros-perfil-qtd-moradores">0</div>
+              <span class="text-[10px] sm:text-xs text-amber-700 font-semibold" id="bairros-perfil-perc-moradores">(0%)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========================================================================= -->
+        <!-- GRID DE 2 COLUNAS: COMÉRCIO LOCAL & RAMOS DE ATIVIDADE -->
+        <!-- ========================================================================= -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+          
+          <!-- Gráfico Impacto no Comércio Local -->
+          <div class="bg-white rounded-2xl p-4 sm:p-6 border border-slate-200 card-shadow flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <h3 class="text-sm sm:text-base font-bold text-slate-900">Impacto da Falta de Vagas no Comércio</h3>
+                <span class="text-[10px] bg-purple-50 text-purple-700 font-bold px-2 py-0.5 rounded">Pergunta 4</span>
+              </div>
+              <p class="text-[11px] sm:text-xs text-slate-500 mb-3">A dificuldade de estacionar atrapalha as vendas e compras na rua?</p>
+              <div class="h-56 sm:h-64 w-full relative">
+                <canvas id="chart-bairros-impacto"></canvas>
+              </div>
+            </div>
+            <div class="mt-3 pt-3 border-t border-slate-100 text-[11px] text-slate-600 flex items-center justify-between">
+              <span>Impacto Negativo Relatado:</span>
+              <strong class="text-purple-700 font-bold" id="bairros-impacto-perc-txt">75.0% dos comerciantes</strong>
+            </div>
+          </div>
+
+          <!-- Ramos de Atividade Mapeados na Rua Pres. Carlos Luz -->
+          <div class="bg-white rounded-2xl p-4 sm:p-6 border border-slate-200 card-shadow flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <h3 class="text-sm sm:text-base font-bold text-slate-900">Ramos de Atividade Mapeados</h3>
+                <span class="text-[10px] bg-slate-100 text-slate-700 font-bold px-2 py-0.5 rounded" id="bairros-total-ramos">15 Estabelecimentos</span>
+              </div>
+              <p class="text-[11px] sm:text-xs text-slate-500 mb-3">Tipos de comércios e serviços entrevistados na Rua Presidente Carlos Luz</p>
+              <div id="lista-tipos-comercio" class="space-y-1.5 max-h-60 sm:max-h-64 overflow-y-auto pr-1">
+                <!-- Renderizado dinamicamente via JS -->
+              </div>
+            </div>
+            <div class="mt-3 pt-3 border-t border-slate-100 text-[10px] text-slate-500">
+              Diversidade comercial ativa: barbearias, vidraçarias, oficinas, clínicas e comércios de bairro.
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ========================================================================= -->
+        <!-- ORIGEM E LOCALIDADE DOS ENTREVISTADOS (MAPEAMENTO TERRITORIAL IDÊNTICO AO CENTRO) -->
+        <!-- ========================================================================= -->
+        <div class="bg-white rounded-2xl p-4 sm:p-6 border border-slate-200 card-shadow space-y-4">
+          
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
+            <div class="flex items-center gap-2.5">
+              <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-blue-50 border border-blue-200 text-blue-600 flex items-center justify-center flex-shrink-0">
+                <i data-lucide="map-pin" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <div class="flex items-center gap-2">
+                  <h3 class="text-sm sm:text-base font-bold text-slate-900">Origem e Residência dos Entrevistados na Via</h3>
+                  <span class="text-[10px] uppercase tracking-wider font-extrabold px-2 py-0.5 rounded-full bg-blue-100 text-blue-800">Coluna E</span>
+                </div>
+                <p class="text-[11px] sm:text-xs text-slate-500 mt-0.5">Bairros de moradia dos comerciantes, profissionais e trabalhadores da Rua Presidente Carlos Luz</p>
+              </div>
+            </div>
+            <span class="text-[11px] text-blue-800 bg-blue-50 font-semibold px-2.5 py-1 rounded-lg border border-blue-200 self-start sm:self-auto" id="bairros-total-localidades">
+              Bairros Mapeados
+            </span>
+          </div>
+
+          <!-- Gráfico Horizontal de Localidades + Lista Ranqueada (Idêntico ao Centro) -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 pt-1">
+            <div class="lg:col-span-7 bg-slate-50/70 border border-slate-200/80 rounded-xl p-3.5 sm:p-4 flex flex-col justify-between">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                  <i data-lucide="bar-chart-2" class="w-4 h-4 text-blue-600"></i> Bairros Mais Frequentes
+                </span>
+                <span class="text-[10px] text-slate-500 font-medium">Toque na barra para detalhes</span>
+              </div>
+              <div class="h-60 sm:h-64 w-full relative">
+                <canvas id="chart-bairros-localidade"></canvas>
+              </div>
+            </div>
+
+            <div class="lg:col-span-5 bg-slate-50/70 border border-slate-200/80 rounded-xl p-3.5 sm:p-4 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                    <i data-lucide="list-ordered" class="w-4 h-4 text-blue-600"></i> Distribuição Territorial
+                  </span>
+                  <span class="text-[10px] text-slate-500 font-medium">Porcentagem</span>
+                </div>
+                <div id="bairros-lista-origem" class="space-y-1.5 max-h-60 sm:max-h-64 overflow-y-auto pr-1">
+                  <!-- Inserido dinamicamente via JS -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ========================================================================= -->
+        <!-- PAINEL ESTRATÉGICO PARA TOMADA DE DECISÃO (IDÊNTICO AO CENTRO) -->
+        <!-- ========================================================================= -->
         <div class="bg-gradient-to-br from-leopoldina-navy via-slate-900 to-leopoldina-blue rounded-2xl p-4 sm:p-6 text-white card-shadow space-y-4 sm:space-y-6">
           
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/15 pb-4">
@@ -992,71 +1110,55 @@ window.DADOS_INICIAIS = window.DADOS_CENTRO;
               </div>
               <div>
                 <div class="flex items-center gap-2">
-                  <h3 class="text-sm sm:text-lg font-bold text-white tracking-wide">Diagnóstico Executivo de Viabilidade</h3>
-                  <span class="text-[10px] uppercase tracking-wider font-extrabold px-2 py-0.5 rounded-full bg-amber-400 text-slate-950">Expansão Bairros</span>
+                  <h3 class="text-base sm:text-lg font-bold text-white tracking-wide">Painel Estratégico para Tomada de Decisão</h3>
+                  <span class="text-[10px] uppercase tracking-wider font-extrabold px-2 py-0.5 rounded-full bg-amber-400 text-slate-950">Viabilidade</span>
                 </div>
-                <p class="text-[11px] sm:text-xs text-slate-300 mt-0.5">Cruzamento de dados para suporte à decisão da Prefeitura de Leopoldina</p>
+                <p class="text-xs text-slate-300 mt-0.5">Diagnóstico qualitativo para subsidiar a regulamentação do Rotativo nos Bairros</p>
               </div>
             </div>
-            <div class="text-[11px] sm:text-xs text-slate-300 bg-white/10 px-3 py-1.5 rounded-xl border border-white/10 self-start sm:self-auto flex items-center gap-1.5">
-              <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-400"></i> <span id="bairros-badge-amostra">Amostra de Campo (16 Entrevistas)</span>
+            <div class="text-[11px] sm:text-xs text-slate-300 bg-white/10 px-3 py-1.5 rounded-xl border border-white/10 self-start sm:self-auto">
+              <span id="bairros-badge-amostra">Amostra Preliminar (16 Entrevistas)</span>
             </div>
           </div>
 
-          <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-5">
+          <!-- Grade de Análise Estratégica: Motivos Contra vs Vantagens a Favor -->
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 text-xs">
             
-            <!-- CARD 1: EFEITO MIGRATÓRIO -->
+            <!-- Coluna 1: Preocupações e Motivos de Resistência -->
             <div class="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/10 flex flex-col justify-between">
               <div>
-                <span class="text-xs font-bold text-amber-300 uppercase tracking-wide flex items-center gap-1.5 mb-2">
-                  <i data-lucide="arrow-left-right" class="w-3.5 h-3.5"></i> Efeito Migratório da Cotegipe
-                </span>
-                <p class="text-[11px] text-slate-200 mb-3">Comerciantes relatam que o rotativo no Centro empurrou os carros para os bairros vizinhos:</p>
-                <div class="bg-white/5 p-3 rounded-lg border border-white/5 text-[11px] text-slate-300 space-y-2">
-                  <p class="italic text-amber-200">"Precisa colocar o rotativo nessa rua, porque o pessoal saiu da Cotegipe para ficar estacionando aqui o dia todo e com isso não se acha mais vagas."</p>
-                  <p class="text-[10px] text-slate-400">— Comerciante da Rua Presidente Carlos Luz</p>
+                <div class="flex items-center justify-between mb-2">
+                  <h4 class="text-xs sm:text-sm font-bold text-rose-300 uppercase tracking-wide flex items-center gap-1.5">
+                    <i data-lucide="alert-triangle" class="w-4 h-4"></i> Preocupações e Motivos de Resistência
+                  </h4>
+                  <span class="text-[10px] bg-rose-500/20 text-rose-300 font-black px-2 py-0.5 rounded border border-rose-500/30">Lojistas</span>
                 </div>
-              </div>
-              <div class="mt-3 pt-3 border-t border-white/10 text-[11px] text-slate-300 leading-snug">
-                <strong class="text-white">💡 Conclusão Técnica:</strong> A expansão é necessária para evitar a sobrecarga desordenada das vias perimetrais ao Centro.
+                <p class="text-[11px] text-slate-300 mb-2">Demandas apontadas para que a Prefeitura ajuste as regras:</p>
+                <div class="space-y-1.5" id="bairros-lista-motivos-contra">
+                  <!-- Preenchido via JS -->
+                </div>
               </div>
             </div>
 
-            <!-- CARD 2: MOTIVOS DE RESISTÊNCIA -->
+            <!-- Coluna 2: Vantagens Apontadas pelos Apoiadores -->
             <div class="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/10 flex flex-col justify-between">
               <div>
-                <span class="text-xs font-bold text-rose-300 uppercase tracking-wide flex items-center gap-1.5 mb-2">
-                  <i data-lucide="alert-octagon" class="w-3.5 h-3.5"></i> O que Diz Quem é Contra
-                </span>
-                <p class="text-[11px] text-slate-200 mb-2">Principais temores apontados na Pergunta 6:</p>
-                <div class="space-y-1.5 text-[11px]" id="bairros-lista-motivos-contra">
-                  <!-- Gerado via JS -->
+                <div class="flex items-center justify-between mb-2">
+                  <h4 class="text-xs sm:text-sm font-bold text-emerald-300 uppercase tracking-wide flex items-center gap-1.5">
+                    <i data-lucide="check-circle-2" class="w-4 h-4"></i> Vantagens Apontadas pelos Apoiadores
+                  </h4>
+                  <span class="text-[10px] bg-emerald-500/20 text-emerald-300 font-black px-2 py-0.5 rounded border border-emerald-500/30">Oportunidades</span>
                 </div>
-              </div>
-              <div class="mt-3 pt-3 border-t border-white/10 text-[11px] text-slate-300 leading-snug">
-                <strong class="text-white">💡 Ponto de Atenção:</strong> A resistência não é à organização, mas sim ao receio de perda de vendas e falta de espaço de carga e descarga.
-              </div>
-            </div>
-
-            <!-- CARD 3: VANTAGENS ESPERADAS -->
-            <div class="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/10 flex flex-col justify-between">
-              <div>
-                <span class="text-xs font-bold text-emerald-300 uppercase tracking-wide flex items-center gap-1.5 mb-2">
-                  <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> O que Espera Quem é a Favor
-                </span>
-                <p class="text-[11px] text-slate-200 mb-2">Benefícios almejados na Pergunta 7:</p>
-                <div class="space-y-1.5 text-[11px]" id="bairros-lista-vantagens-favor">
-                  <!-- Gerado via JS -->
+                <p class="text-[11px] text-slate-300 mb-2">Benefícios diretos esperados com a implantação da Vaga Azul:</p>
+                <div class="space-y-1.5" id="bairros-lista-vantagens-favor">
+                  <!-- Preenchido via JS -->
                 </div>
-              </div>
-              <div class="mt-3 pt-3 border-t border-white/10 text-[11px] text-slate-300 leading-snug">
-                <strong class="text-white">💡 Oportunidade:</strong> Comerciantes favoráveis destacam a rotatividade para clientes que vêm resolver problemas rápidos.
               </div>
             </div>
 
           </div>
 
-          <!-- PLANO DE DIRETRIZES PARA IMPLANTAÇÃO -->
+          <!-- Plano de Diretrizes para Implantação sem Conflitos -->
           <div class="bg-white/5 rounded-xl p-3.5 sm:p-4 border border-white/10">
             <h4 class="text-xs sm:text-sm font-bold text-amber-300 uppercase tracking-wide flex items-center gap-1.5 mb-2">
               <i data-lucide="clipboard-list" class="w-4 h-4"></i> Diretrizes Recomendadas para Implantação sem Conflitos
@@ -1064,7 +1166,7 @@ window.DADOS_INICIAIS = window.DADOS_CENTRO;
             <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-[11px] text-slate-300">
               <div class="bg-white/5 p-2.5 rounded-lg border border-white/5">
                 <strong class="text-white block font-bold mb-1">1. Carga e Descarga Livre (30 min)</strong>
-                Demarcar bolsões prioritários para entregas e mercadorias de móveis, tintas, vidraçarias e materiais.
+                Demarcar bolsões prioritários para entregas e mercadorias de móveis, tintas, vidraçarias e materiais de construção.
               </div>
               <div class="bg-white/5 p-2.5 rounded-lg border border-white/5">
                 <strong class="text-white block font-bold mb-1">2. Motos e Entregadores</strong>
@@ -1077,22 +1179,6 @@ window.DADOS_INICIAIS = window.DADOS_CENTRO;
             </div>
           </div>
 
-        </div>
-
-        <!-- MAPEAMENTO TERRITORIAL DA VIA -->
-        <div class="bg-white rounded-2xl p-4 sm:p-6 border border-slate-200 card-shadow">
-          <div class="flex items-center justify-between mb-3">
-            <div>
-              <h3 class="text-sm sm:text-base font-bold text-slate-900 flex items-center gap-1.5">
-                <i data-lucide="map" class="w-4 h-4 text-blue-600"></i> Origem dos Entrevistados na Via
-              </h3>
-              <p class="text-[11px] sm:text-xs text-slate-500">Bairros de residência dos comerciantes e trabalhadores da Rua Presidente Carlos Luz</p>
-            </div>
-            <span class="text-[10px] bg-slate-100 text-slate-700 font-bold px-2 py-0.5 rounded" id="bairros-total-localidades">Mapeamento Territorial</span>
-          </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2" id="bairros-lista-origem">
-            <!-- Gerado via JS -->
-          </div>
         </div>
 
       </div> <!-- /container-pesquisa-bairros -->
@@ -3203,7 +3289,7 @@ window.DADOS_INICIAIS = window.DADOS_CENTRO;
       lucide.createIcons();
     }
 
-    function renderizarGraficosBairros(data, stats) {
+        function renderizarGraficosBairros(data, stats) {
       Object.keys(chartsBairros).forEach(k => {
         if (chartsBairros[k]) chartsBairros[k].destroy();
       });
@@ -3212,56 +3298,16 @@ window.DADOS_INICIAIS = window.DADOS_CENTRO;
       const baseFontSize = modoFonteGrande ? 11 : 10;
       const boldWeight = modoFonteGrande ? '800' : '700';
 
-      // Gráfico 1: Adesão ao Rotativo (Doughnut)
+      // 1. Gráfico 1: Adesão ao Rotativo (Barras Verticais Idêntico ao Gráfico de Satisfação do Centro)
       const ctxAdesao = document.getElementById('chart-bairros-adesao');
       if (ctxAdesao) {
         chartsBairros['adesao'] = new Chart(ctxAdesao.getContext('2d'), {
-          type: 'doughnut',
-          data: {
-            labels: ['Totalmente a favor', 'Com ressalvas', 'Contra', 'Indiferente'],
-            datasets: [{
-              data: [stats.simTotal, stats.simRessalvas, stats.contra, stats.indiferente],
-              backgroundColor: ['#10b981', '#06b6d4', '#f43f5e', '#94a3b8'],
-              borderWidth: 2,
-              borderColor: '#ffffff'
-            }]
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-              legend: { display: false },
-              tooltip: {
-                callbacks: {
-                  label: (ctx) => ` ${ctx.label}: ${ctx.raw} (${((ctx.raw/total)*100).toFixed(1)}%)`
-                }
-              }
-            },
-            cutout: '62%'
-          }
-        });
-
-        const leg = document.getElementById('bairros-legenda-adesao');
-        if (leg) {
-          leg.innerHTML = `
-            <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span><span>A Favor: <strong>${stats.simTotal} (${((stats.simTotal/total)*100).toFixed(0)}%)</strong></span></div>
-            <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-cyan-500"></span><span>Ressalvas: <strong>${stats.simRessalvas} (${((stats.simRessalvas/total)*100).toFixed(0)}%)</strong></span></div>
-            <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span><span>Contra: <strong>${stats.contra} (${((stats.contra/total)*100).toFixed(0)}%)</strong></span></div>
-            <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-slate-400"></span><span>Indiferente: <strong>${stats.indiferente} (${((stats.indiferente/total)*100).toFixed(0)}%)</strong></span></div>
-          `;
-        }
-      }
-
-      // Gráfico 2: Vagas Hoje (Barra)
-      const ctxVagas = document.getElementById('chart-bairros-vagas');
-      if (ctxVagas) {
-        chartsBairros['vagas'] = new Chart(ctxVagas.getContext('2d'), {
           type: 'bar',
           data: {
-            labels: ['Difícil', 'Médio', 'Fácil'],
+            labels: ['A Favor (Total)', 'Com Ressalvas', 'Indiferente', 'Contra o Rotativo'],
             datasets: [{
-              data: [stats.vagasDificil, stats.vagasMedio, stats.vagasFacil],
-              backgroundColor: ['#ef4444', '#f59e0b', '#10b981'],
+              data: [stats.simTotal, stats.simRessalvas, stats.indiferente, stats.contra],
+              backgroundColor: ['#10b981', '#06b6d4', '#94a3b8', '#ef4444'],
               borderRadius: 6
             }]
           },
@@ -3282,9 +3328,56 @@ window.DADOS_INICIAIS = window.DADOS_CENTRO;
             }
           }
         });
+
+        const leg = document.getElementById('bairros-legenda-adesao');
+        if (leg) {
+          leg.innerHTML = `
+            <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span><span>A Favor: <strong>${stats.simTotal} (${((stats.simTotal/total)*100).toFixed(0)}%)</strong></span></div>
+            <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-cyan-500"></span><span>Ressalvas: <strong>${stats.simRessalvas} (${((stats.simRessalvas/total)*100).toFixed(0)}%)</strong></span></div>
+            <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span><span>Contra: <strong>${stats.contra} (${((stats.contra/total)*100).toFixed(0)}%)</strong></span></div>
+            <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-slate-400"></span><span>Indiferente: <strong>${stats.indiferente} (${((stats.indiferente/total)*100).toFixed(0)}%)</strong></span></div>
+          `;
+        }
       }
 
-      // Gráfico 3: Impacto Comercial (Barra Horizontal)
+      // 2. Gráfico 2: Vagas Hoje (Rosca / Doughnut Idêntico ao Gráfico de Vagas do Centro)
+      const ctxVagas = document.getElementById('chart-bairros-vagas');
+      if (ctxVagas) {
+        chartsBairros['vagas'] = new Chart(ctxVagas.getContext('2d'), {
+          type: 'doughnut',
+          data: {
+            labels: ['Difícil (Ocupadas o dia todo)', 'Médio (Demora a achar)', 'Fácil (Sempre tem)'],
+            datasets: [{
+              data: [stats.vagasDificil, stats.vagasMedio, stats.vagasFacil],
+              backgroundColor: ['#ef4444', '#f59e0b', '#10b981'],
+              borderWidth: 2,
+              borderColor: '#ffffff'
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                callbacks: {
+                  label: (ctx) => ` ${ctx.label}: ${ctx.raw} (${((ctx.raw/total)*100).toFixed(1)}%)`
+                }
+              }
+            },
+            cutout: '62%'
+          }
+        });
+
+        const elDif = document.getElementById('card-bairros-vagas-dificil');
+        const elMed = document.getElementById('card-bairros-vagas-medio');
+        const elFac = document.getElementById('card-bairros-vagas-facil');
+        if (elDif) elDif.innerText = `${((stats.vagasDificil/total)*100).toFixed(1)}%`;
+        if (elMed) elMed.innerText = `${((stats.vagasMedio/total)*100).toFixed(1)}%`;
+        if (elFac) elFac.innerText = `${((stats.vagasFacil/total)*100).toFixed(1)}%`;
+      }
+
+      // 3. Gráfico 3: Impacto Comercial (Barra Horizontal)
       const ctxImpacto = document.getElementById('chart-bairros-impacto');
       if (ctxImpacto) {
         chartsBairros['impacto'] = new Chart(ctxImpacto.getContext('2d'), {
@@ -3383,11 +3476,48 @@ window.DADOS_INICIAIS = window.DADOS_CENTRO;
       const elTot = document.getElementById('bairros-total-localidades');
       if (elTot) elTot.innerText = `${Object.keys(locs).length} Bairros Mapeados`;
 
+      const ordenados = Object.keys(locs).sort((a,b) => locs[b] - locs[a]);
+
+      // 4. Gráfico Horizontal de Localidades dos Bairros (Idêntico ao Centro)
+      const ctxLoc = document.getElementById('chart-bairros-localidade');
+      if (ctxLoc) {
+        if (chartsBairros['localidade']) chartsBairros['localidade'].destroy();
+        const topBairros = ordenados.slice(0, 8);
+        chartsBairros['localidade'] = new Chart(ctxLoc.getContext('2d'), {
+          type: 'bar',
+          indexAxis: 'y',
+          data: {
+            labels: topBairros,
+            datasets: [{
+              data: topBairros.map(b => locs[b]),
+              backgroundColor: '#2563eb',
+              borderRadius: 6
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                callbacks: {
+                  label: (ctx) => ` ${ctx.raw} entrevistados (${((ctx.raw/totalIdent)*100).toFixed(1)}%)`
+                }
+              }
+            },
+            scales: {
+              x: { beginAtZero: true, grid: { color: '#f1f5f9' }, ticks: { stepSize: 1, font: { size: modoFonteGrande ? 11 : 10, weight: modoFonteGrande ? '800' : '700' } } },
+              y: { grid: { display: false }, ticks: { font: { size: modoFonteGrande ? 11 : 10, weight: modoFonteGrande ? '800' : '700' } } }
+            }
+          }
+        });
+      }
+
       container.innerHTML = '';
-      Object.keys(locs).sort((a,b) => locs[b] - locs[a]).forEach(bairro => {
+      ordenados.forEach(bairro => {
         const pct = ((locs[bairro] / totalIdent) * 100).toFixed(0);
         const div = document.createElement('div');
-        div.className = 'p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between text-xs';
+        div.className = 'p-2 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between text-xs';
         div.innerHTML = `
           <span class="font-bold text-slate-800">${bairro}</span>
           <span class="text-[10px] font-extrabold text-blue-700 bg-blue-100/70 px-2 py-0.5 rounded-full">${locs[bairro]} (${pct}%)</span>
