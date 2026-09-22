@@ -1,0 +1,7 @@
+*.py
+*.bat
+*.exe
+*.zip
+*.tar.gz
+*.log
+public_url.txt

@@ -209,10 +209,10 @@
         <!-- Seletor de Pesquisa -->
         <div class="flex items-center gap-1.5 min-w-0">
           <i data-lucide="layers" class="w-3.5 h-3.5 text-amber-400 flex-shrink-0"></i>
-          <select id="select-onda" onchange="trocarOnda(this.value)" class="bg-leopoldina-navy text-white text-xs font-semibold px-2 sm:px-3 py-1 rounded-md border border-white/20 focus:outline-none truncate max-w-[200px] sm:max-w-xs">
-            <option value="onda1" selected>Pesquisa 01 - Centro (Com Rotativo)</option>
-            <option value="onda_controle">Pesquisa 01 - Bairros (Sem Rotativo)</option>
-            <option value="onda2">Pesquisa 02 - Próximo Bimestre</option>
+          <select id="select-onda" onchange="trocarOnda(this.value)" class="bg-leopoldina-navy text-white text-xs font-semibold px-2 sm:px-3 py-1 rounded-md border border-white/20 focus:outline-none truncate max-w-[210px] sm:max-w-xs cursor-pointer shadow-sm">
+            <option value="centro" selected>Pesquisa 01 – Centro (Com Rotativo)</option>
+            <option value="bairros">Pesquisa 01 – Bairros (Sem Rotativo)</option>
+            <option value="evolucao">Histórico Bimestral & Metas</option>
           </select>
         </div>
 
@@ -292,11 +292,11 @@
           <i data-lucide="map-pin" class="w-4 h-4 sm:w-5 sm:h-5"></i>
         </div>
         <div>
-          <h2 class="text-xs sm:text-base font-bold text-slate-900 leading-snug">
+          <h2 class="text-xs sm:text-base font-bold text-slate-900 leading-snug" id="banner-titulo-pesquisa">
             Pesquisa 01: Rua Barão de Cotegipe e Centro
           </h2>
           <p class="text-[11px] sm:text-xs text-slate-500">
-            <strong id="badge-total-identificadas">60 entrevistas</strong> (<span id="badge-detalhe-amostra">38 identificadas e 22 anônimas</span> computadas).
+            <strong id="badge-total-identificadas">160 entrevistas</strong> (<span id="badge-detalhe-amostra">38 identificadas e 22 anônimas</span> computadas).
           </p>
         </div>
       </div>
@@ -309,6 +309,11 @@
     <!-- ABA 1: VISÃO GERAL EXECUTIVA -->
     <!-- ========================================================================= -->
     <div id="view-geral" class="view-content space-y-4 sm:space-y-6">
+
+      <!-- ================================================================= -->
+      <!-- PAINEL 1: PESQUISA 01 - CENTRO (COM ROTATIVO) -->
+      <!-- ================================================================= -->
+      <div id="container-pesquisa-centro" class="space-y-4 sm:space-y-6">
 
       <!-- GRID DE KPIS ADAPTADO (2x2 no Celular, 4 colunas no PC) -->
       <div class="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4">
@@ -824,9 +829,270 @@
           </div>
         </div>
 
-      </div>
+      </div> <!-- /container-pesquisa-centro -->
 
-    </div>
+      <!-- ================================================================= -->
+      <!-- PAINEL 2: PESQUISA DE VIABILIDADE - BAIRROS (SEM ROTATIVO) -->
+      <!-- ================================================================= -->
+      <div id="container-pesquisa-bairros" class="space-y-4 sm:space-y-6 hidden">
+
+        <!-- BANNER DE STATUS DA VIABILIDADE -->
+        <div class="bg-gradient-to-r from-blue-900 via-indigo-950 to-slate-900 rounded-2xl p-4 sm:p-5 text-white card-shadow flex flex-col sm:flex-row sm:items-center justify-between gap-3 border border-blue-800/40">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-blue-500/20 border border-blue-400/30 text-blue-300 flex items-center justify-center flex-shrink-0">
+              <i data-lucide="map" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="text-[10px] uppercase tracking-wider font-extrabold px-2 py-0.5 rounded-full bg-blue-400 text-slate-950">Estudo Preliminar</span>
+                <h3 class="text-sm sm:text-lg font-bold text-white tracking-wide">Pesquisa de Viabilidade nos Bairros</h3>
+              </div>
+              <p class="text-[11px] sm:text-xs text-slate-300 mt-0.5">Diagnóstico na Rua Presidente Carlos Luz para avaliar expansão e regularização de vagas</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 self-start sm:self-auto">
+            <span class="text-[11px] sm:text-xs text-blue-200 bg-white/10 px-3 py-1.5 rounded-xl border border-white/10 flex items-center gap-1.5">
+              <i data-lucide="building-2" class="w-3.5 h-3.5 text-amber-400"></i>
+              <strong id="bairros-badge-respostas">16 entrevistas</strong>
+            </span>
+          </div>
+        </div>
+
+        <!-- GRID DE KPIS DE VIABILIDADE -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4">
+          
+          <!-- KPI 1: Apoio à Implantação -->
+          <div class="bg-white rounded-2xl p-3 sm:p-5 border border-slate-200 card-shadow flex flex-col justify-between">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] sm:text-xs font-bold text-slate-500 uppercase">Apoio ao Rotativo</span>
+              <span class="text-[10px] font-bold px-1.5 py-0.2 rounded bg-emerald-50 text-emerald-700">A Favor</span>
+            </div>
+            <div class="my-1.5 sm:my-2 flex items-baseline gap-1">
+              <span id="bairros-kpi-adesao" class="text-2xl sm:text-4xl font-extrabold text-emerald-600">37.5%</span>
+            </div>
+            <div class="w-full bg-slate-100 rounded-full h-1.5 sm:h-2 overflow-hidden mb-1">
+              <div id="bairros-bar-adesao" class="bg-emerald-500 h-full rounded-full" style="width: 37.5%;"></div>
+            </div>
+            <span class="text-[10px] text-slate-500 font-medium" id="bairros-kpi-adesao-sub">A favor ou com ressalvas</span>
+          </div>
+
+          <!-- KPI 2: Resistência Atual -->
+          <div class="bg-white rounded-2xl p-3 sm:p-5 border border-slate-200 card-shadow flex flex-col justify-between">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] sm:text-xs font-bold text-slate-500 uppercase">Resistência</span>
+              <span class="text-[10px] font-bold px-1.5 py-0.2 rounded bg-rose-50 text-rose-700">Contrários</span>
+            </div>
+            <div class="my-1.5 sm:my-2 flex items-baseline gap-1">
+              <span id="bairros-kpi-contra" class="text-2xl sm:text-4xl font-extrabold text-rose-600">56.2%</span>
+            </div>
+            <div class="w-full bg-slate-100 rounded-full h-1.5 sm:h-2 overflow-hidden mb-1">
+              <div id="bairros-bar-contra" class="bg-rose-500 h-full rounded-full" style="width: 56.2%;"></div>
+            </div>
+            <span class="text-[10px] text-slate-500 font-medium" id="bairros-kpi-contra-sub">Receio de afastar clientes e falta de carga/descarga</span>
+          </div>
+
+          <!-- KPI 3: Vagas Escassas Hoje -->
+          <div class="bg-white rounded-2xl p-3 sm:p-5 border border-slate-200 card-shadow flex flex-col justify-between">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] sm:text-xs font-bold text-slate-500 uppercase">Vagas Hoje</span>
+              <span class="text-[10px] font-bold px-1.5 py-0.2 rounded bg-amber-50 text-amber-800">Dificuldade</span>
+            </div>
+            <div class="my-1.5 sm:my-2 flex items-baseline gap-1">
+              <span id="bairros-kpi-vagas" class="text-2xl sm:text-4xl font-extrabold text-amber-600">87.5%</span>
+            </div>
+            <div class="w-full bg-slate-100 rounded-full h-1.5 sm:h-2 overflow-hidden mb-1">
+              <div id="bairros-bar-vagas" class="bg-amber-500 h-full rounded-full" style="width: 87.5%;"></div>
+            </div>
+            <span class="text-[10px] text-slate-500 font-medium" id="bairros-kpi-vagas-sub">Vagas ocupadas o dia todo por carros em fuga do Centro</span>
+          </div>
+
+          <!-- KPI 4: Prejuízo Comercial -->
+          <div class="bg-white rounded-2xl p-3 sm:p-5 border border-slate-200 card-shadow flex flex-col justify-between">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] sm:text-xs font-bold text-slate-500 uppercase">Prejuízo Comercial</span>
+              <span class="text-[10px] font-bold px-1.5 py-0.2 rounded bg-purple-50 text-purple-700">Fluxo</span>
+            </div>
+            <div class="my-1.5 sm:my-2 flex items-baseline gap-1">
+              <span id="bairros-kpi-prejuizo" class="text-2xl sm:text-4xl font-extrabold text-purple-700">75.0%</span>
+            </div>
+            <div class="w-full bg-slate-100 rounded-full h-1.5 sm:h-2 overflow-hidden mb-1">
+              <div id="bairros-bar-prejuizo" class="bg-purple-600 h-full rounded-full" style="width: 75%;"></div>
+            </div>
+            <span class="text-[10px] text-slate-500 font-medium" id="bairros-kpi-prejuizo-sub">Falta de vagas afeta compras e entregas na via</span>
+          </div>
+        </div>
+
+        <!-- GRID DE GRÁFICOS DE VIABILIDADE -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
+          
+          <!-- Gráfico 1: Adesão ao Rotativo -->
+          <div class="bg-white rounded-2xl p-4 sm:p-6 border border-slate-200 card-shadow flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <h3 class="text-sm sm:text-base font-bold text-slate-900">Adesão ao Rotativo na Via</h3>
+                <span class="text-[10px] bg-blue-50 text-blue-700 font-bold px-2 py-0.5 rounded">Pergunta 5</span>
+              </div>
+              <p class="text-[11px] sm:text-xs text-slate-500 mb-3">Você seria a favor da implantação da Área Azul nesta rua?</p>
+              <div class="h-52 sm:h-56 w-full relative flex items-center justify-center">
+                <canvas id="chart-bairros-adesao"></canvas>
+              </div>
+            </div>
+            <div class="mt-3 pt-3 border-t border-slate-100 grid grid-cols-2 gap-2 text-[10px] sm:text-[11px]" id="bairros-legenda-adesao">
+              <!-- Preenchido via JS -->
+            </div>
+          </div>
+
+          <!-- Gráfico 2: Como é achar vaga hoje -->
+          <div class="bg-white rounded-2xl p-4 sm:p-6 border border-slate-200 card-shadow flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <h3 class="text-sm sm:text-base font-bold text-slate-900">Dificuldade de Vagas Hoje</h3>
+                <span class="text-[10px] bg-amber-50 text-amber-700 font-bold px-2 py-0.5 rounded">Pergunta 3</span>
+              </div>
+              <p class="text-[11px] sm:text-xs text-slate-500 mb-3">Como você avalia a facilidade de encontrar vagas nesta rua?</p>
+              <div class="h-52 sm:h-56 w-full">
+                <canvas id="chart-bairros-vagas"></canvas>
+              </div>
+            </div>
+            <div class="mt-3 pt-3 border-t border-slate-100 text-[11px] text-slate-600" id="bairros-desc-vagas">
+              <strong class="text-slate-900 font-semibold" id="bairros-vagas-perc-txt">87.5%</strong> relatam lentidão ou impossibilidade de encontrar vagas livres.
+            </div>
+          </div>
+
+          <!-- Gráfico 3: Impacto no Comércio -->
+          <div class="bg-white rounded-2xl p-4 sm:p-6 border border-slate-200 card-shadow flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <h3 class="text-sm sm:text-base font-bold text-slate-900">Impacto no Comércio da Via</h3>
+                <span class="text-[10px] bg-purple-50 text-purple-700 font-bold px-2 py-0.5 rounded">Pergunta 4</span>
+              </div>
+              <p class="text-[11px] sm:text-xs text-slate-500 mb-3">A dificuldade de estacionar atrapalha os estabelecimentos?</p>
+              <div class="h-52 sm:h-56 w-full">
+                <canvas id="chart-bairros-impacto"></canvas>
+              </div>
+            </div>
+            <div class="mt-3 pt-3 border-t border-slate-100 text-[11px] text-slate-600" id="bairros-desc-impacto">
+              <strong class="text-slate-900 font-semibold" id="bairros-impacto-perc-txt">75.0%</strong> dos entrevistados afirmam prejuízo nas vendas ou na rotina.
+            </div>
+          </div>
+
+        </div>
+
+        <!-- PAINEL ESTRATÉGICO DE TOMADA DE DECISÃO (VIABILIDADE DE EXPANSÃO) -->
+        <div class="bg-gradient-to-br from-leopoldina-navy via-slate-900 to-leopoldina-blue rounded-2xl p-4 sm:p-6 text-white card-shadow space-y-4 sm:space-y-6">
+          
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/15 pb-4">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-amber-400/20 border border-amber-400/30 text-amber-300 flex items-center justify-center flex-shrink-0">
+                <i data-lucide="compass" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+              </div>
+              <div>
+                <div class="flex items-center gap-2">
+                  <h3 class="text-sm sm:text-lg font-bold text-white tracking-wide">Diagnóstico Executivo de Viabilidade</h3>
+                  <span class="text-[10px] uppercase tracking-wider font-extrabold px-2 py-0.5 rounded-full bg-amber-400 text-slate-950">Expansão Bairros</span>
+                </div>
+                <p class="text-[11px] sm:text-xs text-slate-300 mt-0.5">Cruzamento de dados para suporte à decisão da Prefeitura de Leopoldina</p>
+              </div>
+            </div>
+            <div class="text-[11px] sm:text-xs text-slate-300 bg-white/10 px-3 py-1.5 rounded-xl border border-white/10 self-start sm:self-auto flex items-center gap-1.5">
+              <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-400"></i> <span id="bairros-badge-amostra">Amostra de Campo (16 Entrevistas)</span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-5">
+            
+            <!-- CARD 1: EFEITO MIGRATÓRIO -->
+            <div class="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/10 flex flex-col justify-between">
+              <div>
+                <span class="text-xs font-bold text-amber-300 uppercase tracking-wide flex items-center gap-1.5 mb-2">
+                  <i data-lucide="arrow-left-right" class="w-3.5 h-3.5"></i> Efeito Migratório da Cotegipe
+                </span>
+                <p class="text-[11px] text-slate-200 mb-3">Comerciantes relatam que o rotativo no Centro empurrou os carros para os bairros vizinhos:</p>
+                <div class="bg-white/5 p-3 rounded-lg border border-white/5 text-[11px] text-slate-300 space-y-2">
+                  <p class="italic text-amber-200">"Precisa colocar o rotativo nessa rua, porque o pessoal saiu da Cotegipe para ficar estacionando aqui o dia todo e com isso não se acha mais vagas."</p>
+                  <p class="text-[10px] text-slate-400">— Comerciante da Rua Presidente Carlos Luz</p>
+                </div>
+              </div>
+              <div class="mt-3 pt-3 border-t border-white/10 text-[11px] text-slate-300 leading-snug">
+                <strong class="text-white">💡 Conclusão Técnica:</strong> A expansão é necessária para evitar a sobrecarga desordenada das vias perimetrais ao Centro.
+              </div>
+            </div>
+
+            <!-- CARD 2: MOTIVOS DE RESISTÊNCIA -->
+            <div class="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/10 flex flex-col justify-between">
+              <div>
+                <span class="text-xs font-bold text-rose-300 uppercase tracking-wide flex items-center gap-1.5 mb-2">
+                  <i data-lucide="alert-octagon" class="w-3.5 h-3.5"></i> O que Diz Quem é Contra
+                </span>
+                <p class="text-[11px] text-slate-200 mb-2">Principais temores apontados na Pergunta 6:</p>
+                <div class="space-y-1.5 text-[11px]" id="bairros-lista-motivos-contra">
+                  <!-- Gerado via JS -->
+                </div>
+              </div>
+              <div class="mt-3 pt-3 border-t border-white/10 text-[11px] text-slate-300 leading-snug">
+                <strong class="text-white">💡 Ponto de Atenção:</strong> A resistência não é à organização, mas sim ao receio de perda de vendas e falta de espaço de carga e descarga.
+              </div>
+            </div>
+
+            <!-- CARD 3: VANTAGENS ESPERADAS -->
+            <div class="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/10 flex flex-col justify-between">
+              <div>
+                <span class="text-xs font-bold text-emerald-300 uppercase tracking-wide flex items-center gap-1.5 mb-2">
+                  <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> O que Espera Quem é a Favor
+                </span>
+                <p class="text-[11px] text-slate-200 mb-2">Benefícios almejados na Pergunta 7:</p>
+                <div class="space-y-1.5 text-[11px]" id="bairros-lista-vantagens-favor">
+                  <!-- Gerado via JS -->
+                </div>
+              </div>
+              <div class="mt-3 pt-3 border-t border-white/10 text-[11px] text-slate-300 leading-snug">
+                <strong class="text-white">💡 Oportunidade:</strong> Comerciantes favoráveis destacam a rotatividade para clientes que vêm resolver problemas rápidos.
+              </div>
+            </div>
+
+          </div>
+
+          <!-- PLANO DE DIRETRIZES PARA IMPLANTAÇÃO -->
+          <div class="bg-white/5 rounded-xl p-3.5 sm:p-4 border border-white/10">
+            <h4 class="text-xs sm:text-sm font-bold text-amber-300 uppercase tracking-wide flex items-center gap-1.5 mb-2">
+              <i data-lucide="clipboard-list" class="w-4 h-4"></i> Diretrizes Recomendadas para Implantação sem Conflitos
+            </h4>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-[11px] text-slate-300">
+              <div class="bg-white/5 p-2.5 rounded-lg border border-white/5">
+                <strong class="text-white block font-bold mb-1">1. Carga e Descarga Livre (30 min)</strong>
+                Demarcar bolsões prioritários para entregas e mercadorias de móveis, tintas, vidraçarias e materiais.
+              </div>
+              <div class="bg-white/5 p-2.5 rounded-lg border border-white/5">
+                <strong class="text-white block font-bold mb-1">2. Motos e Entregadores</strong>
+                Isenção ou cadastro subsidiado para motoboys e trabalhadores locais que dependem da moto para trabalhar.
+              </div>
+              <div class="bg-white/5 p-2.5 rounded-lg border border-white/5">
+                <strong class="text-white block font-bold mb-1">3. Tolerância Ampliada (15 a 20 min)</strong>
+                Tempo suficiente para paradas rápidas no comércio de bairro sem penalização imediata.
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- MAPEAMENTO TERRITORIAL DA VIA -->
+        <div class="bg-white rounded-2xl p-4 sm:p-6 border border-slate-200 card-shadow">
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <h3 class="text-sm sm:text-base font-bold text-slate-900 flex items-center gap-1.5">
+                <i data-lucide="map" class="w-4 h-4 text-blue-600"></i> Origem dos Entrevistados na Via
+              </h3>
+              <p class="text-[11px] sm:text-xs text-slate-500">Bairros de residência dos comerciantes e trabalhadores da Rua Presidente Carlos Luz</p>
+            </div>
+            <span class="text-[10px] bg-slate-100 text-slate-700 font-bold px-2 py-0.5 rounded" id="bairros-total-localidades">Mapeamento Territorial</span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2" id="bairros-lista-origem">
+            <!-- Gerado via JS -->
+          </div>
+        </div>
+
+      </div> <!-- /container-pesquisa-bairros -->
+    </div> <!-- /view-geral -->
 
     <!-- ========================================================================= -->
     <!-- ABA 2: COMÉRCIO LOCAL -->
@@ -1092,15 +1358,19 @@
   <!-- LÓGICA DE DADOS, SINCRONIZAÇÃO E GRÁFICOS JAVASCRIPT -->
   <!-- ========================================================================= -->
   <script>
-    let DADOS_ATUAIS = window.DADOS_INICIAIS || [];
+    let DADOS_CENTRO = window.DADOS_CENTRO || window.DADOS_INICIAIS || [];
+    let DADOS_BAIRROS = window.DADOS_BAIRROS || [];
+    let PESQUISA_ATIVA = 'centro';
+    let DADOS_ATUAIS = DADOS_CENTRO;
     let charts = {};
+    let chartsBairros = {};
     let filtroComentarioAtivo = 'todos';
     let modoFonteGrande = false;
     let deferredInstallPrompt = null;
 
     // Forçar atualização do Service Worker e capturar instalação PWA
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js?v=23').then((reg) => {
+      navigator.serviceWorker.register('sw.js?v=24').then((reg) => {
         reg.update();
       }).catch(err => console.log('SW fail:', err));
     }
@@ -1245,29 +1515,109 @@
       return parsed;
     }
 
-    let gvizCallbackResolve = null;
+    let gvizCallbackResolveCentro = null;
+    let gvizCallbackResolveBairros = null;
+
     window.__onGoogleSheetSync = function(data) {
-      if (gvizCallbackResolve) {
-        gvizCallbackResolve(data);
-        gvizCallbackResolve = null;
+      if (gvizCallbackResolveCentro) {
+        gvizCallbackResolveCentro(data);
+        gvizCallbackResolveCentro = null;
       }
     };
 
-    function buscarDadosGoogleGviz() {
+    window.__onGoogleSheetSyncBairros = function(data) {
+      if (gvizCallbackResolveBairros) {
+        gvizCallbackResolveBairros(data);
+        gvizCallbackResolveBairros = null;
+      }
+    };
+
+    function processarPlanilhaGvizBairros(json) {
+      if (!json || !json.table || !json.table.rows) return null;
+      const rows = json.table.rows;
+      const parsed = [];
+
+      rows.forEach((r, idx) => {
+        if (!r.c || !r.c.some(cell => cell && cell.v !== null && cell.v !== '')) return;
+
+        const getVal = (colIdx) => {
+          if (!r.c || colIdx >= r.c.length) return '';
+          const cell = r.c[colIdx];
+          if (!cell || cell.v === null || cell.v === undefined) return '';
+          return String(cell.f !== undefined ? cell.f : cell.v).trim();
+        };
+
+        parsed.push({
+          id: idx + 1,
+          timestamp: getVal(0),
+          nome: getVal(1),
+          idade: getVal(2),
+          contato: getVal(3),
+          endereco: getVal(4),
+          tipo_comercio: getVal(5),
+          perfil: getVal(6),
+          local: getVal(7),
+          facilidade_vagas: getVal(8),
+          impacto_comercio: getVal(9),
+          aceitacao_rotativo: getVal(10),
+          motivo_contra: getVal(11),
+          vantagem_a_favor: getVal(12),
+          sugestao_critica: getVal(13),
+          faturamento: getVal(14),
+          funcionarios: getVal(15),
+          pesquisa_onda: 'Pesquisa 01 - Bairros (Sem Rotativo)'
+        });
+      });
+      return parsed;
+    }
+
+    function buscarDadosGoogleGvizBairros() {
       return new Promise((resolve) => {
         const timeout = setTimeout(() => {
-          if (gvizCallbackResolve) {
-            gvizCallbackResolve = null;
+          if (gvizCallbackResolveBairros) {
+            gvizCallbackResolveBairros = null;
             resolve(null);
           }
         }, 6000);
 
-        gvizCallbackResolve = (data) => {
+        gvizCallbackResolveBairros = (data) => {
           clearTimeout(timeout);
           resolve(data);
         };
 
-        const scriptId = 'script-gviz-sync';
+        const scriptId = 'script-gviz-sync-bairros';
+        const oldScript = document.getElementById(scriptId);
+        if (oldScript) oldScript.remove();
+
+        const s = document.createElement('script');
+        s.id = scriptId;
+        s.src = `https://docs.google.com/spreadsheets/d/1DzHqPOyX86DwzdtPn5_tbgjZYF5IyyHFobqbdiE0ofM/gviz/tq?tqx=responseHandler:__onGoogleSheetSyncBairros&gid=1292366487&_t=${Date.now()}`;
+        s.onerror = () => {
+          clearTimeout(timeout);
+          if (gvizCallbackResolveBairros) {
+            gvizCallbackResolveBairros = null;
+            resolve(null);
+          }
+        };
+        document.head.appendChild(s);
+      });
+    }
+
+    function buscarDadosGoogleGvizCentro() {
+      return new Promise((resolve) => {
+        const timeout = setTimeout(() => {
+          if (gvizCallbackResolveCentro) {
+            gvizCallbackResolveCentro = null;
+            resolve(null);
+          }
+        }, 6000);
+
+        gvizCallbackResolveCentro = (data) => {
+          clearTimeout(timeout);
+          resolve(data);
+        };
+
+        const scriptId = 'script-gviz-sync-centro';
         const oldScript = document.getElementById(scriptId);
         if (oldScript) oldScript.remove();
 
@@ -1276,8 +1626,8 @@
         s.src = `https://docs.google.com/spreadsheets/d/1i4CLjdzqrN25gsNG7bqyQoiimXrOE6agD5fla7-iD1M/gviz/tq?tqx=responseHandler:__onGoogleSheetSync&gid=1202801408&_t=${Date.now()}`;
         s.onerror = () => {
           clearTimeout(timeout);
-          if (gvizCallbackResolve) {
-            gvizCallbackResolve = null;
+          if (gvizCallbackResolveCentro) {
+            gvizCallbackResolveCentro = null;
             resolve(null);
           }
         };
@@ -1294,56 +1644,55 @@
         btnSync.classList.add('opacity-75');
       }
 
-      let parsed = null;
-
-      // 1. Tentar via endpoint oficial Google Visualization JSONP (sem CORS, 100% nativo)
       try {
-        const gvizData = await buscarDadosGoogleGviz();
-        if (gvizData) {
-          const res = processarPlanilhaGviz(gvizData);
-          if (res && res.length > 0) parsed = res;
+        const [gvizCentro, gvizBairros] = await Promise.all([
+          buscarDadosGoogleGvizCentro(),
+          buscarDadosGoogleGvizBairros()
+        ]);
+
+        let mudouCentro = false;
+        let mudouBairros = false;
+
+        if (gvizCentro) {
+          const parsedC = processarPlanilhaGviz(gvizCentro);
+          if (parsedC && parsedC.length > 0) {
+            if (parsedC.length !== DADOS_CENTRO.length || JSON.stringify(parsedC) !== JSON.stringify(DADOS_CENTRO)) {
+              DADOS_CENTRO = parsedC;
+              mudouCentro = true;
+            }
+          }
         }
-      } catch (e) {}
 
-      // 2. Fallback: servidor local /api/sync-sheets se estiver rodando localmente
-      if (!parsed) {
-        try {
-          const resp = await fetch('/api/sync-sheets', { cache: 'no-store' });
-          if (resp.ok) {
-            const csv = await resp.text();
-            const res = parseCSV(csv);
-            if (res.length > 0) parsed = res;
+        if (gvizBairros) {
+          const parsedB = processarPlanilhaGvizBairros(gvizBairros);
+          if (parsedB && parsedB.length > 0) {
+            if (parsedB.length !== DADOS_BAIRROS.length || JSON.stringify(parsedB) !== JSON.stringify(DADOS_BAIRROS)) {
+              DADOS_BAIRROS = parsedB;
+              mudouBairros = true;
+            }
           }
-        } catch (e) {}
-      }
+        }
 
-      if (!silencioso && syncIcon && btnSync) {
-        syncIcon.classList.remove('animate-spin');
-        btnSync.classList.remove('opacity-75');
-      }
-
-      if (parsed && parsed.length > 0) {
-        const totalAntigo = DADOS_ATUAIS.length;
-        const dadosMudaram = (parsed.length !== totalAntigo) || 
-                             (JSON.stringify(parsed) !== JSON.stringify(DADOS_ATUAIS));
-        if (dadosMudaram) {
-          DADOS_ATUAIS = parsed;
-          renderizarDashboard(DADOS_ATUAIS);
-          if (!silencioso) {
-            showToast(`Sincronizado com sucesso! ${parsed.length} respostas.`);
-          } else if (parsed.length > totalAntigo) {
-            showToast(`Planilha atualizada! ${parsed.length} respostas (+${parsed.length - totalAntigo} novas).`);
-          }
+        if (PESQUISA_ATIVA === 'centro') {
+          DADOS_ATUAIS = DADOS_CENTRO;
+          if (mudouCentro || !silencioso) renderizarDashboard(DADOS_CENTRO);
         } else {
-          if (!silencioso) {
-            showToast(`Base de dados já atualizada (${parsed.length} respostas).`);
-          }
+          DADOS_ATUAIS = DADOS_BAIRROS;
+          if (mudouBairros || !silencioso) renderizarDashboardBairros(DADOS_BAIRROS);
         }
-        return;
-      }
 
-      if (!silencioso) {
-        showToast('Base de dados atualizada (60 respostas).');
+        if (!silencioso) {
+          showToast(`Sincronizado! Centro: ${DADOS_CENTRO.length} | Bairros: ${DADOS_BAIRROS.length}`);
+        } else if (mudouCentro || mudouBairros) {
+          showToast(`Planilhas atualizadas! (Centro: ${DADOS_CENTRO.length}, Bairros: ${DADOS_BAIRROS.length})`);
+        }
+      } catch (e) {
+        console.error('Erro na sincronização:', e);
+      } finally {
+        if (!silencioso && syncIcon && btnSync) {
+          syncIcon.classList.remove('animate-spin');
+          btnSync.classList.remove('opacity-75');
+        }
       }
     }
 
@@ -1936,37 +2285,76 @@
       const countTodos = document.getElementById('count-filtro-todos');
       if (countTodos) countTodos.innerText = totalComent;
 
-      // Classificação consistente de Elogios e Críticas:
-      // Elogio: nota >= 4
-      // Crítica: nota <= 3 ou sem nota
-      const totalElogios = comentarios.filter(c => (c.satisfacao || 0) >= 4).length;
+      // Classificação consistente de Elogios e Críticas para Centro e Bairros:
+      const totalElogios = comentarios.filter(c => {
+        if (c.satisfacao !== null && c.satisfacao !== undefined && c.satisfacao > 0) {
+          return c.satisfacao >= 4;
+        }
+        const aceit = (c.aceitacao_rotativo || '').toLowerCase();
+        return aceit.includes('a favor') || aceit.includes('totalmente') || aceit.includes('ressalvas');
+      }).length;
       const countElogios = document.getElementById('count-filtro-elogios');
       if (countElogios) countElogios.innerText = totalElogios;
 
-      const totalCriticas = comentarios.filter(c => (c.satisfacao || 0) <= 3).length;
+      const totalCriticas = totalComent - totalElogios;
       const countCriticas = document.getElementById('count-filtro-criticas');
       if (countCriticas) countCriticas.innerText = totalCriticas;
 
+      const isSurveyBairros = PESQUISA_ATIVA === 'bairros';
+
       comentarios.forEach((item) => {
         const nota = item.satisfacao || 0;
-        const tipo = (nota >= 4) ? 'elogio' : 'critica';
-
+        let tipo = 'critica';
         let badgeColor = 'bg-slate-100 text-slate-700';
         let borderColor = 'border-slate-200';
         let icone = 'message-square';
+        let badgeText = `Nota ${nota > 0 ? nota : 'N/A'}`;
 
         if (nota >= 4) {
+          tipo = 'elogio';
           badgeColor = 'bg-emerald-50 text-emerald-700 border-emerald-200';
           borderColor = 'border-emerald-100';
           icone = 'thumbs-up';
+          badgeText = `Nota ${nota}`;
         } else if (nota === 3) {
+          tipo = 'critica';
           badgeColor = 'bg-amber-50 text-amber-800 border-amber-200';
           borderColor = 'border-amber-100';
           icone = 'alert-circle';
+          badgeText = 'Nota 3';
         } else if (nota > 0 && nota <= 2) {
+          tipo = 'critica';
           badgeColor = 'bg-rose-50 text-rose-700 border-rose-200';
           borderColor = 'border-rose-100';
           icone = 'alert-triangle';
+          badgeText = `Nota ${nota}`;
+        } else if (item.aceitacao_rotativo) {
+          const a = item.aceitacao_rotativo.toLowerCase();
+          if (a.includes('totalmente')) {
+            tipo = 'elogio';
+            badgeColor = 'bg-emerald-50 text-emerald-700 border-emerald-200';
+            borderColor = 'border-emerald-100';
+            icone = 'thumbs-up';
+            badgeText = 'A Favor (Total)';
+          } else if (a.includes('ressalvas')) {
+            tipo = 'elogio';
+            badgeColor = 'bg-blue-50 text-blue-700 border-blue-200';
+            borderColor = 'border-blue-100';
+            icone = 'help-circle';
+            badgeText = 'A Favor c/ Ressalvas';
+          } else if (a.includes('contra') || a.includes('não') || a.includes('nao')) {
+            tipo = 'critica';
+            badgeColor = 'bg-rose-50 text-rose-700 border-rose-200';
+            borderColor = 'border-rose-100';
+            icone = 'alert-triangle';
+            badgeText = 'Contra o Rotativo';
+          } else {
+            tipo = 'critica';
+            badgeColor = 'bg-slate-100 text-slate-700 border-slate-200';
+            borderColor = 'border-slate-200';
+            icone = 'minus-circle';
+            badgeText = 'Indiferente';
+          }
         }
 
         const card = document.createElement('div');
@@ -1980,7 +2368,7 @@
           <div>
             <div class="flex items-center justify-between gap-2 mb-2">
               <span class="text-[11px] font-semibold px-2 py-0.5 rounded-full border ${badgeColor} flex items-center gap-1">
-                <i data-lucide="${icone}" class="w-3 h-3"></i> Nota ${nota > 0 ? nota : 'N/A'}
+                <i data-lucide="${icone}" class="w-3 h-3"></i> ${badgeText}
               </span>
               <span class="text-[10px] text-slate-400 font-medium">${(item.perfil || "").toLowerCase().includes("visitante") ? "Motorista / Usuário" : (item.perfil || "Cidadão")}</span>
             </div>
@@ -1990,7 +2378,7 @@
           </div>
           <div class="mt-2.5 pt-2.5 border-t border-slate-100 flex items-center justify-between text-[10px] text-slate-400">
             <span>${item.nome ? item.nome : 'Anônimo'}</span>
-            <span>${item.local || 'Centro'}</span>
+            <span>${item.local || (isSurveyBairros ? 'Rua Pres. Carlos Luz' : 'Centro')}</span>
           </div>
         `;
         feed.appendChild(card);
@@ -2634,18 +3022,376 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
+    
     function trocarOnda(onda) {
-      if (onda === 'onda1') {
-        renderizarDashboard(DADOS_ATUAIS);
-        showToast('Pesquisa 01 - Centro (Com Rotativo)');
-      } else if (onda === 'onda_controle') {
-        showToast('Áreas de Expansão (Sem Rotativo): Em breve.');
-        mudarAba('evolucao');
-      } else if (onda === 'onda2') {
-        showToast('Pesquisa 02: Próximo bimestre.');
+      if (onda === 'centro' || onda === 'onda1') {
+        PESQUISA_ATIVA = 'centro';
+        DADOS_ATUAIS = DADOS_CENTRO;
+        const sel = document.getElementById('select-onda');
+        if (sel) sel.value = 'centro';
+
+        mudarAba('geral');
+
+        const cCentro = document.getElementById('container-pesquisa-centro');
+        const cBairros = document.getElementById('container-pesquisa-bairros');
+        if (cCentro) cCentro.classList.remove('hidden');
+        if (cBairros) cBairros.classList.add('hidden');
+
+        const bannerTit = document.getElementById('banner-titulo-pesquisa');
+        if (bannerTit) bannerTit.innerText = 'Pesquisa 01: Rua Barão de Cotegipe e Centro';
+
+        renderizarDashboard(DADOS_CENTRO);
+        showToast('Pesquisa 01 – Centro (Com Rotativo)');
+      } else if (onda === 'bairros' || onda === 'onda_controle') {
+        PESQUISA_ATIVA = 'bairros';
+        DADOS_ATUAIS = DADOS_BAIRROS;
+        const sel = document.getElementById('select-onda');
+        if (sel) sel.value = 'bairros';
+
+        mudarAba('geral');
+
+        const cCentro = document.getElementById('container-pesquisa-centro');
+        const cBairros = document.getElementById('container-pesquisa-bairros');
+        if (cCentro) cCentro.classList.add('hidden');
+        if (cBairros) cBairros.classList.remove('hidden');
+
+        const bannerTit = document.getElementById('banner-titulo-pesquisa');
+        if (bannerTit) bannerTit.innerText = 'Pesquisa 01: Bairros Sem Rotativo (Estudo de Viabilidade)';
+
+        renderizarDashboardBairros(DADOS_BAIRROS);
+        showToast('Pesquisa 01 – Bairros (Sem Rotativo)');
+      } else if (onda === 'evolucao' || onda === 'onda2') {
         mudarAba('evolucao');
       }
     }
+
+    function renderizarDashboardBairros(data) {
+      if (!data || data.length === 0) return;
+      const total = data.length;
+
+      // 1. Cabeçalho Geral
+      const elHeaderTot = document.getElementById('header-total-resp');
+      if (elHeaderTot) elHeaderTot.innerText = total;
+
+      const elBadgeIdent = document.getElementById('badge-total-identificadas');
+      if (elBadgeIdent) elBadgeIdent.innerText = `${total} entrevistas na via`;
+
+      const elBadgeDet = document.getElementById('badge-detalhe-amostra');
+      if (elBadgeDet) elBadgeDet.innerText = 'Rua Pres. Carlos Luz e adjacências';
+
+      const elBairrosResp = document.getElementById('bairros-badge-respostas');
+      if (elBairrosResp) elBairrosResp.innerText = `${total} entrevistas`;
+
+      const elBairrosAmostra = document.getElementById('bairros-badge-amostra');
+      if (elBairrosAmostra) elBairrosAmostra.innerText = `Amostra de Campo (${total} Entrevistas)`;
+
+      // 2. Cálculo de Adesão (Pergunta 5)
+      let simTotal = 0, simRessalvas = 0, contra = 0, indiferente = 0;
+      data.forEach(d => {
+        const a = (d.aceitacao_rotativo || '').toLowerCase();
+        if (a.includes('totalmente')) simTotal++;
+        else if (a.includes('ressalvas')) simRessalvas++;
+        else if (a.includes('não') || a.includes('nao') || a.includes('contra')) contra++;
+        else if (a.includes('indiferente')) indiferente++;
+        else contra++;
+      });
+
+      const percAdesao = (((simTotal + simRessalvas) / total) * 100).toFixed(1);
+      const percContra = ((contra / total) * 100).toFixed(1);
+
+      const elKpiAdesao = document.getElementById('bairros-kpi-adesao');
+      const elBarAdesao = document.getElementById('bairros-bar-adesao');
+      const elSubAdesao = document.getElementById('bairros-kpi-adesao-sub');
+      if (elKpiAdesao) elKpiAdesao.innerText = `${percAdesao}%`;
+      if (elBarAdesao) elBarAdesao.style.width = `${percAdesao}%`;
+      if (elSubAdesao) elSubAdesao.innerText = `${simTotal} a favor + ${simRessalvas} com ressalvas`;
+
+      const elKpiContra = document.getElementById('bairros-kpi-contra');
+      const elBarContra = document.getElementById('bairros-bar-contra');
+      if (elKpiContra) elKpiContra.innerText = `${percContra}%`;
+      if (elBarContra) elBarContra.style.width = `${percContra}%`;
+
+      // 3. Vagas Hoje (Pergunta 3)
+      let vagasDificil = 0, vagasMedio = 0, vagasFacil = 0;
+      data.forEach(d => {
+        const v = (d.facilidade_vagas || '').toLowerCase();
+        if (v.includes('difícil') || v.includes('dificil')) vagasDificil++;
+        else if (v.includes('médio') || v.includes('medio')) vagasMedio++;
+        else vagasFacil++;
+      });
+
+      const percDificuldade = (((vagasDificil + vagasMedio) / total) * 100).toFixed(1);
+      const elKpiVagas = document.getElementById('bairros-kpi-vagas');
+      const elBarVagas = document.getElementById('bairros-bar-vagas');
+      if (elKpiVagas) elKpiVagas.innerText = `${percDificuldade}%`;
+      if (elBarVagas) elBarVagas.style.width = `${percDificuldade}%`;
+
+      const elVagasTxt = document.getElementById('bairros-vagas-perc-txt');
+      if (elVagasTxt) elVagasTxt.innerText = `${percDificuldade}%`;
+
+      // 4. Prejuízo ao Comércio (Pergunta 4)
+      let impMuito = 0, impPouco = 0, impNao = 0;
+      data.forEach(d => {
+        const imp = (d.impacto_comercio || '').toLowerCase();
+        if (imp.includes('muito')) impMuito++;
+        else if (imp.includes('pouco')) impPouco++;
+        else impNao++;
+      });
+
+      const percPrejuizo = (((impMuito + impPouco) / total) * 100).toFixed(1);
+      const elKpiPrej = document.getElementById('bairros-kpi-prejuizo');
+      const elBarPrej = document.getElementById('bairros-bar-prejuizo');
+      if (elKpiPrej) elKpiPrej.innerText = `${percPrejuizo}%`;
+      if (elBarPrej) elBarPrej.style.width = `${percPrejuizo}%`;
+
+      const elImpTxt = document.getElementById('bairros-impacto-perc-txt');
+      if (elImpTxt) elImpTxt.innerText = `${percPrejuizo}%`;
+
+      // 5. Renderizar Gráficos Chart.js de Bairros
+      renderizarGraficosBairros(data, {
+        simTotal, simRessalvas, contra, indiferente,
+        vagasDificil, vagasMedio, vagasFacil,
+        impMuito, impPouco, impNao
+      });
+
+      // 6. Motivos Contra & Vantagens a Favor
+      renderizarDemandasBairros(data);
+
+      // 7. Mapeamento Territorial Bairros
+      renderizarLocalidadesBairros(data);
+
+      // 8. Atualizar Comércio da Via
+      const listaComercio = document.getElementById('lista-tipos-comercio');
+      if (listaComercio) {
+        const comercios = {};
+        data.forEach(d => {
+          const tc = (d.tipo_comercio || 'Não informado').trim();
+          if (tc && tc.length > 1) {
+            comercios[tc] = (comercios[tc] || 0) + 1;
+          }
+        });
+        listaComercio.innerHTML = '';
+        Object.keys(comercios).sort((a,b) => comercios[b] - comercios[a]).forEach(c => {
+          const div = document.createElement('div');
+          div.className = 'flex items-center justify-between p-2 rounded-lg bg-slate-50 border border-slate-100 text-xs';
+          div.innerHTML = `<span class="font-semibold text-slate-800">${c}</span><span class="text-blue-600 font-bold bg-blue-50 px-2 py-0.5 rounded text-[10px]">${comercios[c]} estabelecimento(s)</span>`;
+          listaComercio.appendChild(div);
+        });
+      }
+
+      // 9. Atualizar Voz do Cidadão para os comentários de Bairros
+      renderizarVozDoCidadao(data);
+
+      // 10. Atualizar Card no Histórico Bimestral
+      const elHistBairros = document.getElementById('view-evolucao');
+      if (elHistBairros) {
+        const elOndaBairrosDiff = elHistBairros.querySelector('.text-rose-600');
+        if (elOndaBairrosDiff) elOndaBairrosDiff.innerText = `${percDificuldade}% apurado`;
+        const elOndaBairrosDisp = elHistBairros.querySelector('.text-slate-500');
+        if (elOndaBairrosDisp) elOndaBairrosDisp.innerText = `${percAdesao}% apoio`;
+        const elOndaBairrosStatus = elHistBairros.querySelector('.text-amber-700');
+        if (elOndaBairrosStatus) {
+          elOndaBairrosStatus.className = 'text-emerald-700 font-semibold';
+          elOndaBairrosStatus.innerText = `${total} Entrevistas`;
+        }
+      }
+
+      lucide.createIcons();
+    }
+
+    function renderizarGraficosBairros(data, stats) {
+      Object.keys(chartsBairros).forEach(k => {
+        if (chartsBairros[k]) chartsBairros[k].destroy();
+      });
+
+      const total = data.length || 1;
+      const baseFontSize = modoFonteGrande ? 11 : 10;
+      const boldWeight = modoFonteGrande ? '800' : '700';
+
+      // Gráfico 1: Adesão ao Rotativo (Doughnut)
+      const ctxAdesao = document.getElementById('chart-bairros-adesao');
+      if (ctxAdesao) {
+        chartsBairros['adesao'] = new Chart(ctxAdesao.getContext('2d'), {
+          type: 'doughnut',
+          data: {
+            labels: ['Totalmente a favor', 'Com ressalvas', 'Contra', 'Indiferente'],
+            datasets: [{
+              data: [stats.simTotal, stats.simRessalvas, stats.contra, stats.indiferente],
+              backgroundColor: ['#10b981', '#06b6d4', '#f43f5e', '#94a3b8'],
+              borderWidth: 2,
+              borderColor: '#ffffff'
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                callbacks: {
+                  label: (ctx) => ` ${ctx.label}: ${ctx.raw} (${((ctx.raw/total)*100).toFixed(1)}%)`
+                }
+              }
+            },
+            cutout: '62%'
+          }
+        });
+
+        const leg = document.getElementById('bairros-legenda-adesao');
+        if (leg) {
+          leg.innerHTML = `
+            <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span><span>A Favor: <strong>${stats.simTotal} (${((stats.simTotal/total)*100).toFixed(0)}%)</strong></span></div>
+            <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-cyan-500"></span><span>Ressalvas: <strong>${stats.simRessalvas} (${((stats.simRessalvas/total)*100).toFixed(0)}%)</strong></span></div>
+            <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span><span>Contra: <strong>${stats.contra} (${((stats.contra/total)*100).toFixed(0)}%)</strong></span></div>
+            <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-slate-400"></span><span>Indiferente: <strong>${stats.indiferente} (${((stats.indiferente/total)*100).toFixed(0)}%)</strong></span></div>
+          `;
+        }
+      }
+
+      // Gráfico 2: Vagas Hoje (Barra)
+      const ctxVagas = document.getElementById('chart-bairros-vagas');
+      if (ctxVagas) {
+        chartsBairros['vagas'] = new Chart(ctxVagas.getContext('2d'), {
+          type: 'bar',
+          data: {
+            labels: ['Difícil', 'Médio', 'Fácil'],
+            datasets: [{
+              data: [stats.vagasDificil, stats.vagasMedio, stats.vagasFacil],
+              backgroundColor: ['#ef4444', '#f59e0b', '#10b981'],
+              borderRadius: 6
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                callbacks: {
+                  label: (ctx) => ` ${ctx.raw} votos (${((ctx.raw/total)*100).toFixed(1)}%)`
+                }
+              }
+            },
+            scales: {
+              y: { beginAtZero: true, grid: { color: '#f1f5f9' }, ticks: { stepSize: 2, font: { size: baseFontSize, weight: boldWeight } } },
+              x: { grid: { display: false }, ticks: { font: { size: baseFontSize, weight: boldWeight } } }
+            }
+          }
+        });
+      }
+
+      // Gráfico 3: Impacto Comercial (Barra Horizontal)
+      const ctxImpacto = document.getElementById('chart-bairros-impacto');
+      if (ctxImpacto) {
+        chartsBairros['impacto'] = new Chart(ctxImpacto.getContext('2d'), {
+          type: 'bar',
+          indexAxis: 'y',
+          data: {
+            labels: ['Atrapalha muito', 'Atrapalha um pouco', 'Não atrapalha'],
+            datasets: [{
+              data: [stats.impMuito, stats.impPouco, stats.impNao],
+              backgroundColor: ['#7c3aed', '#a855f7', '#94a3b8'],
+              borderRadius: 6
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                callbacks: {
+                  label: (ctx) => ` ${ctx.raw} votos (${((ctx.raw/total)*100).toFixed(1)}%)`
+                }
+              }
+            },
+            scales: {
+              x: { beginAtZero: true, grid: { color: '#f1f5f9' }, ticks: { stepSize: 2, font: { size: baseFontSize, weight: boldWeight } } },
+              y: { grid: { display: false }, ticks: { font: { size: baseFontSize, weight: boldWeight } } }
+            }
+          }
+        });
+      }
+    }
+
+    function renderizarDemandasBairros(data) {
+      const listContra = document.getElementById('bairros-lista-motivos-contra');
+      const listFavor = document.getElementById('bairros-lista-vantagens-favor');
+
+      if (listContra) {
+        const contraMap = {};
+        data.forEach(d => {
+          const m = (d.motivo_contra || '').trim();
+          if (m && !m.toLowerCase().includes('não sou contra') && !m.toLowerCase().includes('nao sou contra')) {
+            contraMap[m] = (contraMap[m] || 0) + 1;
+          }
+        });
+        listContra.innerHTML = '';
+        const sorted = Object.keys(contraMap).sort((a,b) => contraMap[b] - contraMap[a]);
+        if (sorted.length === 0) {
+          listContra.innerHTML = '<span class="text-slate-400">Nenhum motivo registrado.</span>';
+        } else {
+          sorted.forEach(k => {
+            const div = document.createElement('div');
+            div.className = 'bg-white/5 p-2 rounded border border-white/5 flex items-center justify-between gap-2';
+            div.innerHTML = `<span class="truncate text-slate-200">${k}</span><span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30 flex-shrink-0">${contraMap[k]} citações</span>`;
+            listContra.appendChild(div);
+          });
+        }
+      }
+
+      if (listFavor) {
+        const favorMap = {};
+        data.forEach(d => {
+          const v = (d.vantagem_a_favor || '').trim();
+          if (v && !v.toLowerCase().includes('não sou a favor') && !v.toLowerCase().includes('nao sou a favor')) {
+            favorMap[v] = (favorMap[v] || 0) + 1;
+          }
+        });
+        listFavor.innerHTML = '';
+        const sorted = Object.keys(favorMap).sort((a,b) => favorMap[b] - favorMap[a]);
+        if (sorted.length === 0) {
+          listFavor.innerHTML = '<span class="text-slate-400">Nenhuma vantagem registrada.</span>';
+        } else {
+          sorted.forEach(k => {
+            const div = document.createElement('div');
+            div.className = 'bg-white/5 p-2 rounded border border-white/5 flex items-center justify-between gap-2';
+            div.innerHTML = `<span class="truncate text-slate-200">${k}</span><span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 flex-shrink-0">${favorMap[k]} citações</span>`;
+            listFavor.appendChild(div);
+          });
+        }
+      }
+    }
+
+    function renderizarLocalidadesBairros(data) {
+      const container = document.getElementById('bairros-lista-origem');
+      if (!container) return;
+
+      const locs = {};
+      data.forEach(d => {
+        const loc = normalizarBairro(d.endereco);
+        if (loc) {
+          locs[loc] = (locs[loc] || 0) + 1;
+        }
+      });
+
+      const totalIdent = Object.values(locs).reduce((a,b) => a+b, 0) || 1;
+      const elTot = document.getElementById('bairros-total-localidades');
+      if (elTot) elTot.innerText = `${Object.keys(locs).length} Bairros Mapeados`;
+
+      container.innerHTML = '';
+      Object.keys(locs).sort((a,b) => locs[b] - locs[a]).forEach(bairro => {
+        const pct = ((locs[bairro] / totalIdent) * 100).toFixed(0);
+        const div = document.createElement('div');
+        div.className = 'p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between text-xs';
+        div.innerHTML = `
+          <span class="font-bold text-slate-800">${bairro}</span>
+          <span class="text-[10px] font-extrabold text-blue-700 bg-blue-100/70 px-2 py-0.5 rounded-full">${locs[bairro]} (${pct}%)</span>
+        `;
+        container.appendChild(div);
+      });
+    }
+
 
     function abrirModalApp() {
       document.getElementById('modal-app').classList.remove('hidden');
