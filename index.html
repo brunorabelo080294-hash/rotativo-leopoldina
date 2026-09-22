@@ -249,7 +249,7 @@
   <!-- BARRA DE NAVEGAÇÃO INFERIOR PARA CELULAR (ESTILO APP NATIVO) -->
   <!-- ========================================================================= -->
   <nav class="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 shadow-2xl safe-bottom no-print">
-    <div class="grid grid-cols-5 h-14">
+    <div id="mob-nav-grid" class="grid grid-cols-5 h-14">
       
       <button onclick="mudarAba('geral')" id="mob-tab-geral" class="mob-tab-btn flex flex-col items-center justify-center text-blue-600 transition-colors">
         <i data-lucide="bar-chart-3" class="w-5 h-5 mb-0.5"></i>
@@ -3109,6 +3109,45 @@
     }
 
     
+    function atualizarAbasPorPesquisa(tipo) {
+      const tabsOcultaveis = ['comercio', 'app-tarifas', 'evolucao'];
+      const mobNavGrid = document.getElementById('mob-nav-grid');
+      
+      if (tipo === 'bairros') {
+        // Oculta abas que só existem no Centro (comércio com rotativo, app/tarifas, histórico bimestral)
+        tabsOcultaveis.forEach(aba => {
+          const tabDesk = document.getElementById(`tab-${aba}`);
+          if (tabDesk) tabDesk.classList.add('hidden');
+          const tabMob = document.getElementById(`mob-tab-${aba}`);
+          if (tabMob) tabMob.classList.add('hidden');
+        });
+
+        if (mobNavGrid) {
+          mobNavGrid.classList.remove('grid-cols-5');
+          mobNavGrid.classList.add('grid-cols-2');
+        }
+
+        // Se estiver em uma aba que foi ocultada, volta para a Visão Geral
+        const viewAtualAtiva = document.querySelector('.tab-btn.active-tab');
+        if (viewAtualAtiva && (viewAtualAtiva.id === 'tab-comercio' || viewAtualAtiva.id === 'tab-app-tarifas' || viewAtualAtiva.id === 'tab-evolucao')) {
+          mudarAba('geral');
+        }
+      } else {
+        // Mostra todas as abas (Centro possui todos os dados completos)
+        tabsOcultaveis.forEach(aba => {
+          const tabDesk = document.getElementById(`tab-${aba}`);
+          if (tabDesk) tabDesk.classList.remove('hidden');
+          const tabMob = document.getElementById(`mob-tab-${aba}`);
+          if (tabMob) tabMob.classList.remove('hidden');
+        });
+
+        if (mobNavGrid) {
+          mobNavGrid.classList.remove('grid-cols-2');
+          mobNavGrid.classList.add('grid-cols-5');
+        }
+      }
+    }
+
     function trocarOnda(onda) {
       if (onda === 'centro' || onda === 'onda1') {
         PESQUISA_ATIVA = 'centro';
@@ -3116,6 +3155,7 @@
         const sel = document.getElementById('select-onda');
         if (sel) sel.value = 'centro';
 
+        atualizarAbasPorPesquisa('centro');
         mudarAba('geral');
 
         const cCentro = document.getElementById('container-pesquisa-centro');
@@ -3134,6 +3174,7 @@
         const sel = document.getElementById('select-onda');
         if (sel) sel.value = 'bairros';
 
+        atualizarAbasPorPesquisa('bairros');
         mudarAba('geral');
 
         const cCentro = document.getElementById('container-pesquisa-centro');
