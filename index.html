@@ -577,7 +577,7 @@
           <i data-lucide="info" class="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5"></i>
           <div>
             <strong class="text-blue-950 font-bold">Diagnóstico Geográfico:</strong>
-            A pesquisa demonstra ampla capilaridade em bairros tradicionais de Leopoldina (Pirineus, Vila Esteves, Cotegipe, Cohab, Tomé Nogueira, São Cristóvão) e atração de consumidores de municípios vizinhos (Cataguases). As novas respostas inseridas na Planilha Google são computadas e sincronizadas automaticamente neste gráfico.
+            <span id="diag-geografico-texto">A pesquisa demonstra ampla capilaridade em bairros tradicionais de Leopoldina (Pirineus, Vila Esteves, Cotegipe, Cohab, Tomé Nogueira, São Cristóvão) e atração de consumidores de municípios vizinhos (Cataguases). As novas respostas inseridas na Planilha Google são computadas e sincronizadas automaticamente neste gráfico.</span>
           </div>
         </div>
 
@@ -647,7 +647,7 @@
                   <div class="w-full bg-white/10 rounded-full h-1.5 overflow-hidden">
                     <div id="exec-bar-morador" class="bg-blue-400 h-full rounded-full" style="width: 100%;"></div>
                   </div>
-                  <span class="text-[10px] text-slate-300 mt-1 block">Aprovam 100% a fluidez e organização na porta de casa.</span>
+                  <span class="text-[10px] text-slate-300 mt-1 block" id="exec-desc-morador">Aprovam a fluidez e organização na porta de casa.</span>
                 </div>
 
                 <!-- Comerciantes -->
@@ -701,7 +701,7 @@
             </div>
 
             <div class="mt-3 pt-3 border-t border-white/10 text-[11px] text-slate-300 leading-snug">
-              <strong class="text-white">💡 Percepção da População:</strong> 7 em cada 10 motoristas nunca sofreram penalidade, indicando que o receio decorre mais do medo de ser notificado por engano do que de punições frequentes.
+              <strong class="text-white">💡 Percepção da População:</strong> <span id="exec-texto-percepcao-multa">8 em cada 10 motoristas nunca sofreram penalidade, indicando que o receio decorre mais do medo de ser notificado por engano do que de punições frequentes.</span>
             </div>
           </div>
 
@@ -731,7 +731,7 @@
                     <strong id="idade-nota-17-29" class="text-cyan-300 font-black">4.2 ★</strong>
                   </div>
                   <p class="text-[10px] text-slate-300 leading-tight">
-                    100% acham vaga fácil; 75% dominam o aplicativo com facilidade.
+                    Maior facilidade com aplicativo e aprovação maciça na oferta de vagas.
                   </p>
                 </div>
 
@@ -755,7 +755,7 @@
                     <strong id="idade-nota-50-59" class="text-emerald-300 font-black">4.0 ★</strong>
                   </div>
                   <p class="text-[10px] text-slate-300 leading-tight">
-                    100% aprovam melhora nas vagas e fluidez na via.
+                    Elevada aprovação da melhora nas vagas e organização da via.
                   </p>
                 </div>
 
@@ -775,7 +775,7 @@
 
             <div class="mt-2.5 pt-2.5 border-t border-white/10 text-[10px] text-amber-200/90 leading-snug flex items-start gap-1.5">
               <i data-lucide="shield-alert" class="w-3.5 h-3.5 flex-shrink-0 mt-0.5 text-amber-400"></i>
-              <span><strong>Atenção Estatística:</strong> 74% do público têm entre 17 e 49 anos. Recomenda-se focar as decisões de governo nas prioridades da maioria produtiva.</span>
+              <span><strong>Atenção Estatística:</strong> <span id="exec-perc-pop-ativa">68%</span> do público têm entre 17 e 49 anos. Recomenda-se focar as decisões de governo nas prioridades da maioria produtiva.</span>
             </div>
           </div>
 
@@ -910,8 +910,8 @@
           </div>
           <div class="text-xl sm:text-2xl font-bold text-slate-900">R$ 2,00 / R$ 1,00</div>
           <p class="text-[11px] text-slate-500">Carro / Moto</p>
-          <div class="mt-2 text-[11px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded font-semibold inline-block">
-            88.3% consideram preço justo
+          <div class="mt-2 text-[11px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded font-semibold inline-block" id="badge-tarifa-hora">
+            88.0% consideram preço justo
           </div>
         </div>
 
@@ -922,8 +922,8 @@
           </div>
           <div class="text-xl sm:text-2xl font-bold text-amber-600">R$ 20,00 / R$ 10,00</div>
           <p class="text-[11px] text-slate-500">Até 3 dias para regularizar</p>
-          <div class="mt-2 text-[11px] text-amber-800 bg-amber-50 px-2 py-0.5 rounded font-semibold inline-block">
-            36.7% são contrários
+          <div class="mt-2 text-[11px] text-amber-800 bg-amber-50 px-2 py-0.5 rounded font-semibold inline-block" id="badge-tarifa-pos">
+            31.0% são contrários
           </div>
         </div>
 
@@ -1532,7 +1532,7 @@
       // Diagnóstico de Comércio
       const lojistasData = data.filter(d => d.perfil && d.perfil.toLowerCase().includes('comerciante'));
       const totalLojComercio = lojistasData.length || 1;
-      const semImpacto = lojistasData.filter(d => (d.impacto_comercio || '').toLowerCase().includes('não teve impacto') || (d.impacto_comercio || '').toLowerCase().includes('aumentou')).length;
+      const semImpacto = lojistasData.filter(d => (d.impacto_comercio || '').toLowerCase().includes('não teve impacto') || (d.impacto_comercio || '').toLowerCase().includes('nao teve impacto') || (d.impacto_comercio || '').toLowerCase().includes('aumentou')).length;
       const queda = lojistasData.filter(d => (d.impacto_comercio || '').toLowerCase().includes('diminuiu')).length;
       const percSemImp = ((semImpacto / totalLojComercio) * 100).toFixed(0);
       const percQueda = ((queda / totalLojComercio) * 100).toFixed(0);
@@ -1540,7 +1540,29 @@
       const elComercioPos = document.getElementById('comercio-perc-positivo');
       const elComercioQueda = document.getElementById('comercio-perc-queda');
       if (elComercioPos) elComercioPos.innerText = `${percSemImp}% Sem Impacto Negativo`;
-      if (elComercioQueda) elComercioQueda.innerText = `${percQueda}% Queda Inicial`;
+      if (elComercioQueda) elComercioQueda.innerText = `${percQueda}% Queda Inicial no Fluxo`;
+
+      // Faturamento Comércio (Pergunta 5.1 / Coluna 15)
+      const lojistasComFat = lojistasData.filter(d => d.aumento_faturamento && d.aumento_faturamento.trim().length > 0);
+      const totalFat = lojistasComFat.length || 1;
+      const fatEstavel = lojistasComFat.filter(d => {
+        const af = (d.aumento_faturamento || '').toLowerCase();
+        return af.includes('não sei') || af.includes('nao sei') || af.includes('nao sabe') || af.includes('estável') || af.includes('estavel');
+      }).length;
+      const percFatEstavel = ((fatEstavel / totalFat) * 100).toFixed(0);
+      const elPercFat = document.getElementById('comercio-perc-faturamento');
+      const elDescFat = document.getElementById('comercio-desc-faturamento');
+      if (elPercFat) elPercFat.innerText = `${percFatEstavel}% Sem Queda Confirmada`;
+      if (elDescFat) elDescFat.innerText = `${fatEstavel} de ${totalFat} lojistas não relatam queda decorrente do rotativo (ou aguardam consolidação).`;
+
+      // Selos de Tarifa e Pós-Utilização (Aba App & Tarifas)
+      const elBadgeHora = document.getElementById('badge-tarifa-hora');
+      if (elBadgeHora) elBadgeHora.innerText = `${precoPerc}% consideram preço justo`;
+
+      const contraPos = data.filter(d => (d.tarifa_pos_utilizacao || '').toLowerCase().includes('contra')).length;
+      const percContraPos = total > 0 ? ((contraPos / total) * 100).toFixed(1) : '0.0';
+      const elBadgePos = document.getElementById('badge-tarifa-pos');
+      if (elBadgePos) elBadgePos.innerText = `${percContraPos}% são contrários à cobrança`;
 
       renderizarGraficos(data, notas);
       renderizarLocalidades(data);
@@ -2095,6 +2117,12 @@
       if (elQtdComMulta) elQtdComMulta.innerText = `${comMulta} pessoas (${percComMulta}%)`;
       if (elDetalheMulta) elDetalheMulta.innerText = `(${semMulta} dos ${totalMultaResp} que responderam ao quesito)`;
 
+      const ratioSemMulta = Math.round((semMulta / totalMultaResp) * 10);
+      const elTextoMulta = document.getElementById('exec-texto-percepcao-multa');
+      if (elTextoMulta) {
+        elTextoMulta.innerText = `${ratioSemMulta} em cada 10 motoristas nunca sofreram penalidade, indicando que o receio decorre mais do medo de ser notificado por engano do que de punições frequentes.`;
+      }
+
       // 3. Gráfico Demográfico de Faixa Etária (Chart.js)
       const ctxIdade = document.getElementById('chart-faixa-etaria');
       if (ctxIdade) {
@@ -2151,6 +2179,10 @@
         if (elP4) elP4.innerText = `${((count60_plus / totalIdades) * 100).toFixed(1)}%`;
         if (elN4) elN4.innerText = `${f4.media} ★`;
         if (elObs4) elObs4.innerText = `${count60_plus} entrevistados (${((count60_plus / totalIdades) * 100).toFixed(1)}%). Ponderar decisões de massa.`;
+
+        const percPopAtiva = totalIdades > 0 ? (((count17_29 + count30_49) / totalIdades) * 100).toFixed(0) : '68';
+        const elPopAtiva = document.getElementById('exec-perc-pop-ativa');
+        if (elPopAtiva) elPopAtiva.innerText = `${percPopAtiva}%`;
 
         const boldWeight = modoFonteGrande ? '800' : '700';
         const baseFontSize = modoFonteGrande ? 11 : 10;
@@ -2436,6 +2468,12 @@
         } else {
           elVisitantes.innerText = 'Leopoldina e Região';
         }
+      }
+
+      const elDiagGeo = document.getElementById('diag-geografico-texto');
+      if (elDiagGeo && ordenados.length > 0) {
+        const topBairros = ordenados.slice(0, 4).map(o => o.bairro).join(', ');
+        elDiagGeo.innerText = `A pesquisa demonstra ampla capilaridade com ${ordenados.length} localidades mapeadas (destaque para ${topBairros}) e atração de consumidores e visitantes de cidades vizinhas. Todas as novas respostas inseridas na Planilha Google são computadas e sincronizadas automaticamente neste gráfico.`;
       }
 
       // Renderizar Lista Ranqueada
