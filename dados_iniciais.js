@@ -3716,7 +3716,7 @@ window.DADOS_BAIRROS = [
     "local": "Rua Presidente Carlos Luz",
     "facilidade_vagas": "Médio (demora, mas acha).",
     "impacto_comercio": "Não atrapalha.",
-    "aceitacao_rotativo": "Indiferente.",
+    "aceitacao_rotativo": "Sim, sou totalmente a favor.",
     "motivo_contra": "Não sou contra.",
     "vantagem_a_favor": "Não sou A FAVOR.",
     "sugestao_critica": "Não tem",

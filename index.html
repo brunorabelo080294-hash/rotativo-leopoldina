@@ -526,8 +526,8 @@
               <i data-lucide="navigation" class="w-4 h-4"></i>
             </div>
             <div>
-              <span class="text-[10px] sm:text-xs text-slate-500 font-medium block">Visitantes de Outras Cidades</span>
-              <div class="text-xs sm:text-sm font-bold text-slate-900 truncate" id="kpi-visitantes-regiao">Cataguases (Comércio Regional)</div>
+              <span class="text-[10px] sm:text-xs text-slate-500 font-medium block">Cidades Vizinhas (Regional)</span>
+              <div class="text-xs sm:text-sm font-bold text-slate-900 truncate" id="kpi-visitantes-regiao">Cataguases, Recreio e Juiz de Fora</div>
             </div>
           </div>
 
@@ -2852,6 +2852,16 @@
       }
     }
 
+    function isLocalidadeRegional(nome) {
+      if (!nome || typeof nome !== 'string') return false;
+      const low = nome.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+      return low.includes('cataguases') || 
+             low.includes('recreio') || 
+             low.includes('juiz de fora') || 
+             low.includes('regional') || 
+             low.includes('visitante');
+    }
+
     function normalizarBairro(raw) {
       if (!raw || typeof raw !== 'string') return null;
       let s = raw.trim();
@@ -2873,7 +2883,9 @@
       if (low.includes('tome') || low.includes('nogueira')) return 'Tomé Nogueira';
       if (low.includes('cohab')) return 'Cohab';
       if (low.includes('cristovao') || low.includes('cristov') || low.includes('esquetino')) return 'São Cristóvão';
-      if (low.includes('cataguases')) return 'Cataguases (Visitante)';
+      if (low.includes('cataguases')) return 'Cataguases (Regional)';
+      if (low.includes('recreio')) return 'Recreio (Regional)';
+      if (low.includes('juiz de fora') || low.includes('jf')) return 'Juiz de Fora (Regional)';
       if (low.includes('bela vista')) return 'Bela Vista';
       if (low.includes('flores')) return 'Rua das Flores';
       if (low.includes('tres cruzes')) return 'Três Cruzes';
@@ -2936,9 +2948,12 @@
 
       const elVisitantes = document.getElementById('kpi-visitantes-regiao');
       if (elVisitantes) {
-        const visit = ordenados.find(o => o.bairro.toLowerCase().includes('cataguases') || o.bairro.toLowerCase().includes('visitante'));
-        if (visit) {
-          elVisitantes.innerText = `${visit.bairro} (${visit.total})`;
+        const regionais = ordenados.filter(o => isLocalidadeRegional(o.bairro));
+        const totalReg = regionais.reduce((acc, curr) => acc + curr.total, 0);
+        if (totalReg > 0) {
+          const cidadesStr = regionais.map(r => r.bairro.replace(' (Regional)', '').replace(' (Visitante)', '')).join(', ');
+          elVisitantes.innerText = `${cidadesStr} (${totalReg})`;
+          elVisitantes.title = `${totalReg} pessoa(s) de cidades vizinhas: ${cidadesStr}`;
         } else {
           elVisitantes.innerText = 'Leopoldina e Região';
         }
@@ -2946,8 +2961,10 @@
 
       const elDiagGeo = document.getElementById('diag-geografico-texto');
       if (elDiagGeo && ordenados.length > 0) {
-        const topBairros = ordenados.slice(0, 4).map(o => o.bairro).join(', ');
-        elDiagGeo.innerText = `A pesquisa demonstra ampla capilaridade com ${ordenados.length} localidades mapeadas (destaque para ${topBairros}) e atração de consumidores e visitantes de cidades vizinhas. Todas as novas respostas inseridas na Planilha Google são computadas e sincronizadas automaticamente neste gráfico.`;
+        const topBairros = ordenados.slice(0, 4).map(o => o.bairro.replace(' (Regional)', '').replace(' (Visitante)', '')).join(', ');
+        const regCidades = ordenados.filter(o => isLocalidadeRegional(o.bairro)).map(o => o.bairro.replace(' (Regional)', '').replace(' (Visitante)', ''));
+        const regStr = regCidades.length > 0 ? ` e atração de cidades vizinhas da região (${regCidades.join(', ')})` : '';
+        elDiagGeo.innerText = `A pesquisa demonstra ampla capilaridade com ${ordenados.length} localidades mapeadas (destaque para ${topBairros})${regStr}. Todas as novas respostas inseridas na Planilha Google são computadas e sincronizadas automaticamente neste gráfico.`;
       }
 
       // Renderizar Lista Ranqueada
@@ -2957,20 +2974,21 @@
         const maxCount = ordenados.length > 0 ? ordenados[0].total : 1;
 
         ordenados.forEach((item, idx) => {
-          const isVisitante = item.bairro.toLowerCase().includes('visitante') || item.bairro.toLowerCase().includes('cataguases');
+          const isVisitante = isLocalidadeRegional(item.bairro);
           const barColor = isVisitante ? 'bg-amber-500' : 'bg-blue-600';
           const pctBar = Math.max(12, Math.round((item.total / maxCount) * 100));
+          const nomeExibicao = item.bairro.replace(' (Regional)', '').replace(' (Visitante)', '');
 
           const div = document.createElement('div');
           div.className = 'bg-white p-2 sm:p-2.5 rounded-lg border border-slate-200 hover:border-blue-300 transition-colors shadow-xs';
           div.innerHTML = `
             <div class="flex items-center justify-between text-xs mb-1">
               <div class="flex items-center gap-1.5 min-w-0 pr-2">
-                <span class="w-4.5 h-4.5 rounded-md ${idx < 3 ? 'bg-blue-100 text-blue-700 font-bold' : 'bg-slate-100 text-slate-500 font-medium'} flex items-center justify-center text-[10px] flex-shrink-0">
+                <span class="w-4.5 h-4.5 rounded-md ${idx < 3 ? 'bg-blue-100 text-blue-700 font-bold' : (isVisitante ? 'bg-amber-100 text-amber-800 font-bold' : 'bg-slate-100 text-slate-500 font-medium')} flex items-center justify-center text-[10px] flex-shrink-0">
                   ${idx + 1}
                 </span>
-                <span class="font-bold text-slate-800 truncate text-[11px] sm:text-xs">${item.bairro}</span>
-                ${isVisitante ? '<span class="text-[9px] bg-amber-100 text-amber-800 px-1 rounded font-bold">Regional</span>' : ''}
+                <span class="font-bold text-slate-800 truncate text-[11px] sm:text-xs">${nomeExibicao}</span>
+                ${isVisitante ? '<span class="text-[9px] bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded font-bold uppercase tracking-wider">Regional</span>' : ''}
               </div>
               <div class="text-right flex-shrink-0">
                 <span class="font-extrabold text-blue-950 text-xs">${item.total}</span>
@@ -3002,7 +3020,7 @@
 
         // Cores: líderes azul escuro, visitante em âmbar, demais em azul vibrante/ciano
         const bgColors = itensGrafico.map((item, idx) => {
-          if (item.bairro.toLowerCase().includes('visitante')) return '#f59e0b';
+          if (isLocalidadeRegional(item.bairro)) return '#f59e0b';
           if (idx === 0 || idx === 1) return '#1e3a8a';
           if (idx < 5) return '#2563eb';
           return '#38bdf8';
