@@ -800,7 +800,7 @@
             </span>
           </div>
 
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
             
             <!-- Lista com Gráfico de Barras de Demandas -->
             <div class="lg:col-span-7 space-y-2" id="lista-demandas-executivo">
@@ -2813,11 +2813,13 @@
           const barW = Math.max(8, ((cat.count / maxCount) * 100).toFixed(0));
 
           const div = document.createElement('div');
-          div.className = 'bg-white/5 p-2 sm:p-2.5 rounded-lg border border-white/5';
+          div.className = 'bg-white/5 p-2 sm:p-2.5 rounded-lg border border-white/5 hover:bg-white/10 hover:border-white/20 active:scale-[0.98] transition-all cursor-pointer select-none';
+          div.title = `${cat.name}: ${cat.count} manifestações (${perc}%)`;
+          div.onclick = () => showToast(`📌 ${cat.name}: ${cat.count} manifestações (${perc}%)`);
           div.innerHTML = `
-            <div class="flex items-center justify-between gap-2 mb-1">
-              <span class="text-xs text-white font-medium truncate">${cat.name}</span>
-              <span class="text-[10px] font-black px-1.5 py-0.5 rounded border ${cat.badge} whitespace-nowrap flex-shrink-0">${cat.count} (${perc}%)</span>
+            <div class="flex items-start justify-between gap-2.5 mb-1.5">
+              <span class="text-xs text-white font-medium break-words whitespace-normal leading-relaxed flex-1">${cat.name}</span>
+              <span class="text-[10px] font-black px-1.5 py-0.5 rounded border ${cat.badge} whitespace-nowrap flex-shrink-0 mt-0.5">${cat.count} (${perc}%)</span>
             </div>
             <div class="w-full bg-white/10 rounded-full h-1.5 overflow-hidden">
               <div class="${cat.color} h-full rounded-full transition-all duration-500" style="width: ${barW}%;"></div>
@@ -2836,15 +2838,17 @@
         top3.forEach((dem, idx) => {
           const perc = ((dem.count / totalBase) * 100).toFixed(1);
           const li = document.createElement('li');
-          li.className = 'flex items-start gap-2 bg-white/5 p-2.5 rounded-lg border border-white/5 hover:border-white/15 transition-all';
+          li.className = 'flex items-start gap-2.5 bg-white/5 p-2.5 rounded-lg border border-white/5 hover:bg-white/10 hover:border-white/20 active:scale-[0.98] transition-all cursor-pointer select-none';
+          li.title = `${dem.name}: ${dem.count} citações (${perc}%) - ${dem.desc}`;
+          li.onclick = () => showToast(`💡 ${dem.name}: ${dem.count} citações (${perc}%)`);
           li.innerHTML = `
             <span class="w-5 h-5 rounded-full ${dem.numBadge} flex items-center justify-center font-black text-xs flex-shrink-0 mt-0.5">${idx + 1}</span>
             <div class="flex-1 min-w-0">
-              <div class="flex items-center justify-between gap-1 flex-wrap">
-                <strong class="text-white text-xs">${dem.name}</strong>
-                <span class="text-[10px] font-extrabold px-1.5 py-0.5 rounded border ${dem.badge} whitespace-nowrap">${dem.count} citações (${perc}%)</span>
+              <div class="flex items-start justify-between gap-2 flex-wrap">
+                <strong class="text-white text-xs font-semibold break-words whitespace-normal leading-relaxed flex-1">${dem.name}</strong>
+                <span class="text-[10px] font-extrabold px-1.5 py-0.5 rounded border ${dem.badge} whitespace-nowrap flex-shrink-0 mt-0.5">${dem.count} citações (${perc}%)</span>
               </div>
-              <span class="text-slate-300 text-[11px] leading-tight block mt-1">${dem.desc}</span>
+              <span class="text-slate-300 text-[11px] leading-relaxed break-words whitespace-normal block mt-1.5">${dem.desc}</span>
             </div>
           `;
           containerTop3.appendChild(li);
@@ -2980,17 +2984,19 @@
           const nomeExibicao = item.bairro.replace(' (Regional)', '').replace(' (Visitante)', '');
 
           const div = document.createElement('div');
-          div.className = 'bg-white p-2 sm:p-2.5 rounded-lg border border-slate-200 hover:border-blue-300 transition-colors shadow-xs';
+          div.className = 'bg-white p-2 sm:p-2.5 rounded-lg border border-slate-200 hover:border-blue-400 hover:shadow-xs active:scale-[0.98] transition-all cursor-pointer select-none shadow-xs';
+          div.title = `${nomeExibicao}${isVisitante ? ' (Regional)' : ''}: ${item.total} entrevistados (${item.perc}%)`;
+          div.onclick = () => showToast(`📍 ${nomeExibicao}: ${item.total} entrevistados (${item.perc}%)`);
           div.innerHTML = `
-            <div class="flex items-center justify-between text-xs mb-1">
-              <div class="flex items-center gap-1.5 min-w-0 pr-2">
-                <span class="w-4.5 h-4.5 rounded-md ${idx < 3 ? 'bg-blue-100 text-blue-700 font-bold' : (isVisitante ? 'bg-amber-100 text-amber-800 font-bold' : 'bg-slate-100 text-slate-500 font-medium')} flex items-center justify-center text-[10px] flex-shrink-0">
+            <div class="flex items-start justify-between text-xs mb-1.5 gap-2">
+              <div class="flex items-start gap-1.5 min-w-0 pr-1 flex-1">
+                <span class="w-4.5 h-4.5 rounded-md ${idx < 3 ? 'bg-blue-100 text-blue-700 font-bold' : (isVisitante ? 'bg-amber-100 text-amber-800 font-bold' : 'bg-slate-100 text-slate-500 font-medium')} flex items-center justify-center text-[10px] flex-shrink-0 mt-0.5">
                   ${idx + 1}
                 </span>
-                <span class="font-bold text-slate-800 truncate text-[11px] sm:text-xs">${nomeExibicao}</span>
-                ${isVisitante ? '<span class="text-[9px] bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded font-bold uppercase tracking-wider">Regional</span>' : ''}
+                <span class="font-bold text-slate-800 break-words whitespace-normal leading-snug text-[11px] sm:text-xs flex-1">${nomeExibicao}</span>
+                ${isVisitante ? '<span class="text-[9px] bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded font-bold uppercase tracking-wider flex-shrink-0 mt-0.5">Regional</span>' : ''}
               </div>
-              <div class="text-right flex-shrink-0">
+              <div class="text-right flex-shrink-0 mt-0.5">
                 <span class="font-extrabold text-blue-950 text-xs">${item.total}</span>
                 <span class="text-[10px] text-slate-400 font-medium ml-1">(${item.perc}%)</span>
               </div>

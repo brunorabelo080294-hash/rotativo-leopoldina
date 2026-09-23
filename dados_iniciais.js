@@ -3659,7 +3659,7 @@ window.DADOS_BAIRROS = [
     "aceitacao_rotativo": "Sim, mas com ressalvas (depende do valor/tempo).",
     "motivo_contra": "Não sou contra.",
     "vantagem_a_favor": "Facilidade para parar rapidamente e resolver problemas.",
-    "sugestao_critica": "Não tem",
+    "sugestao_critica": "",
     "faturamento": "Não sei informar.",
     "funcionarios": "2",
     "pesquisa_onda": "Pesquisa 01 - Bairros (Sem Rotativo)"
@@ -3679,7 +3679,7 @@ window.DADOS_BAIRROS = [
     "aceitacao_rotativo": "Não, sou contra.",
     "motivo_contra": "Acho que vai afastar os clientes do comércio.",
     "vantagem_a_favor": "Não sou A FAVOR.",
-    "sugestao_critica": "Não tem",
+    "sugestao_critica": "",
     "faturamento": "Não sei informar.",
     "funcionarios": "1",
     "pesquisa_onda": "Pesquisa 01 - Bairros (Sem Rotativo)"
@@ -3699,7 +3699,7 @@ window.DADOS_BAIRROS = [
     "aceitacao_rotativo": "Não, sou contra.",
     "motivo_contra": "Dificulta, principalmente pq nao tem carga e descarga",
     "vantagem_a_favor": "Não sou A FAVOR.",
-    "sugestao_critica": "Não tem",
+    "sugestao_critica": "",
     "faturamento": "Não sei informar.",
     "funcionarios": "5",
     "pesquisa_onda": "Pesquisa 01 - Bairros (Sem Rotativo)"
@@ -3719,7 +3719,7 @@ window.DADOS_BAIRROS = [
     "aceitacao_rotativo": "Sim, sou totalmente a favor.",
     "motivo_contra": "Não sou contra.",
     "vantagem_a_favor": "Não sou A FAVOR.",
-    "sugestao_critica": "Não tem",
+    "sugestao_critica": "",
     "faturamento": "Não sei informar.",
     "funcionarios": "1",
     "pesquisa_onda": "Pesquisa 01 - Bairros (Sem Rotativo)"
@@ -3759,7 +3759,7 @@ window.DADOS_BAIRROS = [
     "aceitacao_rotativo": "Sim, sou totalmente a favor.",
     "motivo_contra": "Não sou contra.",
     "vantagem_a_favor": "Facilidade para parar rapidamente e resolver problemas.",
-    "sugestao_critica": "Não",
+    "sugestao_critica": "",
     "faturamento": "Não sei informar.",
     "funcionarios": "6",
     "pesquisa_onda": "Pesquisa 01 - Bairros (Sem Rotativo)"
@@ -3779,7 +3779,7 @@ window.DADOS_BAIRROS = [
     "aceitacao_rotativo": "Sim, mas com ressalvas (depende do valor/tempo).",
     "motivo_contra": "Não sou contra.",
     "vantagem_a_favor": "Facilidade para parar rapidamente e resolver problemas.",
-    "sugestao_critica": "Nao",
+    "sugestao_critica": "",
     "faturamento": "Não sei informar.",
     "funcionarios": "",
     "pesquisa_onda": "Pesquisa 01 - Bairros (Sem Rotativo)"
@@ -3799,7 +3799,7 @@ window.DADOS_BAIRROS = [
     "aceitacao_rotativo": "Sim, mas com ressalvas (depende do valor/tempo).",
     "motivo_contra": "Não sou contra.",
     "vantagem_a_favor": "Facilidade para parar rapidamente e resolver problemas.",
-    "sugestao_critica": "Não tem",
+    "sugestao_critica": "",
     "faturamento": "Não sei informar.",
     "funcionarios": "5",
     "pesquisa_onda": "Pesquisa 01 - Bairros (Sem Rotativo)"
@@ -3839,7 +3839,7 @@ window.DADOS_BAIRROS = [
     "aceitacao_rotativo": "Não, sou contra.",
     "motivo_contra": "Acho que vai afastar os clientes do comércio.",
     "vantagem_a_favor": "Não sou A FAVOR.",
-    "sugestao_critica": "Não",
+    "sugestao_critica": "",
     "faturamento": "Não sei informar.",
     "funcionarios": "",
     "pesquisa_onda": "Pesquisa 01 - Bairros (Sem Rotativo)"
